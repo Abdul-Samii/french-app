@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parlez-Vous — French Verb Mastery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f3ed;
+    --page: #ede8e0;
+    --card: #faf8f4;
+    --card2: #f2ede4;
+    --border: #d4c9b8;
+    --border2: #c4b8a4;
+    --navy: #1a2d4a;
+    --navy2: #243d62;
+    --blue: #2e5496;
+    --blue2: #3a6ab8;
+    --terra: #c05e3a;
+    --terra2: #d97050;
+    --teal: #2a6b5a;
+    --teal2: #348a72;
+    --amber: #b07b20;
+    --amber2: #d09830;
+    --ink: #1a1816;
+    --ink2: #3a3630;
+    --muted: #7a7060;
+    --muted2: #9a9080;
+    --past-bg: #e8f2ee;
+    --past-border: #2a6b5a;
+    --past-text: #1a4035;
+    --present-bg: #fff8e8;
+    --present-border: #b07b20;
+    --present-text: #5a3c08;
+    --future-bg: #e8eef8;
+    --future-border: #2e5496;
+    --future-text: #12274a;
+    --radius: 14px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  /* subtle dot pattern on body */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, #b8a88820 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* TOP BAR */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 28px;
+    border-bottom: 2px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(247,243,237,0.97);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+    font-size: 1.45rem;
+    color: var(--navy);
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .logo-flag {
+    font-style: normal;
+    font-size: 1.2rem;
+  }
+
+  .logo-sub {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    background: var(--card2);
+  }
+
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    max-width: 320px;
+    margin: 0 24px;
+  }
+
+  .progress-track {
+    flex: 1;
+    height: 6px;
+    background: var(--card2);
+    border-radius: 3px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--navy), var(--blue2));
+    border-radius: 3px;
+    transition: width 0.5s cubic-bezier(.4,0,.2,1);
+  }
+
+  .progress-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    white-space: nowrap;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .top-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn-icon {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    color: var(--ink2);
+    border-radius: 8px;
+    padding: 7px 13px;
+    font-size: 0.78rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.15s;
+    letter-spacing: 0.01em;
+  }
+
+  .btn-icon:hover {
+    background: var(--card2);
+    border-color: var(--border2);
+  }
+
+  .btn-icon.active {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: #fff;
+  }
+
+  /* MAIN LAYOUT */
+  .main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 28px 20px 48px;
+    gap: 18px;
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* MAIN WORD CARD */
+  .word-card {
+    width: 100%;
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(26,24,22,0.07), 0 1px 3px rgba(26,24,22,0.05);
+  }
+
+  .word-card-header {
+    background: var(--navy);
+    padding: 28px 36px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .word-card-header::after {
+    content: '';
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 40px solid rgba(255,255,255,0.04);
+    pointer-events: none;
+  }
+
+  .verb-number {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  .verb-main-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  .verb-word {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 3.8rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .verb-word:hover { opacity: 0.85; }
+
+  .speak-btn {
+    background: rgba(255,255,255,0.12);
+    border: 1.5px solid rgba(255,255,255,0.25);
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #fff;
+    font-size: 0.95rem;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+
+  .speak-btn:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.5); }
+  .speak-btn.speaking { background: rgba(255,255,255,0.28); animation: pulse 0.6s infinite; }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+  }
+
+  .verb-translation {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.6);
+    font-weight: 300;
+    font-style: italic;
+    font-family: 'Libre Baskerville', serif;
+    padding-bottom: 3px;
+  }
+
+  .verb-pron {
+    display: inline-block;
+    font-size: 0.82rem;
+    color: var(--navy);
+    background: #e8f0fa;
+    border: 1px solid #c0d0e8;
+    border-radius: 6px;
+    padding: 4px 11px;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+    margin-top: 2px;
+  }
+
+  .word-card-body {
+    padding: 22px 36px 26px;
+  }
+
+  .tips-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .tips-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: #fff8e8;
+    border: 1.5px solid #e8d090;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .tips-content {}
+  .tips-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--amber);
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+
+  .tips-text {
+    font-size: 0.88rem;
+    color: var(--ink2);
+    line-height: 1.65;
+  }
+
+  .card-actions {
+    position: absolute;
+    top: 22px;
+    right: 26px;
+    display: flex;
+    gap: 8px;
+  }
+
+  .bm-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1.5px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.7);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 0.75rem;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 500;
+  }
+
+  .bm-btn:hover { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.4); color: #fff; }
+  .bm-btn.saved { background: #e8b830; border-color: #e8b830; color: var(--navy); }
+
+  /* TENSE GRID */
+  .tense-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    width: 100%;
+  }
+
+  @media(max-width: 640px) {
+    .tense-grid { grid-template-columns: 1fr; }
+    .verb-word { font-size: 2.6rem; }
+    .word-card-header { padding: 22px 20px 20px; }
+    .word-card-body { padding: 18px 20px 20px; }
+  }
+
+  .tense-card {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(26,24,22,0.04);
+  }
+
+  .tense-header {
+    padding: 14px 18px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .past   .tense-header { background: var(--past-bg); border-bottom-color: rgba(42,107,90,0.2); }
+  .present .tense-header { background: var(--present-bg); border-bottom-color: rgba(176,123,32,0.2); }
+  .future  .tense-header { background: var(--future-bg); border-bottom-color: rgba(46,84,150,0.2); }
+
+  .tense-label-group { display: flex; align-items: center; gap: 8px; }
+
+  .tense-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .past .tense-dot   { background: var(--past-border); }
+  .present .tense-dot { background: var(--amber); }
+  .future .tense-dot  { background: var(--blue); }
+
+  .tense-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .past .tense-label   { color: var(--past-text); }
+  .present .tense-label { color: var(--present-text); }
+  .future .tense-label  { color: var(--future-text); }
+
+  .tense-french {
+    font-size: 0.65rem;
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+  }
+
+  .past .tense-french   { color: var(--teal2); }
+  .present .tense-french { color: var(--amber); }
+  .future .tense-french  { color: var(--blue2); }
+
+  .tense-speak {
+    background: none;
+    border: 1px solid;
+    border-radius: 6px;
+    padding: 4px 9px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.15s;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+  }
+
+  .past .tense-speak   { border-color: var(--past-border); color: var(--teal); }
+  .present .tense-speak { border-color: var(--amber); color: var(--amber); }
+  .future .tense-speak  { border-color: var(--blue); color: var(--blue); }
+
+  .past .tense-speak:hover   { background: var(--past-border); color: #fff; }
+  .present .tense-speak:hover { background: var(--amber); color: #fff; }
+  .future .tense-speak:hover  { background: var(--blue); color: #fff; }
+
+  .tense-body { padding: 16px 18px 14px; }
+
+  .tense-forms {
+    font-size: 1.02rem;
+    color: var(--ink);
+    font-weight: 500;
+    line-height: 1.8;
+    margin-bottom: 12px;
+  }
+
+  .form-entry { display: flex; align-items: baseline; gap: 7px; flex-wrap: wrap; }
+  .form-word { font-weight: 600; color: var(--ink); }
+  .form-pron {
+    font-size: 0.72rem;
+    color: var(--muted2);
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+  }
+
+  .tense-example {
+    font-size: 0.82rem;
+    line-height: 1.6;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border);
+  }
+
+  .tense-example .fr {
+    color: var(--ink2);
+    font-weight: 500;
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+    margin-bottom: 3px;
+  }
+
+  .tense-example .en {
+    color: var(--muted);
+    font-size: 0.78rem;
+    margin-bottom: 8px;
+  }
+
+  .ex-speak-btn {
+    background: none;
+    border: none;
+    font-size: 0.72rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    transition: opacity 0.15s;
+  }
+
+  .past .ex-speak-btn   { color: var(--teal); }
+  .present .ex-speak-btn { color: var(--amber); }
+  .future .ex-speak-btn  { color: var(--blue); }
+  .ex-speak-btn:hover { opacity: 0.7; }
+
+  /* NAV */
+  .nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .btn-nav {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    color: var(--ink2);
+    border-radius: 12px;
+    padding: 12px 28px;
+    font-size: 0.88rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    box-shadow: 0 1px 3px rgba(26,24,22,0.06);
+  }
+
+  .btn-nav:hover { background: var(--card2); border-color: var(--border2); }
+
+  .btn-nav.primary {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  .btn-nav.primary:hover { background: var(--navy2); }
+  .btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  /* SEARCH PANEL */
+  .search-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26,45,74,0.55);
+    z-index: 200;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 80px;
+  }
+
+  .search-overlay.open { display: flex; }
+
+  .search-box {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 18px;
+    width: 100%;
+    max-width: 540px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(26,24,22,0.18);
+  }
+
+  .search-input-row {
+    display: flex;
+    align-items: center;
+    padding: 14px 18px;
+    gap: 10px;
+    border-bottom: 1.5px solid var(--border);
+    background: var(--card2);
+  }
+
+  .search-icon { color: var(--muted); font-size: 0.95rem; }
+
+  .search-input {
+    flex: 1;
+    background: none;
+    border: none;
+    color: var(--ink);
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+  }
+
+  .search-input::placeholder { color: var(--muted2); }
+
+  .search-close {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 6px;
+    width: 28px;
+    height: 28px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+
+  .search-close:hover { background: var(--card); color: var(--ink); }
+
+  .search-results { max-height: 400px; overflow-y: auto; }
+
+  .search-result {
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: background 0.12s;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .search-result:hover { background: var(--card2); }
+  .search-result:last-child { border-bottom: none; }
+
+  .sr-num {
+    font-size: 0.68rem;
+    color: var(--muted2);
+    width: 28px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+  }
+
+  .sr-verb {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--navy);
+    font-family: 'Libre Baskerville', serif;
+  }
+
+  .sr-trans { font-size: 0.8rem; color: var(--muted); font-style: italic; }
+
+  /* Card animation */
+  .card-enter {
+    animation: cardIn 0.32s cubic-bezier(0.34,1.4,0.64,1);
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(10px) scale(0.99); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .loading {
+    text-align: center;
+    padding: 80px;
+    color: var(--muted);
+    font-size: 1.1rem;
+    font-style: italic;
+    font-family: 'Libre Baskerville', serif;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--navy);
+    color: #fff;
+    padding: 10px 22px;
+    border-radius: 50px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    z-index: 300;
+    transition: transform 0.28s cubic-bezier(.34,1.4,.64,1);
+    pointer-events: none;
+    letter-spacing: 0.01em;
+  }
+
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* Autoplay bar */
+  .autoplay-bar {
+    width: 100%;
+    height: 3px;
+    background: var(--card2);
+    border-radius: 2px;
+    overflow: hidden;
+    display: none;
+    border: 1px solid var(--border);
+  }
+
+  .autoplay-bar.active { display: block; }
+
+  .autoplay-fill {
+    height: 100%;
+    background: var(--navy);
+    border-radius: 2px;
+    width: 0%;
+    transition: width linear;
+  }
+
+  /* Quiz */
+  .quiz-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26,45,74,0.65);
+    z-index: 150;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 24px;
+  }
+
+  .quiz-overlay.open { display: flex; }
+
+  .quiz-card {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    padding: 36px 40px;
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(26,24,22,0.14);
+  }
+
+  .quiz-question {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 3rem;
+    color: var(--navy);
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+
+  .quiz-hint { font-size: 0.85rem; color: var(--muted); margin-bottom: 24px; }
+
+  .quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .quiz-opt {
+    background: var(--card2);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 13px 10px;
+    color: var(--ink);
+    cursor: pointer;
+    font-size: 0.88rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    transition: all 0.15s;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .quiz-opt:hover { border-color: var(--navy); color: var(--navy); background: var(--future-bg); }
+  .quiz-opt.correct { border-color: var(--teal); background: var(--past-bg); color: var(--teal); }
+  .quiz-opt.wrong { border-color: var(--terra); background: #faeee8; color: var(--terra); }
+  .quiz-opt:disabled { cursor: not-allowed; }
+
+  .quiz-score { font-size: 0.88rem; color: rgba(255,255,255,0.8); font-weight: 500; }
+
+  .quiz-title {
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    color: #fff;
+    margin-bottom: 3px;
+  }
+
+  .quiz-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">
+    <span class="logo-flag">🇫🇷</span>
+    Parlez-Vous
+    <span class="logo-sub">194 Verbs</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <span class="progress-label" id="progressLabel">1 / 194</span>
+  </div>
+  <div class="top-actions">
+    <button class="btn-icon" onclick="toggleSearch()" title="Search verbs">🔍 Search</button>
+    <button class="btn-icon" id="autoBtn" onclick="toggleAuto()">▶ Auto</button>
+    <button class="btn-icon" onclick="openQuiz()">🎯 Quiz</button>
+    <button class="btn-icon" id="bookmarkFilterBtn" onclick="toggleBookmarkFilter()">⭐ Saved</button>
+  </div>
+</div>
+
+<div class="main">
+  <div class="autoplay-bar" id="autoBar"><div class="autoplay-fill" id="autoFill"></div></div>
+  <div id="cardArea" class="loading">Chargement des verbes…</div>
+
+  <div class="nav-row">
+    <button class="btn-nav" id="prevBtn" onclick="navigate(-1)">← Précédent</button>
+    <button class="btn-nav primary" onclick="speakCurrent()">🔊 Prononcer</button>
+    <button class="btn-nav" id="nextBtn" onclick="navigate(1)">Suivant →</button>
+  </div>
+</div>
+
+<!-- Search -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-box">
+    <div class="search-input-row">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" id="searchInput" placeholder="Rechercher un verbe en français ou en anglais…" oninput="filterSearch()">
+      <button class="search-close" onclick="toggleSearch()">✕</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- Quiz -->
+<div class="quiz-overlay" id="quizOverlay" style="position:fixed;">
+  <div class="quiz-title">Quiz de conjugaison</div>
+  <div class="quiz-score" id="quizScore">Score: 0 / 0</div>
+  <div class="quiz-card" style="position:relative;">
+    <button class="btn-nav quiz-close" onclick="closeQuiz()" style="position:absolute;top:14px;right:14px;padding:6px 12px;font-size:0.78rem;">✕ Fermer</button>
+    <div class="quiz-question" id="quizQ">—</div>
+    <div class="quiz-hint" id="quizHint">Que signifie ce verbe ?</div>
+    <div class="quiz-options" id="quizOpts"></div>
+  </div>
+  <button class="btn-nav primary" onclick="nextQuiz()" style="display:none" id="quizNextBtn">Question suivante →</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ——————————————————————————————
+// VERB DATA (194 verbs from your docx)
+// ——————————————————————————————
+const VERBS = [{"verb":"être","pronunciation":"EH-truh","translation":"to be","past":{"forms":"était [ay-TEH] / a été [ah ay-TAY]","example":"Il était fatigué après le travail. (He was tired after work.)"},"present":{"forms":"est [eh] / sommes [sohm]","example":"Elle est médecin dans un grand hôpital. (She is a doctor in a big hospital.)"},"future":{"forms":"sera [suh-RAH] / seront [suh-ROHN]","example":"Nous serons prêts demain matin. (We will be ready tomorrow morning.)"}},{"verb":"avoir","pronunciation":"ah-VWAHR","translation":"to have","past":{"forms":"avait [ah-VEH] / a eu [ah EW]","example":"J'avais faim ce matin. (I was hungry this morning.)"},"present":{"forms":"a [ah] / avons [ah-VOHN]","example":"Elle a deux enfants. (She has two children.)"},"future":{"forms":"aura [oh-RAH] / aurons [oh-ROHN]","example":"Tu auras plus de temps la semaine prochaine. (You will have more time next week.)"}},{"verb":"aller","pronunciation":"ah-LAY","translation":"to go","past":{"forms":"allait [ah-LEH] / est allé [eh ah-LAY]","example":"Il allait à l'école chaque jour. (He used to go to school every day.)"},"present":{"forms":"va [vah] / allons [ah-LOHN]","example":"Nous allons au marché ce matin. (We are going to the market this morning.)"},"future":{"forms":"ira [ee-RAH] / irons [ee-ROHN]","example":"Elle ira en France l'été prochain. (She will go to France next summer.)"}},{"verb":"faire","pronunciation":"fair","translation":"to do, make","past":{"forms":"faisait [fuh-ZEH] / a fait [ah feh]","example":"Il a fait ses devoirs hier soir. (He did his homework yesterday evening.)"},"present":{"forms":"fait [feh] / faisons [fuh-ZOHN]","example":"Elle fait du sport tous les jours. (She does sport every day.)"},"future":{"forms":"fera [fuh-RAH] / ferons [fuh-ROHN]","example":"Nous ferons un gâteau pour la fête. (We will make a cake for the party.)"}},{"verb":"dire","pronunciation":"deer","translation":"to say, tell","past":{"forms":"disait [dee-ZEH] / a dit [ah dee]","example":"Il a dit la vérité à sa mère. (He told the truth to his mother.)"},"present":{"forms":"dit [dee] / disons [dee-ZOHN]","example":"Elle dit bonjour à ses voisins. (She says hello to her neighbours.)"},"future":{"forms":"dira [dee-RAH] / dirons [dee-ROHN]","example":"Je te dirai le secret demain. (I will tell you the secret tomorrow.)"}},{"verb":"pouvoir","pronunciation":"poo-VWAHR","translation":"can, to be able to","past":{"forms":"pouvait [poo-VEH] / a pu [ah pew]","example":"Il pouvait courir très vite quand il était jeune. (He could run very fast when he was young.)"},"present":{"forms":"peut [puh] / pouvons [poo-VOHN]","example":"Elle peut parler trois langues. (She can speak three languages.)"},"future":{"forms":"pourra [poo-RAH] / pourrons [poo-ROHN]","example":"Nous pourrons partir tôt vendredi. (We will be able to leave early on Friday.)"}},{"verb":"vouloir","pronunciation":"voo-LWAHR","translation":"to want","past":{"forms":"voulait [voo-LEH] / a voulu [ah voo-LEW]","example":"Elle voulait devenir médecin. (She wanted to become a doctor.)"},"present":{"forms":"veut [vuh] / voulons [voo-LOHN]","example":"Il veut un café avec du sucre. (He wants a coffee with sugar.)"},"future":{"forms":"voudra [voo-DRAH] / voudrons [voo-DROHN]","example":"Tu voudras peut-être rester plus longtemps. (You will probably want to stay longer.)"}},{"verb":"savoir","pronunciation":"sah-VWAHR","translation":"to know","past":{"forms":"savait [sah-VEH] / a su [ah sew]","example":"Elle savait jouer du piano depuis l'enfance. (She knew how to play piano since childhood.)"},"present":{"forms":"sait [seh] / savons [sah-VOHN]","example":"Il sait la réponse à la question. (He knows the answer to the question.)"},"future":{"forms":"saura [soh-RAH] / saurons [soh-ROHN]","example":"Nous saurons les résultats demain. (We will know the results tomorrow.)"}},{"verb":"voir","pronunciation":"vwahr","translation":"to see","past":{"forms":"voyait [vwah-YEH] / a vu [ah vew]","example":"J'ai vu un beau film hier soir. (I saw a beautiful film yesterday evening.)"},"present":{"forms":"voit [vwah] / voyons [vwah-YOHN]","example":"Elle voit ses amis chaque semaine. (She sees her friends every week.)"},"future":{"forms":"verra [veh-RAH] / verrons [veh-ROHN]","example":"Nous verrons ce qui se passe. (We will see what happens.)"}},{"verb":"venir","pronunciation":"vuh-NEER","translation":"to come","past":{"forms":"venait [vuh-NEH] / est venu [eh vuh-NEW]","example":"Il venait toujours à l'heure. (He always used to come on time.)"},"present":{"forms":"vient [vyahn] / venons [vuh-NOHN]","example":"Elle vient de Paris. (She comes from Paris.)"},"future":{"forms":"viendra [vyahn-DRAH] / viendrons [vyahn-DROHN]","example":"Mon ami viendra me rendre visite ce soir. (My friend will come to visit me this evening.)"}},{"verb":"suivre","pronunciation":"sweev-ruh","translation":"to follow","past":{"forms":"suivait [swee-VEH] / a suivi [ah swee-VEE]","example":"Le chien suivait son maître partout. (The dog followed its owner everywhere.)"},"present":{"forms":"suit [swee] / suivons [swee-VOHN]","example":"Elle suit un cours de français en ligne. (She is following a French course online.)"},"future":{"forms":"suivra [sweev-RAH] / suivrons [sweev-ROHN]","example":"Nous suivrons les instructions du guide. (We will follow the guide's instructions.)"}},{"verb":"parler","pronunciation":"par-LAY","translation":"to speak, talk","past":{"forms":"parlait [par-LEH] / a parlé [ah par-LAY]","example":"Ils ont parlé toute la nuit. (They talked all night.)"},"present":{"forms":"parle [parl] / parlons [par-LOHN]","example":"Elle parle couramment le français. (She speaks French fluently.)"},"future":{"forms":"parlera [par-luh-RAH] / parlerons [par-luh-ROHN]","example":"Je parlerai au directeur demain matin. (I will speak to the director tomorrow morning.)"}},{"verb":"prendre","pronunciation":"prahn-druh","translation":"to take, get","past":{"forms":"prenait [pruh-NEH] / a pris [ah pree]","example":"Il a pris le train pour Lyon. (He took the train to Lyon.)"},"present":{"forms":"prend [prahn] / prenons [pruh-NOHN]","example":"Elle prend son café noir chaque matin. (She takes her coffee black every morning.)"},"future":{"forms":"prendra [prahn-DRAH] / prendrons [prahn-DROHN]","example":"Nous prendrons la décision ensemble. (We will take the decision together.)"}},{"verb":"croire","pronunciation":"krwahr","translation":"to believe, think","past":{"forms":"croyait [krwah-YEH] / a cru [ah krew]","example":"Elle croyait en la bonté des gens. (She believed in the goodness of people.)"},"present":{"forms":"croit [krwah] / croyons [krwah-YOHN]","example":"Il croit que tout ira bien. (He believes that everything will be fine.)"},"future":{"forms":"croira [krwah-RAH] / croirons [krwah-ROHN]","example":"Tu croiras difficilement ce que je t'ai vu. (You will barely believe what I saw.)"}},{"verb":"aimer","pronunciation":"ay-MAY","translation":"to love, like","past":{"forms":"aimait [ay-MEH] / a aimé [ah ay-MAY]","example":"Il aimait beaucoup lire des romans. (He used to love reading novels.)"},"present":{"forms":"aime [em] / aimons [ay-MOHN]","example":"Elle aime la musique classique. (She loves classical music.)"},"future":{"forms":"aimera [em-RAH] / aimerons [em-ROHN]","example":"Vous aimerez cette ville, j'en suis sûr. (You will love this city, I'm sure.)"}},{"verb":"falloir","pronunciation":"fah-LWAHR","translation":"to be necessary (must)","past":{"forms":"fallait [fah-LEH] / a fallu [ah fah-LEW]","example":"Il fallait travailler dur pour réussir. (It was necessary to work hard to succeed.)"},"present":{"forms":"faut [foh]","example":"Il faut manger des légumes tous les jours. (It is necessary to eat vegetables every day.)"},"future":{"forms":"faudra [foh-DRAH]","example":"Il faudra partir tôt pour éviter le trafic. (It will be necessary to leave early to avoid traffic.)"}},{"verb":"passer","pronunciation":"pah-SAY","translation":"to pass, go by","past":{"forms":"passait [pah-SEH] / a passé [ah pah-SAY]","example":"Nous avons passé une belle journée à la plage. (We spent a lovely day at the beach.)"},"present":{"forms":"passe [pahs] / passons [pah-SOHN]","example":"Le temps passe très vite en vacances. (Time passes very quickly on holiday.)"},"future":{"forms":"passera [pahs-RAH] / passerons [pahs-ROHN]","example":"Il passera te voir ce soir. (He will come by to see you this evening.)"}},{"verb":"penser","pronunciation":"pahn-SAY","translation":"to think","past":{"forms":"pensait [pahn-SEH] / a pensé [ah pahn-SAY]","example":"Elle pensait souvent à sa famille. (She often thought about her family.)"},"present":{"forms":"pense [pahns] / pensons [pahn-SOHN]","example":"Il pense que c'est une bonne idée. (He thinks it's a good idea.)"},"future":{"forms":"pensera [pahns-RAH] / penserons [pahns-ROHN]","example":"Nous penserons à toi pendant ton voyage. (We will think of you during your trip.)"}},{"verb":"attendre","pronunciation":"ah-TAHN-druh","translation":"to wait for, expect","past":{"forms":"attendait [ah-tahn-DEH] / a attendu [ah ah-tahn-DEW]","example":"Nous avons attendu une heure à l'aéroport. (We waited one hour at the airport.)"},"present":{"forms":"attend [ah-TAHN] / attendons [ah-tahn-DOHN]","example":"Elle attend l'arrivée du train. (She is waiting for the arrival of the train.)"},"future":{"forms":"attendra [ah-tahn-DRAH] / attendrons [ah-tahn-DROHN]","example":"Ils attendront la réponse jusqu'à vendredi. (They will wait for the answer until Friday.)"}},{"verb":"trouver","pronunciation":"troo-VAY","translation":"to find","past":{"forms":"trouvait [troo-VEH] / a trouvé [ah troo-VAY]","example":"Il a trouvé un travail intéressant. (He found an interesting job.)"},"present":{"forms":"trouve [troov] / trouvons [troo-VOHN]","example":"Elle trouve ce livre très ennuyeux. (She finds this book very boring.)"},"future":{"forms":"trouvera [troov-RAH] / trouverons [troov-ROHN]","example":"Nous trouverons une solution ensemble. (We will find a solution together.)"}},{"verb":"laisser","pronunciation":"leh-SAY","translation":"to leave","past":{"forms":"laissait [leh-SEH] / a laissé [ah leh-SAY]","example":"Il a laissé ses clés à la maison. (He left his keys at home.)"},"present":{"forms":"laisse [less] / laissons [leh-SOHN]","example":"Elle laisse toujours la porte ouverte. (She always leaves the door open.)"},"future":{"forms":"laissera [less-RAH] / laisserons [less-ROHN]","example":"Je te laisserai un message si je pars avant toi. (I will leave you a message if I leave before you.)"}},{"verb":"arriver","pronunciation":"ah-ree-VAY","translation":"to arrive","past":{"forms":"arrivait [ah-ree-VEH] / est arrivé [eh ah-ree-VAY]","example":"Le train est arrivé avec du retard. (The train arrived late.)"},"present":{"forms":"arrive [ah-REEV] / arrivons [ah-ree-VOHN]","example":"Elle arrive au bureau à neuf heures. (She arrives at the office at nine o'clock.)"},"future":{"forms":"arrivera [ah-reev-RAH] / arriverons [ah-reev-ROHN]","example":"Il arrivera demain soir à Paris. (He will arrive in Paris tomorrow evening.)"}},{"verb":"donner","pronunciation":"doh-NAY","translation":"to give","past":{"forms":"donnait [doh-NEH] / a donné [ah doh-NAY]","example":"Elle lui a donné un beau cadeau. (She gave him a beautiful gift.)"},"present":{"forms":"donne [dohn] / donnons [doh-NOHN]","example":"Il donne des cours de maths le soir. (He gives maths lessons in the evenings.)"},"future":{"forms":"donnera [dohn-RAH] / donnerons [dohn-ROHN]","example":"Nous donnerons notre réponse lundi. (We will give our answer on Monday.)"}},{"verb":"regarder","pronunciation":"ruh-gar-DAY","translation":"to look at, watch","past":{"forms":"regardait [ruh-gar-DEH] / a regardé [ah ruh-gar-DAY]","example":"Ils ont regardé un film toute la nuit. (They watched a film all night.)"},"present":{"forms":"regarde [ruh-GARD] / regardons [ruh-gar-DOHN]","example":"Elle regarde la télévision chaque soir. (She watches television every evening.)"},"future":{"forms":"regardera [ruh-gard-RAH] / regarderons [ruh-gard-ROHN]","example":"Nous regarderons le match ensemble ce soir. (We will watch the match together this evening.)"}},{"verb":"appeler","pronunciation":"ah-puh-LAY","translation":"to call, ring","past":{"forms":"appelait [ah-puh-LEH] / a appelé [ah ah-puh-LAY]","example":"Elle a appelé sa mère pour lui souhaiter son anniversaire. (She called her mother to wish her happy birthday.)"},"present":{"forms":"appelle [ah-PEL] / appelons [ah-puh-LOHN]","example":"Il appelle ses amis tous les dimanches. (He calls his friends every Sunday.)"},"future":{"forms":"appellera [ah-pel-RAH] / appellerons [ah-pel-ROHN]","example":"Je t'appellerai dès que j'arrive. (I will call you as soon as I arrive.)"}},{"verb":"partir","pronunciation":"par-TEER","translation":"to go, leave","past":{"forms":"partait [par-TEH] / est parti [eh par-TEE]","example":"Il est parti tôt ce matin sans dire au revoir. (He left early this morning without saying goodbye.)"},"present":{"forms":"part [par] / partons [par-TOHN]","example":"Elle part en vacances la semaine prochaine. (She leaves for holidays next week.)"},"future":{"forms":"partira [par-tee-RAH] / partirons [par-tee-ROHN]","example":"Nous partirons pour Rome en juin. (We will leave for Rome in June.)"}},{"verb":"mettre","pronunciation":"meh-truh","translation":"to put, put on, wear","past":{"forms":"mettait [meh-TEH] / a mis [ah mee]","example":"Elle a mis sa belle robe pour la soirée. (She put on her beautiful dress for the evening.)"},"present":{"forms":"met [meh] / mettons [meh-TOHN]","example":"Il met toujours du sucre dans son thé. (He always puts sugar in his tea.)"},"future":{"forms":"mettra [meh-TRAH] / mettrons [meh-TROHN]","example":"Nous mettrons la table pour le dîner. (We will set the table for dinner.)"}},{"verb":"rester","pronunciation":"res-TAY","translation":"to stay, remain","past":{"forms":"restait [res-TEH] / est resté [eh res-TAY]","example":"Elle est restée à la maison toute la journée. (She stayed at home all day.)"},"present":{"forms":"reste [rest] / restons [res-TOHN]","example":"Il reste calme même dans les situations difficiles. (He stays calm even in difficult situations.)"},"future":{"forms":"restera [rest-RAH] / resterons [rest-ROHN]","example":"Nous resterons à Paris pendant une semaine. (We will stay in Paris for a week.)"}},{"verb":"arrêter","pronunciation":"ah-reh-TAY","translation":"to stop","past":{"forms":"arrêtait [ah-reh-TEH] / a arrêté [ah ah-reh-TAY]","example":"Il a arrêté de fumer il y a deux ans. (He stopped smoking two years ago.)"},"present":{"forms":"arrête [ah-RET] / arrêtons [ah-reh-TOHN]","example":"Elle arrête toujours le travail à dix-huit heures. (She always stops work at six o'clock.)"},"future":{"forms":"arrêtera [ah-ret-RAH] / arrêterons [ah-ret-ROHN]","example":"Le train s'arrêtera à Lyon avant Paris. (The train will stop at Lyon before Paris.)"}},{"verb":"connaître","pronunciation":"koh-NEH-truh","translation":"to know, experience","past":{"forms":"connaissait [koh-neh-SEH] / a connu [ah koh-NEW]","example":"Il a connu beaucoup de difficultés dans sa vie. (He experienced many difficulties in his life.)"},"present":{"forms":"connaît [koh-NEH] / connaissons [koh-neh-SOHN]","example":"Elle connaît bien cette ville. (She knows this city well.)"},"future":{"forms":"connaîtra [koh-neh-TRAH] / connaîtrons [koh-neh-TROHN]","example":"Tu connaîtras mieux la langue après six mois. (You will know the language better after six months.)"}},{"verb":"tuer","pronunciation":"tew-AY","translation":"to kill","past":{"forms":"tuait [tew-EH] / a tué [ah tew-AY]","example":"La chaleur a tué les plantes dans le jardin. (The heat killed the plants in the garden.)"},"present":{"forms":"tue [tew] / tuons [tew-OHN]","example":"Ce travail me tue, je suis épuisé. (This work is killing me, I'm exhausted.)"},"future":{"forms":"tuera [tew-RAH] / tuerons [tew-ROHN]","example":"Le froid intense tuera les mauvaises herbes. (The intense cold will kill the weeds.)"}},{"verb":"mourir","pronunciation":"moo-REER","translation":"to die, pass away","past":{"forms":"mourait [moo-REH] / est mort [eh mor]","example":"Le vieux chêne est mort pendant la tempête. (The old oak tree died during the storm.)"},"present":{"forms":"meurt [muhr] / mourons [moo-ROHN]","example":"Elle meurt de rire à chaque fois. (She is dying with laughter every time.)"},"future":{"forms":"mourra [moo-RAH] / mourrons [moo-ROHN]","example":"Les fleurs mourront si tu ne les arroses pas. (The flowers will die if you don't water them.)"}},{"verb":"demander","pronunciation":"duh-mahn-DAY","translation":"to ask, ask for","past":{"forms":"demandait [duh-mahn-DEH] / a demandé [ah duh-mahn-DAY]","example":"Elle a demandé de l'aide à ses collègues. (She asked her colleagues for help.)"},"present":{"forms":"demande [duh-MAHND] / demandons [duh-mahn-DOHN]","example":"Il demande toujours la permission avant d'agir. (He always asks for permission before acting.)"},"future":{"forms":"demandera [duh-mahnd-RAH] / demanderons [duh-mahnd-ROHN]","example":"Je demanderai une augmentation à mon patron. (I will ask my boss for a pay rise.)"}},{"verb":"comprendre","pronunciation":"kohm-PRAHN-druh","translation":"to understand","past":{"forms":"comprenait [kohm-pruh-NEH] / a compris [ah kohm-PREE]","example":"Il a compris l'importance du travail d'équipe. (He understood the importance of teamwork.)"},"present":{"forms":"comprend [kohm-PRAHN] / comprenons [kohm-pruh-NOHN]","example":"Elle comprend le français mais ne le parle pas encore. (She understands French but doesn't speak it yet.)"},"future":{"forms":"comprendra [kohm-prahn-DRAH] / comprendrons [kohm-prahn-DROHN]","example":"Tu comprendras mieux après l'explication. (You will understand better after the explanation.)"}},{"verb":"sortir","pronunciation":"sor-TEER","translation":"to go out, take out","past":{"forms":"sortait [sor-TEH] / est sorti [eh sor-TEE]","example":"Ils sont sortis danser vendredi dernier. (They went out dancing last Friday.)"},"present":{"forms":"sort [sor] / sortons [sor-TOHN]","example":"Elle sort le chien deux fois par jour. (She takes the dog out twice a day.)"},"future":{"forms":"sortira [sor-tee-RAH] / sortirons [sor-tee-ROHN]","example":"Nous sortirons ce soir si le temps le permet. (We will go out tonight if the weather allows.)"}},{"verb":"entendre","pronunciation":"ahn-TAHN-druh","translation":"to hear, listen to","past":{"forms":"entendait [ahn-tahn-DEH] / a entendu [ah ahn-tahn-DEW]","example":"J'ai entendu du bruit au milieu de la nuit. (I heard a noise in the middle of the night.)"},"present":{"forms":"entend [ahn-TAHN] / entendons [ahn-tahn-DOHN]","example":"Elle entend de la musique depuis la fenêtre. (She hears music from the window.)"},"future":{"forms":"entendra [ahn-tahn-DRAH] / entendrons [ahn-tahn-DROHN]","example":"Tu entendras la différence quand tu écouteras attentivement. (You will hear the difference when you listen carefully.)"}},{"verb":"chercher","pronunciation":"shair-SHAY","translation":"to look for, seek","past":{"forms":"cherchait [shair-SHEH] / a cherché [ah shair-SHAY]","example":"Elle a cherché ses lunettes partout dans la maison. (She looked for her glasses everywhere in the house.)"},"present":{"forms":"cherche [shairsh] / cherchons [shair-SHOHN]","example":"Il cherche un appartement à louer près du centre. (He is looking for a flat to rent near the centre.)"},"future":{"forms":"cherchera [shairsh-RAH] / chercherons [shairsh-ROHN]","example":"Nous chercherons une meilleure solution. (We will look for a better solution.)"}},{"verb":"aider","pronunciation":"ay-DAY","translation":"to help, aid","past":{"forms":"aidait [ay-DEH] / a aidé [ah ay-DAY]","example":"Il a aidé ses voisins à déménager. (He helped his neighbours to move house.)"},"present":{"forms":"aide [ed] / aidons [ay-DOHN]","example":"Elle aide les enfants à faire leurs devoirs. (She helps the children with their homework.)"},"future":{"forms":"aidera [ed-RAH] / aiderons [ed-ROHN]","example":"Je t'aiderai à préparer l'examen. (I will help you prepare for the exam.)"}},{"verb":"essayer","pronunciation":"ay-say-AY","translation":"to try, test","past":{"forms":"essayait [ay-say-EH] / a essayé [ah ay-say-AY]","example":"Elle a essayé plusieurs robes avant de choisir. (She tried on several dresses before choosing.)"},"present":{"forms":"essaie [ay-SEH] / essayons [ay-say-YOHN]","example":"Il essaie de parler français chaque jour. (He tries to speak French every day.)"},"future":{"forms":"essaiera [ay-seh-RAH] / essaierons [ay-seh-ROHN]","example":"Nous essaierons d'arriver avant midi. (We will try to arrive before noon.)"}},{"verb":"revenir","pronunciation":"ruh-vuh-NEER","translation":"to come back, return","past":{"forms":"revenait [ruh-vuh-NEH] / est revenu [eh ruh-vuh-NEW]","example":"Il est revenu de voyage très fatigué. (He came back from the trip very tired.)"},"present":{"forms":"revient [ruh-VYAHN] / revenons [ruh-vuh-NOHN]","example":"Elle revient toujours à la même heure. (She always comes back at the same time.)"},"future":{"forms":"reviendra [ruh-vyahn-DRAH] / reviendrons [ruh-vyahn-DROHN]","example":"Nous reviendrons vous rendre visite l'année prochaine. (We will come back to visit you next year.)"}},{"verb":"jouer","pronunciation":"zhoo-AY","translation":"to play","past":{"forms":"jouait [zhoo-EH] / a joué [ah zhoo-AY]","example":"Les enfants ont joué dans le parc toute la journée. (The children played in the park all day.)"},"present":{"forms":"joue [zhoo] / jouons [zhoo-OHN]","example":"Elle joue du violon depuis l'âge de cinq ans. (She has been playing the violin since the age of five.)"},"future":{"forms":"jouera [zhoo-RAH] / jouerons [zhoo-ROHN]","example":"Nous jouerons au tennis samedi matin. (We will play tennis on Saturday morning.)"}},{"verb":"finir","pronunciation":"fee-NEER","translation":"to finish, end","past":{"forms":"finissait [fee-nee-SEH] / a fini [ah fee-NEE]","example":"Elle a fini son rapport avant la réunion. (She finished her report before the meeting.)"},"present":{"forms":"finit [fee-NEE] / finissons [fee-nee-SOHN]","example":"Il finit toujours son assiette. (He always finishes his plate.)"},"future":{"forms":"finira [fee-nee-RAH] / finirons [fee-nee-ROHN]","example":"Nous finirons ce projet avant la deadline. (We will finish this project before the deadline.)"}},{"verb":"perdre","pronunciation":"pehr-druh","translation":"to lose, miss","past":{"forms":"perdait [pair-DEH] / a perdu [ah pair-DEW]","example":"Il a perdu son portefeuille dans le métro. (He lost his wallet in the metro.)"},"present":{"forms":"perd [pair] / perdons [pair-DOHN]","example":"Elle perd toujours ses clés. (She always loses her keys.)"},"future":{"forms":"perdra [pair-DRAH] / perdrons [pair-DROHN]","example":"Si tu n'étudies pas, tu perdras ton temps. (If you don't study, you will waste your time.)"}},{"verb":"sentir","pronunciation":"sahn-TEER","translation":"to smell, feel","past":{"forms":"sentait [sahn-TEH] / a senti [ah sahn-TEE]","example":"Elle a senti le parfum des fleurs dans le jardin. (She smelt the scent of the flowers in the garden.)"},"present":{"forms":"sent [sahn] / sentons [sahn-TOHN]","example":"Ce pain frais sent très bon. (This fresh bread smells very good.)"},"future":{"forms":"sentira [sahn-tee-RAH] / sentirons [sahn-tee-ROHN]","example":"Tu sentiras la différence après avoir dormi. (You will feel the difference after having slept.)"}},{"verb":"rentrer","pronunciation":"rahn-TRAY","translation":"to come home, go in","past":{"forms":"rentrait [rahn-TREH] / est rentré [eh rahn-TRAY]","example":"Elle est rentrée tard après la fête. (She came home late after the party.)"},"present":{"forms":"rentre [rahn-truh] / rentrons [rahn-TROHN]","example":"Il rentre toujours à dix-huit heures. (He always comes home at six o'clock.)"},"future":{"forms":"rentrera [rahn-truh-RAH] / rentrerons [rahn-truh-ROHN]","example":"Nous rentrerons dès que la réunion sera terminée. (We will come home as soon as the meeting is over.)"}},{"verb":"vivre","pronunciation":"vee-vruh","translation":"to live, be alive","past":{"forms":"vivait [vee-VEH] / a vécu [ah vay-KEW]","example":"Il a vécu dix ans en Afrique. (He lived ten years in Africa.)"},"present":{"forms":"vit [vee] / vivons [vee-VOHN]","example":"Elle vit à Lyon depuis trois ans. (She has been living in Lyon for three years.)"},"future":{"forms":"vivra [veev-RAH] / vivrons [veev-ROHN]","example":"Nous vivrons mieux avec ce nouveau salaire. (We will live better with this new salary.)"}},{"verb":"rendre","pronunciation":"rahn-druh","translation":"to return, give back","past":{"forms":"rendait [rahn-DEH] / a rendu [ah rahn-DEW]","example":"Il lui a rendu les livres qu'il avait empruntés. (He returned the books he had borrowed.)"},"present":{"forms":"rend [rahn] / rendons [rahn-DOHN]","example":"Elle rend toujours les affaires qu'on lui prête. (She always returns things that are lent to her.)"},"future":{"forms":"rendra [rahn-DRAH] / rendrons [rahn-DROHN]","example":"Je te rendrai l'argent vendredi. (I will give you back the money on Friday.)"}},{"verb":"tenir","pronunciation":"tuh-NEER","translation":"to hold, keep, last","past":{"forms":"tenait [tuh-NEH] / a tenu [ah tuh-NEW]","example":"Elle tenait fermement la main de son enfant. (She held her child's hand firmly.)"},"present":{"forms":"tient [tyahn] / tenons [tuh-NOHN]","example":"Il tient sa promesse depuis des années. (He has kept his promise for years.)"},"future":{"forms":"tiendra [tyahn-DRAH] / tiendrons [tyahn-DROHN]","example":"Cette vieille chaise ne tiendra pas longtemps. (This old chair will not last long.)"}},{"verb":"oublier","pronunciation":"oob-lyAY","translation":"to forget, miss","past":{"forms":"oubliait [oob-lyEH] / a oublié [ah oob-lyAY]","example":"J'ai oublié mon parapluie à la maison. (I forgot my umbrella at home.)"},"present":{"forms":"oublie [oob-lee] / oublions [oob-lyOHN]","example":"Elle oublie toujours d'éteindre les lumières. (She always forgets to turn off the lights.)"},"future":{"forms":"oubliera [oob-lee-RAH] / oublierons [oob-lee-ROHN]","example":"Tu n'oublieras jamais cette expérience. (You will never forget this experience.)"}},{"verb":"travailler","pronunciation":"trah-vah-YAY","translation":"to work, practise","past":{"forms":"travaillait [trah-vah-YEH] / a travaillé [ah trah-vah-YAY]","example":"Elle a travaillé dur pour obtenir son diplôme. (She worked hard to get her degree.)"},"present":{"forms":"travaille [trah-VY] / travaillons [trah-vah-YOHN]","example":"Il travaille dans une entreprise internationale. (He works in an international company.)"},"future":{"forms":"travaillera [trah-vy-RAH] / travaillerons [trah-vy-ROHN]","example":"Nous travaillerons ensemble sur ce projet. (We will work together on this project.)"}},{"verb":"écouter","pronunciation":"ay-koo-TAY","translation":"to listen to","past":{"forms":"écoutait [ay-koo-TEH] / a écouté [ah ay-koo-TAY]","example":"Elle a écouté attentivement pendant le cours. (She listened carefully during the lesson.)"},"present":{"forms":"écoute [ay-koot] / écoutons [ay-koo-TOHN]","example":"Il écoute de la musique pour se détendre. (He listens to music to relax.)"},"future":{"forms":"écoutera [ay-koot-RAH] / écouterons [ay-koot-ROHN]","example":"Nous écouterons le discours du président ce soir. (We will listen to the president's speech tonight.)"}},{"verb":"manger","pronunciation":"mahn-ZHAY","translation":"to eat","past":{"forms":"mangeait [mahn-ZHEH] / a mangé [ah mahn-ZHAY]","example":"Nous avons mangé dans un excellent restaurant hier. (We ate in an excellent restaurant yesterday.)"},"present":{"forms":"mange [mahnzh] / mangeons [mahn-ZHOHN]","example":"Elle mange une pomme chaque matin. (She eats an apple every morning.)"},"future":{"forms":"mangera [mahnzh-RAH] / mangerons [mahnzh-ROHN]","example":"Ils mangeront ensemble à midi. (They will eat together at noon.)"}},{"verb":"entrer","pronunciation":"ahn-TRAY","translation":"to go in, enter","past":{"forms":"entrait [ahn-TREH] / est entré [eh ahn-TRAY]","example":"Elle est entrée dans la salle sans frapper. (She entered the room without knocking.)"},"present":{"forms":"entre [ahn-truh] / entrons [ahn-TROHN]","example":"Il entre toujours par la porte de derrière. (He always enters through the back door.)"},"future":{"forms":"entrera [ahn-truh-RAH] / entrerons [ahn-truh-ROHN]","example":"Nous entrerons dans le musée à dix heures. (We will enter the museum at ten o'clock.)"}},{"verb":"devenir","pronunciation":"duh-vuh-NEER","translation":"to become","past":{"forms":"devenait [duh-vuh-NEH] / est devenu [eh duh-vuh-NEW]","example":"Elle est devenue professeure après ses études. (She became a teacher after her studies.)"},"present":{"forms":"devient [duh-VYAHN] / devenons [duh-vuh-NOHN]","example":"La situation devient de plus en plus compliquée. (The situation is becoming more and more complicated.)"},"future":{"forms":"deviendra [duh-vyahn-DRAH] / deviendrons [duh-vyahn-DROHN]","example":"Il deviendra un grand musicien un jour. (He will become a great musician one day.)"}},{"verb":"commencer","pronunciation":"koh-mahn-SAY","translation":"to start, begin","past":{"forms":"commençait [koh-mahn-SEH] / a commencé [ah koh-mahn-SAY]","example":"Il a commencé à apprendre le français l'année dernière. (He started learning French last year.)"},"present":{"forms":"commence [koh-MAHNS] / commençons [koh-mahn-SOHN]","example":"Elle commence son travail à huit heures. (She starts her work at eight o'clock.)"},"future":{"forms":"commencera [koh-mahns-RAH] / commencerons [koh-mahns-ROHN]","example":"Nous commencerons la réunion dans cinq minutes. (We will start the meeting in five minutes.)"}},{"verb":"payer","pronunciation":"peh-YAY","translation":"to pay","past":{"forms":"payait [peh-YEH] / a payé [ah peh-YAY]","example":"Il a payé l'addition au restaurant. (He paid the bill at the restaurant.)"},"present":{"forms":"paie [peh] / payons [peh-YOHN]","example":"Elle paie toujours en espèces. (She always pays in cash.)"},"future":{"forms":"paiera [peh-RAH] / paierons [peh-ROHN]","example":"Nous paierons le loyer en début de mois. (We will pay the rent at the beginning of the month.)"}},{"verb":"tirer","pronunciation":"tee-RAY","translation":"to pull, draw","past":{"forms":"tirait [tee-REH] / a tiré [ah tee-RAY]","example":"Il a tiré la porte pour l'ouvrir. (He pulled the door to open it.)"},"present":{"forms":"tire [teer] / tirons [tee-ROHN]","example":"Elle tire les rideaux chaque matin. (She draws the curtains every morning.)"},"future":{"forms":"tirera [teer-RAH] / tirerons [teer-ROHN]","example":"Nous tirerons les conclusions après l'analyse. (We will draw conclusions after the analysis.)"}},{"verb":"ouvrir","pronunciation":"oov-REER","translation":"to open","past":{"forms":"ouvrait [oov-REH] / a ouvert [ah oov-VAIR]","example":"Elle a ouvert le cadeau avec beaucoup d'excitation. (She opened the gift with great excitement.)"},"present":{"forms":"ouvre [oov-ruh] / ouvrons [oov-ROHN]","example":"Il ouvre la boulangerie à six heures du matin. (He opens the bakery at six in the morning.)"},"future":{"forms":"ouvrira [oov-ree-RAH] / ouvrirons [oov-ree-ROHN]","example":"Nous ouvrirons les portes aux visiteurs à midi. (We will open the doors to visitors at noon.)"}},{"verb":"changer","pronunciation":"shahn-ZHAY","translation":"to change, exchange","past":{"forms":"changeait [shahn-ZHEH] / a changé [ah shahn-ZHAY]","example":"Elle a changé de travail trois fois en un an. (She changed jobs three times in one year.)"},"present":{"forms":"change [shahnzh] / changeons [shahn-ZHOHN]","example":"Il change d'avis trop souvent. (He changes his mind too often.)"},"future":{"forms":"changera [shahnzh-RAH] / changerons [shahnzh-ROHN]","example":"Le monde changera beaucoup dans les prochaines années. (The world will change a lot in the coming years.)"}},{"verb":"tomber","pronunciation":"tohm-BAY","translation":"to fall","past":{"forms":"tombait [tohm-BEH] / est tombé [eh tohm-BAY]","example":"Il est tombé en glissant sur la glace. (He fell by slipping on the ice.)"},"present":{"forms":"tombe [tohmb] / tombons [tohm-BOHN]","example":"La pluie tombe depuis ce matin. (The rain has been falling since this morning.)"},"future":{"forms":"tombera [tohmb-RAH] / tomberons [tohmb-ROHN]","example":"Les feuilles tomberont en automne. (The leaves will fall in autumn.)"}},{"verb":"excuser","pronunciation":"ex-kew-ZAY","translation":"to forgive, excuse","past":{"forms":"excusait [ex-kew-ZEH] / a excusé [ah ex-kew-ZAY]","example":"Elle l'a excusé pour son retard exceptionnel. (She excused him for his exceptional lateness.)"},"present":{"forms":"excuse [ex-KEWZ] / excusons [ex-kew-ZOHN]","example":"Il s'excuse d'être arrivé en retard. (He is excusing himself for being late.)"},"future":{"forms":"excusera [ex-kewz-RAH] / excuserons [ex-kewz-ROHN]","example":"Je l'excuserai s'il explique la situation. (I will excuse him if he explains the situation.)"}},{"verb":"dormir","pronunciation":"dor-MEER","translation":"to sleep","past":{"forms":"dormait [dor-MEH] / a dormi [ah dor-MEE]","example":"Elle a dormi huit heures cette nuit. (She slept eight hours last night.)"},"present":{"forms":"dort [dor] / dormons [dor-MOHN]","example":"Le bébé dort profondément dans son lit. (The baby is sleeping deeply in its cot.)"},"future":{"forms":"dormira [dor-mee-RAH] / dormirons [dor-mee-ROHN]","example":"Nous dormirons dans un hôtel pendant le voyage. (We will sleep in a hotel during the trip.)"}},{"verb":"rappeler","pronunciation":"rah-puh-LAY","translation":"to remind, call back","past":{"forms":"rappelait [rah-puh-LEH] / a rappelé [ah rah-puh-LAY]","example":"Il m'a rappelé le rendez-vous de demain. (He reminded me of tomorrow's appointment.)"},"present":{"forms":"rappelle [rah-PEL] / rappelons [rah-puh-LOHN]","example":"Elle me rappelle toujours ma grand-mère. (She always reminds me of my grandmother.)"},"future":{"forms":"rappellera [rah-pel-RAH] / rappellerons [rah-pel-ROHN]","example":"Je vous rappellerai dès que j'aurai les informations. (I will call you back as soon as I have the information.)"}},{"verb":"lire","pronunciation":"leer","translation":"to read","past":{"forms":"lisait [lee-ZEH] / a lu [ah lew]","example":"Elle a lu ce roman en deux jours. (She read this novel in two days.)"},"present":{"forms":"lit [lee] / lisons [lee-ZOHN]","example":"Il lit le journal chaque matin au café. (He reads the newspaper every morning at the café.)"},"future":{"forms":"lira [lee-RAH] / lirons [lee-ROHN]","example":"Nous lirons tous les documents avant la réunion. (We will read all the documents before the meeting.)"}},{"verb":"monter","pronunciation":"mohn-TAY","translation":"to go up, rise","past":{"forms":"montait [mohn-TEH] / est monté [eh mohn-TAY]","example":"Ils ont monté les valises au troisième étage. (They took the suitcases up to the third floor.)"},"present":{"forms":"monte [mohnt] / montons [mohn-TOHN]","example":"Elle monte les escaliers à pied chaque matin. (She climbs the stairs on foot every morning.)"},"future":{"forms":"montera [mohnt-RAH] / monterons [mohnt-ROHN]","example":"Le prix du loyer montera encore l'année prochaine. (The rent price will rise again next year.)"}},{"verb":"quitter","pronunciation":"kee-TAY","translation":"to leave, depart","past":{"forms":"quittait [kee-TEH] / a quitté [ah kee-TAY]","example":"Elle a quitté la ville pour s'installer à la campagne. (She left the city to settle in the countryside.)"},"present":{"forms":"quitte [keet] / quittons [kee-TOHN]","example":"Il quitte le bureau à dix-sept heures trente. (He leaves the office at five thirty.)"},"future":{"forms":"quittera [keet-RAH] / quitterons [keet-ROHN]","example":"Nous quitterons l'hôtel demain matin après le petit-déjeuner. (We will leave the hotel tomorrow morning after breakfast.)"}},{"verb":"continuer","pronunciation":"kohn-tee-NYWAY","translation":"to continue, go on","past":{"forms":"continuait [kohn-tee-NYEH] / a continué [ah kohn-tee-NYWAY]","example":"Il a continué à travailler malgré la fatigue. (He continued to work despite the tiredness.)"},"present":{"forms":"continue [kohn-tee-new] / continuons [kohn-tee-NYOHN]","example":"Elle continue ses études à l'université. (She is continuing her studies at university.)"},"future":{"forms":"continuera [kohn-tee-new-RAH] / continuerons [kohn-tee-new-ROHN]","example":"Nous continuerons à améliorer notre service. (We will continue to improve our service.)"}},{"verb":"toucher","pronunciation":"too-SHAY","translation":"to touch","past":{"forms":"touchait [too-SHEH] / a touché [ah too-SHAY]","example":"L'histoire l'a profondément touché. (The story deeply touched him.)"},"present":{"forms":"touche [toosh] / touchons [too-SHOHN]","example":"Elle touche un bon salaire dans son nouveau poste. (She earns a good salary in her new position.)"},"future":{"forms":"touchera [toosh-RAH] / toucherons [toosh-ROHN]","example":"Ce discours touchera le cœur de tous. (This speech will touch everyone's heart.)"}},{"verb":"emmener","pronunciation":"ahm-NAY","translation":"to take","past":{"forms":"emmenait [ahm-NEH] / a emmené [ah ahm-NAY]","example":"Il a emmené ses enfants au zoo le week-end dernier. (He took his children to the zoo last weekend.)"},"present":{"forms":"emmène [ah-MEN] / emmenons [ahm-NOHN]","example":"Elle emmène sa fille à l'école chaque matin. (She takes her daughter to school every morning.)"},"future":{"forms":"emmènera [ah-men-RAH] / emmènerons [ah-men-ROHN]","example":"Nous emmènerons les touristes visiter le château. (We will take the tourists to visit the castle.)"}},{"verb":"préparer","pronunciation":"pray-pah-RAY","translation":"to prepare, make","past":{"forms":"préparait [pray-pah-REH] / a préparé [ah pray-pah-RAY]","example":"Elle a préparé un délicieux repas pour ses invités. (She prepared a delicious meal for her guests.)"},"present":{"forms":"prépare [pray-par] / préparons [pray-pah-ROHN]","example":"Il prépare son examen depuis plusieurs semaines. (He has been preparing for his exam for several weeks.)"},"future":{"forms":"préparera [pray-par-RAH] / préparerons [pray-par-ROHN]","example":"Nous préparerons la présentation pour lundi. (We will prepare the presentation for Monday.)"}},{"verb":"permettre","pronunciation":"pair-meh-truh","translation":"to allow, permit","past":{"forms":"permettait [pair-meh-TEH] / a permis [ah pair-MEE]","example":"La loi n'a pas permis cette pratique. (The law did not permit this practice.)"},"present":{"forms":"permet [pair-MEH] / permettons [pair-meh-TOHN]","example":"Ce badge me permet d'entrer dans l'immeuble. (This badge allows me to enter the building.)"},"future":{"forms":"permettra [pair-meh-TRAH] / permettrons [pair-meh-TROHN]","example":"Ce diplôme te permettra de trouver un meilleur emploi. (This diploma will allow you to find a better job.)"}},{"verb":"ramener","pronunciation":"rahm-NAY","translation":"to bring back, take back","past":{"forms":"ramenait [rahm-NEH] / a ramené [ah rahm-NAY]","example":"Il a ramené des souvenirs de son voyage au Maroc. (He brought back souvenirs from his trip to Morocco.)"},"present":{"forms":"ramène [rah-MEN] / ramenons [rahm-NOHN]","example":"Elle ramène toujours du pain frais de la boulangerie. (She always brings back fresh bread from the bakery.)"},"future":{"forms":"ramènera [rah-men-RAH] / ramènerons [rah-men-ROHN]","example":"Je te ramènerai les documents signés demain. (I will bring back the signed documents to you tomorrow.)"}},{"verb":"enlever","pronunciation":"ahn-luh-VAY","translation":"to take away, remove","past":{"forms":"enlevait [ahn-luh-VEH] / a enlevé [ah ahn-luh-VAY]","example":"Elle a enlevé ses chaussures avant d'entrer. (She took off her shoes before entering.)"},"present":{"forms":"enlève [ahn-LEV] / enlevons [ahn-luh-VOHN]","example":"Il enlève la saleté avec un chiffon propre. (He removes the dirt with a clean cloth.)"},"future":{"forms":"enlèvera [ahn-lev-RAH] / enlèverons [ahn-lev-ROHN]","example":"Nous enlèverons les vieilles peintures avant de repeindre. (We will remove the old paint before repainting.)"}},{"verb":"lâcher","pronunciation":"lah-SHAY","translation":"to let go of, release","past":{"forms":"lâchait [lah-SHEH] / a lâché [ah lah-SHAY]","example":"L'enfant a lâché le ballon et il s'est envolé. (The child let go of the balloon and it flew away.)"},"present":{"forms":"lâche [lahsh] / lâchons [lah-SHOHN]","example":"Elle ne lâche pas le bras de son ami. (She is not letting go of her friend's arm.)"},"future":{"forms":"lâchera [lahsh-RAH] / lâcherons [lahsh-ROHN]","example":"Le chien ne lâchera pas l'os. (The dog will not let go of the bone.)"}},{"verb":"choisir","pronunciation":"shwah-ZEER","translation":"to choose","past":{"forms":"choisissait [shwah-zee-SEH] / a choisi [ah shwah-ZEE]","example":"Elle a choisi une robe bleue pour la cérémonie. (She chose a blue dress for the ceremony.)"},"present":{"forms":"choisit [shwah-ZEE] / choisissons [shwah-zee-SOHN]","example":"Il choisit toujours les meilleures options. (He always chooses the best options.)"},"future":{"forms":"choisira [shwah-zee-RAH] / choisirons [shwah-zee-ROHN]","example":"Nous choisirons notre destination de vacances ce soir. (We will choose our holiday destination this evening.)"}},{"verb":"conduire","pronunciation":"kohn-DWEER","translation":"to drive, lead","past":{"forms":"conduisait [kohn-dwee-ZEH] / a conduit [ah kohn-DWEE]","example":"Il a conduit pendant six heures sans s'arrêter. (He drove for six hours without stopping.)"},"present":{"forms":"conduit [kohn-DWEE] / conduisons [kohn-dwee-ZOHN]","example":"Elle conduit prudemment dans les rues de la ville. (She drives carefully in the city streets.)"},"future":{"forms":"conduira [kohn-dwee-RAH] / conduirons [kohn-dwee-ROHN]","example":"Je conduirai les invités à leur hôtel. (I will drive the guests to their hotel.)"}},{"verb":"disparaître","pronunciation":"dees-pah-REH-truh","translation":"to disappear, vanish","past":{"forms":"disparaissait [dees-pah-reh-SEH] / a disparu [ah dees-pah-REW]","example":"Le soleil a disparu derrière les nuages. (The sun disappeared behind the clouds.)"},"present":{"forms":"disparaît [dees-pah-REH] / disparaissons [dees-pah-reh-SOHN]","example":"Les espèces animales disparaissent à cause de la déforestation. (Animal species are disappearing due to deforestation.)"},"future":{"forms":"disparaîtra [dees-pah-reh-TRAH] / disparaîtrons [dees-pah-reh-TROHN]","example":"Cette douleur disparaîtra après quelques jours. (This pain will disappear after a few days.)"}},{"verb":"lever","pronunciation":"luh-VAY","translation":"to raise, lift","past":{"forms":"levait [luh-VEH] / a levé [ah luh-VAY]","example":"Elle a levé la main pour poser une question. (She raised her hand to ask a question.)"},"present":{"forms":"lève [lev] / levons [luh-VOHN]","example":"Le soleil se lève à six heures en été. (The sun rises at six o'clock in summer.)"},"future":{"forms":"lèvera [lev-RAH] / lèverons [lev-ROHN]","example":"Nous nous lèverons tôt pour prendre l'avion. (We will get up early to catch the plane.)"}},{"verb":"présenter","pronunciation":"pray-zahn-TAY","translation":"to introduce, present","past":{"forms":"présentait [pray-zahn-TEH] / a présenté [ah pray-zahn-TAY]","example":"Il a présenté son projet devant tout le conseil. (He presented his project before the whole board.)"},"present":{"forms":"présente [pray-ZAHNT] / présentons [pray-zahn-TOHN]","example":"Elle présente les nouvelles à la télévision. (She presents the news on television.)"},"future":{"forms":"présentera [pray-zahnt-RAH] / présenterons [pray-zahnt-ROHN]","example":"Je vous présenterai mon équipe demain. (I will introduce my team to you tomorrow.)"}},{"verb":"accepter","pronunciation":"ak-sep-TAY","translation":"to accept","past":{"forms":"acceptait [ak-sep-TEH] / a accepté [ah ak-sep-TAY]","example":"Elle a accepté l'offre d'emploi avec enthousiasme. (She accepted the job offer with enthusiasm.)"},"present":{"forms":"accepte [ak-SEPT] / acceptons [ak-sep-TOHN]","example":"Il accepte toujours les critiques constructives. (He always accepts constructive criticism.)"},"future":{"forms":"acceptera [ak-sept-RAH] / accepterons [ak-sept-ROHN]","example":"Nous accepterons vos conditions si elles sont raisonnables. (We will accept your conditions if they are reasonable.)"}},{"verb":"casser","pronunciation":"kah-SAY","translation":"to break, shatter","past":{"forms":"cassait [kah-SEH] / a cassé [ah kah-SAY]","example":"L'enfant a cassé le vase en jouant dans le salon. (The child broke the vase while playing in the living room.)"},"present":{"forms":"casse [kahs] / cassons [kah-SOHN]","example":"Cette branche se casse facilement. (This branch breaks easily.)"},"future":{"forms":"cassera [kahs-RAH] / casserons [kahs-ROHN]","example":"La glace se cassera si tu y marches. (The ice will break if you walk on it.)"}},{"verb":"frapper","pronunciation":"frah-PAY","translation":"to hit, strike","past":{"forms":"frappait [frah-PEH] / a frappé [ah frah-PAY]","example":"Il a frappé à la porte avant d'entrer. (He knocked on the door before entering.)"},"present":{"forms":"frappe [frahp] / frappons [frah-POHN]","example":"Elle frappe les touches du clavier rapidement. (She strikes the keyboard keys quickly.)"},"future":{"forms":"frappera [frahp-RAH] / frapperons [frahp-ROHN]","example":"La nouvelle te frappera quand tu l'entendras. (The news will strike you when you hear it.)"}},{"verb":"décider","pronunciation":"day-see-DAY","translation":"to decide","past":{"forms":"décidait [day-see-DEH] / a décidé [ah day-see-DAY]","example":"Elle a décidé de changer de carrière. (She decided to change her career.)"},"present":{"forms":"décide [day-SEED] / décidons [day-see-DOHN]","example":"Il décide toujours seul sans consulter les autres. (He always decides alone without consulting others.)"},"future":{"forms":"décidera [day-seed-RAH] / déciderons [day-seed-ROHN]","example":"Nous déciderons ensemble lors de la prochaine réunion. (We will decide together at the next meeting.)"}},{"verb":"vendre","pronunciation":"vahn-druh","translation":"to sell","past":{"forms":"vendait [vahn-DEH] / a vendu [ah vahn-DEW]","example":"Il a vendu sa voiture pour acheter un vélo. (He sold his car to buy a bicycle.)"},"present":{"forms":"vend [vahn] / vendons [vahn-DOHN]","example":"Elle vend des légumes frais au marché. (She sells fresh vegetables at the market.)"},"future":{"forms":"vendra [vahn-DRAH] / vendrons [vahn-DROHN]","example":"Nous vendrons notre appartement l'année prochaine. (We will sell our flat next year.)"}},{"verb":"tourner","pronunciation":"toor-NAY","translation":"to turn, stir","past":{"forms":"tournait [toor-NEH] / a tourné [ah toor-NAY]","example":"Le réalisateur a tourné son film en Italie. (The director shot his film in Italy.)"},"present":{"forms":"tourne [toorn] / tournons [toor-NOHN]","example":"Elle tourne la sauce pour qu'elle ne brûle pas. (She stirs the sauce so it doesn't burn.)"},"future":{"forms":"tournera [toorn-RAH] / tournerons [toorn-ROHN]","example":"Tourne à gauche au prochain carrefour. (Turn left at the next crossroads.)"}},{"verb":"cacher","pronunciation":"kah-SHAY","translation":"to hide, conceal","past":{"forms":"cachait [kah-SHEH] / a caché [ah kah-SHAY]","example":"Elle a caché le cadeau sous son lit. (She hid the gift under her bed.)"},"present":{"forms":"cache [kahsh] / cachons [kah-SHOHN]","example":"Il cache mal ses émotions. (He poorly hides his emotions.)"},"future":{"forms":"cachera [kahsh-RAH] / cacherons [kahsh-ROHN]","example":"La vérité ne se cachera pas longtemps. (The truth will not be hidden for long.)"}},{"verb":"battre","pronunciation":"bah-truh","translation":"to beat","past":{"forms":"battait [bah-TEH] / a battu [ah bah-TEW]","example":"Notre équipe a battu l'adversaire trois à zéro. (Our team beat the opponent three to zero.)"},"present":{"forms":"bat [bah] / battons [bah-TOHN]","example":"Le cœur bat plus vite quand on court. (The heart beats faster when you run.)"},"future":{"forms":"battra [bah-TRAH] / battrons [bah-TROHN]","example":"Il battra le record national lors de la finale. (He will break the national record at the final.)"}},{"verb":"imaginer","pronunciation":"ee-mah-zhee-NAY","translation":"to imagine, suppose","past":{"forms":"imaginait [ee-mah-zhee-NEH] / a imaginé [ah ee-mah-zhee-NAY]","example":"Elle a imaginé un monde sans frontières. (She imagined a world without borders.)"},"present":{"forms":"imagine [ee-mah-ZHEEN] / imaginons [ee-mah-zhee-NOHN]","example":"Il imagine toujours des scénarios impossibles. (He always imagines impossible scenarios.)"},"future":{"forms":"imaginera [ee-mah-zheen-RAH] / imaginerons [ee-mah-zheen-ROHN]","example":"Vous imaginerez difficilement la beauté de ce paysage. (You will find it hard to imagine the beauty of this landscape.)"}},{"verb":"adorer","pronunciation":"ah-doh-RAY","translation":"to adore, love","past":{"forms":"adorait [ah-doh-REH] / a adoré [ah ah-doh-RAY]","example":"Elle adorait les glaces à la vanille depuis toute petite. (She always adored vanilla ice cream since she was little.)"},"present":{"forms":"adore [ah-DOR] / adorons [ah-doh-ROHN]","example":"Il adore cuisiner pour ses amis le week-end. (He adores cooking for his friends at the weekend.)"},"future":{"forms":"adorera [ah-dor-RAH] / adorerons [ah-dor-ROHN]","example":"Tu adoreras ce restaurant, je te le promets. (You will adore this restaurant, I promise you.)"}},{"verb":"recevoir","pronunciation":"ruh-suh-VWAHR","translation":"to receive, get","past":{"forms":"recevait [ruh-suh-VEH] / a reçu [ah ruh-SEW]","example":"Elle a reçu une lettre de son ami en Australie. (She received a letter from her friend in Australia.)"},"present":{"forms":"reçoit [ruh-SWAH] / recevons [ruh-suh-VOHN]","example":"Il reçoit beaucoup de courriers chaque jour. (He receives a lot of mail every day.)"},"future":{"forms":"recevra [ruh-suh-VRAH] / recevrons [ruh-suh-VROHN]","example":"Nous recevrons les résultats de l'examen la semaine prochaine. (We will receive the exam results next week.)"}},{"verb":"jeter","pronunciation":"zhuh-TAY","translation":"to throw","past":{"forms":"jetait [zhuh-TEH] / a jeté [ah zhuh-TAY]","example":"Il a jeté ses vieux journaux à la poubelle. (He threw his old newspapers in the bin.)"},"present":{"forms":"jette [zhet] / jetons [zhuh-TOHN]","example":"Elle jette un coup d'œil à sa montre. (She throws a glance at her watch.)"},"future":{"forms":"jettera [zhet-RAH] / jetterons [zhet-ROHN]","example":"Ne jette pas ce document, il est important. (Do not throw this document away, it is important.)"}},{"verb":"pleurer","pronunciation":"pluh-RAY","translation":"to cry, weep","past":{"forms":"pleurait [pluh-REH] / a pleuré [ah pluh-RAY]","example":"Elle a pleuré en regardant ce film triste. (She cried while watching this sad film.)"},"present":{"forms":"pleure [pluhr] / pleurons [pluh-ROHN]","example":"Le bébé pleure parce qu'il a faim. (The baby is crying because it is hungry.)"},"future":{"forms":"pleurera [pluhr-RAH] / pleurerons [pluhr-ROHN]","example":"Il ne pleurera pas à la fin de l'histoire. (He will not cry at the end of the story.)"}},{"verb":"amener","pronunciation":"ahm-NAY","translation":"to bring, take","past":{"forms":"amenait [ahm-NEH] / a amené [ah ahm-NAY]","example":"Il a amené son chien au vétérinaire. (He took his dog to the vet.)"},"present":{"forms":"amène [ah-MEN] / amenons [ahm-NOHN]","example":"Elle amène ses collègues à la réunion. (She brings her colleagues to the meeting.)"},"future":{"forms":"amènera [ah-men-RAH] / amènerons [ah-men-ROHN]","example":"Je t'amènerai une surprise ce soir. (I will bring you a surprise this evening.)"}},{"verb":"promettre","pronunciation":"proh-meh-truh","translation":"to promise","past":{"forms":"promettait [proh-meh-TEH] / a promis [ah proh-MEE]","example":"Elle lui a promis de toujours être là pour lui. (She promised him to always be there for him.)"},"present":{"forms":"promet [proh-MEH] / promettons [proh-meh-TOHN]","example":"Il promet de rendre l'argent avant la fin du mois. (He promises to return the money before the end of the month.)"},"future":{"forms":"promettra [proh-meh-TRAH] / promettrons [proh-meh-TROHN]","example":"Je te promettrai une réponse après la réunion. (I will promise you an answer after the meeting.)"}},{"verb":"mentir","pronunciation":"mahn-TEER","translation":"to lie","past":{"forms":"mentait [mahn-TEH] / a menti [ah mahn-TEE]","example":"Il a menti à son employeur sur son expérience. (He lied to his employer about his experience.)"},"present":{"forms":"ment [mahn] / mentons [mahn-TOHN]","example":"Elle ne ment jamais, même pour de bonnes raisons. (She never lies, even for good reasons.)"},"future":{"forms":"mentira [mahn-tee-RAH] / mentirons [mahn-tee-ROHN]","example":"Tu regretteras si tu mentis à tes amis. (You will regret it if you lie to your friends.)"}},{"verb":"utiliser","pronunciation":"ew-tee-lee-ZAY","translation":"to use","past":{"forms":"utilisait [ew-tee-lee-ZEH] / a utilisé [ah ew-tee-lee-ZAY]","example":"Elle a utilisé une nouvelle méthode pour résoudre le problème. (She used a new method to solve the problem.)"},"present":{"forms":"utilise [ew-tee-LEEZ] / utilisons [ew-tee-lee-ZOHN]","example":"Il utilise son téléphone pour tout. (He uses his phone for everything.)"},"future":{"forms":"utilisera [ew-tee-leez-RAH] / utiliserons [ew-tee-leez-ROHN]","example":"Nous utiliserons ce logiciel pour le prochain projet. (We will use this software for the next project.)"}},{"verb":"coucher","pronunciation":"koo-SHAY","translation":"to put to bed, sleep","past":{"forms":"couchait [koo-SHEH] / a couché [ah koo-SHAY]","example":"Elle a couché les enfants à vingt heures. (She put the children to bed at eight o'clock.)"},"present":{"forms":"couche [koosh] / couchons [koo-SHOHN]","example":"Il se couche toujours avant vingt-deux heures. (He always goes to bed before ten o'clock.)"},"future":{"forms":"couchera [koosh-RAH] / coucherons [koosh-ROHN]","example":"Nous nous coucherons tôt ce soir pour être en forme demain. (We will go to bed early tonight to be in shape tomorrow.)"}},{"verb":"préférer","pronunciation":"pray-fay-RAY","translation":"to prefer","past":{"forms":"préférait [pray-fay-REH] / a préféré [ah pray-fay-RAY]","example":"Elle préférait les petites villes aux grandes métropoles. (She preferred small towns to big cities.)"},"present":{"forms":"préfère [pray-FAIR] / préférons [pray-fay-ROHN]","example":"Il préfère le café au thé. (He prefers coffee to tea.)"},"future":{"forms":"préférera [pray-fair-RAH] / préférerons [pray-fair-ROHN]","example":"Tu préféreras probablement l'option moins chère. (You will probably prefer the cheaper option.)"}},{"verb":"offrir","pronunciation":"oh-FREER","translation":"to offer, give","past":{"forms":"offrait [oh-FREH] / a offert [ah oh-FAIR]","example":"Il lui a offert un magnifique bouquet de fleurs. (He gave her a magnificent bouquet of flowers.)"},"present":{"forms":"offre [oh-fruh] / offrons [oh-FROHN]","example":"Elle offre toujours son aide aux personnes dans le besoin. (She always offers her help to people in need.)"},"future":{"forms":"offrira [oh-free-RAH] / offrirons [oh-free-ROHN]","example":"Nous vous offrirons un service personnalisé. (We will offer you a personalised service.)"}},{"verb":"réveiller","pronunciation":"ray-veh-YAY","translation":"to wake up","past":{"forms":"réveillait [ray-veh-YEH] / a réveillé [ah ray-veh-YAY]","example":"Le bruit de la rue m'a réveillé à trois heures du matin. (The noise from the street woke me up at three in the morning.)"},"present":{"forms":"réveille [ray-VEY] / réveillons [ray-veh-YOHN]","example":"Elle se réveille naturellement sans réveil. (She wakes up naturally without an alarm.)"},"future":{"forms":"réveillera [ray-vey-RAH] / réveillerons [ray-vey-ROHN]","example":"Je te réveillerai à sept heures si tu veux. (I will wake you up at seven o'clock if you want.)"}},{"verb":"calmer","pronunciation":"kal-MAY","translation":"to calm down","past":{"forms":"calmait [kal-MEH] / a calmé [ah kal-MAY]","example":"Elle a calmé l'enfant qui pleurait. (She calmed the child who was crying.)"},"present":{"forms":"calme [kalm] / calmons [kal-MOHN]","example":"La musique douce calme les tensions. (Soft music calms tensions.)"},"future":{"forms":"calmera [kalm-RAH] / calmerons [kalm-ROHN]","example":"Cette nouvelle te calmera sûrement. (This news will surely calm you.)"}},{"verb":"chanter","pronunciation":"shahn-TAY","translation":"to sing","past":{"forms":"chantait [shahn-TEH] / a chanté [ah shahn-TAY]","example":"Elle a chanté une belle chanson à la fête. (She sang a beautiful song at the party.)"},"present":{"forms":"chante [shahnt] / chantons [shahn-TOHN]","example":"Il chante sous la douche chaque matin. (He sings in the shower every morning.)"},"future":{"forms":"chantera [shahnt-RAH] / chanterons [shahnt-ROHN]","example":"Nous chanterons ensemble autour du feu. (We will sing together around the fire.)"}},{"verb":"courir","pronunciation":"koo-REER","translation":"to run, rush","past":{"forms":"courait [koo-REH] / a couru [ah koo-REW]","example":"Il a couru dix kilomètres ce matin. (He ran ten kilometres this morning.)"},"present":{"forms":"court [koor] / courons [koo-ROHN]","example":"Elle court chaque soir pour rester en forme. (She runs every evening to stay in shape.)"},"future":{"forms":"courra [koo-RAH] / courrons [koo-ROHN]","example":"Nous courrons dans le marathon de Paris l'année prochaine. (We will run in the Paris marathon next year.)"}},{"verb":"remettre","pronunciation":"ruh-meh-truh","translation":"to put back, hand over","past":{"forms":"remettait [ruh-meh-TEH] / a remis [ah ruh-MEE]","example":"Elle a remis les clés à la réception. (She handed the keys back to reception.)"},"present":{"forms":"remet [ruh-MEH] / remettons [ruh-meh-TOHN]","example":"Il remet toujours ses affaires à leur place. (He always puts his things back in their place.)"},"future":{"forms":"remettra [ruh-meh-TRAH] / remettrons [ruh-meh-TROHN]","example":"Nous lui remettrons le rapport vendredi. (We will hand him the report on Friday.)"}},{"verb":"refuser","pronunciation":"ruh-few-ZAY","translation":"to refuse, turn down","past":{"forms":"refusait [ruh-few-ZEH] / a refusé [ah ruh-few-ZAY]","example":"Elle a refusé l'offre sans hésitation. (She refused the offer without hesitation.)"},"present":{"forms":"refuse [ruh-FEWZ] / refusons [ruh-few-ZOHN]","example":"Il refuse de partir sans avoir fini son travail. (He refuses to leave without having finished his work.)"},"future":{"forms":"refusera [ruh-fewz-RAH] / refuserons [ruh-fewz-ROHN]","example":"Nous refuserons toute proposition déshonnête. (We will refuse any dishonest proposal.)"}},{"verb":"terminer","pronunciation":"tair-mee-NAY","translation":"to end, finish","past":{"forms":"terminait [tair-mee-NEH] / a terminé [ah tair-mee-NAY]","example":"Elle a terminé son discours sous les applaudissements. (She ended her speech to applause.)"},"present":{"forms":"termine [tair-MEEN] / terminons [tair-mee-NOHN]","example":"Il termine son travail avant de partir. (He finishes his work before leaving.)"},"future":{"forms":"terminera [tair-meen-RAH] / terminerons [tair-meen-ROHN]","example":"Nous terminerons la réunion à dix-sept heures. (We will end the meeting at five o'clock.)"}},{"verb":"amuser","pronunciation":"ah-mew-ZAY","translation":"to amuse, entertain","past":{"forms":"amusait [ah-mew-ZEH] / a amusé [ah ah-mew-ZAY]","example":"Le spectacle a amusé tous les enfants. (The show amused all the children.)"},"present":{"forms":"amuse [ah-MEWZ] / amusons [ah-mew-ZOHN]","example":"Elle s'amuse beaucoup dans ce cours de danse. (She is having a lot of fun in this dance class.)"},"future":{"forms":"amusera [ah-mewz-RAH] / amuserons [ah-mewz-ROHN]","example":"Ce jeu t'amusera pendant des heures. (This game will keep you amused for hours.)"}},{"verb":"intéresser","pronunciation":"ahn-tay-reh-SAY","translation":"to interest","past":{"forms":"intéressait [ahn-tay-reh-SEH] / a intéressé [ah ahn-tay-reh-SAY]","example":"Ce sujet m'a beaucoup intéressé. (This subject interested me a lot.)"},"present":{"forms":"intéresse [ahn-tay-RESS] / intéressons [ahn-tay-reh-SOHN]","example":"La science intéresse beaucoup les jeunes esprits. (Science interests many young minds.)"},"future":{"forms":"intéressera [ahn-tay-ress-RAH] / intéresserons [ahn-tay-ress-ROHN]","example":"Ce nouveau projet t'intéressera sûrement. (This new project will surely interest you.)"}},{"verb":"reconnaître","pronunciation":"ruh-koh-NEH-truh","translation":"to recognize, acknowledge","past":{"forms":"reconnaissait [ruh-koh-neh-SEH] / a reconnu [ah ruh-koh-NEW]","example":"Je l'ai reconnu immédiatement à sa voix. (I recognised him immediately by his voice.)"},"present":{"forms":"reconnaît [ruh-koh-NEH] / reconnaissons [ruh-koh-neh-SOHN]","example":"Elle reconnaît toujours ses erreurs honnêtement. (She always acknowledges her mistakes honestly.)"},"future":{"forms":"reconnaîtra [ruh-koh-neh-TRAH] / reconnaîtrons [ruh-koh-neh-TROHN]","example":"Tu reconnaîtras la vérité quand tu la verras. (You will recognise the truth when you see it.)"}},{"verb":"rire","pronunciation":"reer","translation":"to laugh, have fun","past":{"forms":"riait [ree-EH] / a ri [ah ree]","example":"Ils ont ri de bon cœur pendant toute la soirée. (They laughed heartily throughout the whole evening.)"},"present":{"forms":"rit [ree] / rions [ree-OHN]","example":"Elle rit à chaque fois qu'elle entend cette blague. (She laughs every time she hears this joke.)"},"future":{"forms":"rira [ree-RAH] / rirons [ree-ROHN]","example":"Tu riras quand tu verras la suite du film. (You will laugh when you see the rest of the film.)"}},{"verb":"pardonner","pronunciation":"par-doh-NAY","translation":"to forgive, pardon","past":{"forms":"pardonnait [par-doh-NEH] / a pardonné [ah par-doh-NAY]","example":"Elle lui a pardonné après de longues discussions. (She forgave him after long discussions.)"},"present":{"forms":"pardonne [par-DOHN] / pardonnons [par-doh-NOHN]","example":"Il pardonne facilement les petites erreurs. (He easily forgives small mistakes.)"},"future":{"forms":"pardonnera [par-dohn-RAH] / pardonnerons [par-dohn-ROHN]","example":"Je te pardonnerai si tu es sincère. (I will forgive you if you are sincere.)"}},{"verb":"embrasser","pronunciation":"ahm-brah-SAY","translation":"to kiss, embrace","past":{"forms":"embrassait [ahm-brah-SEH] / a embrassé [ah ahm-brah-SAY]","example":"Elle a embrassé ses parents à l'aéroport. (She kissed her parents at the airport.)"},"present":{"forms":"embrasse [ahm-BRAHS] / embrassons [ahm-brah-SOHN]","example":"Il embrasse sa fille avant de partir au travail. (He kisses his daughter before leaving for work.)"},"future":{"forms":"embrassera [ahm-brahs-RAH] / embrasserons [ahm-brahs-ROHN]","example":"Je t'embrasserai très fort quand tu rentreras. (I will hug you tightly when you come back.)"}},{"verb":"danser","pronunciation":"dahn-SAY","translation":"to dance","past":{"forms":"dansait [dahn-SEH] / a dansé [ah dahn-SAY]","example":"Ils ont dansé jusqu'à minuit à la fête. (They danced until midnight at the party.)"},"present":{"forms":"danse [dahns] / dansons [dahn-SOHN]","example":"Elle danse le flamenco depuis l'enfance. (She has been dancing flamenco since childhood.)"},"future":{"forms":"dansera [dahns-RAH] / danserons [dahns-ROHN]","example":"Nous danserons ensemble lors du mariage. (We will dance together at the wedding.)"}},{"verb":"exister","pronunciation":"eg-zees-TAY","translation":"to exist","past":{"forms":"existait [eg-zees-TEH] / a existé [ah eg-zees-TAY]","example":"Ce restaurant a existé pendant trente ans. (This restaurant existed for thirty years.)"},"present":{"forms":"existe [eg-ZEEST] / existons [eg-zees-TOHN]","example":"Ce problème existe depuis des décennies. (This problem has existed for decades.)"},"future":{"forms":"existera [eg-zeest-RAH] / existerons [eg-zeest-ROHN]","example":"Les technologies d'aujourd'hui n'existeront plus dans vingt ans. (Today's technologies will no longer exist in twenty years.)"}},{"verb":"réussir","pronunciation":"ray-ew-SEER","translation":"to succeed","past":{"forms":"réussissait [ray-ew-see-SEH] / a réussi [ah ray-ew-SEE]","example":"Elle a réussi son examen avec mention. (She passed her exam with distinction.)"},"present":{"forms":"réussit [ray-ew-SEE] / réussissons [ray-ew-see-SOHN]","example":"Il réussit tout ce qu'il entreprend. (He succeeds in everything he undertakes.)"},"future":{"forms":"réussira [ray-ew-see-RAH] / réussirons [ray-ew-see-ROHN]","example":"Avec du travail, tu réussiras tes objectifs. (With hard work, you will achieve your goals.)"}},{"verb":"protéger","pronunciation":"proh-tay-ZHAY","translation":"to protect","past":{"forms":"protégeait [proh-tay-ZHEH] / a protégé [ah proh-tay-ZHAY]","example":"Elle a protégé les données de l'entreprise contre les pirates. (She protected the company's data against hackers.)"},"present":{"forms":"protège [proh-TEZH] / protégeons [proh-tay-ZHOHN]","example":"Il protège toujours ses enfants avec amour. (He always protects his children with love.)"},"future":{"forms":"protégera [proh-tezh-RAH] / protégerons [proh-tezh-ROHN]","example":"Nous protégerons l'environnement pour les générations futures. (We will protect the environment for future generations.)"}},{"verb":"prévenir","pronunciation":"pray-vuh-NEER","translation":"to tell, inform, prevent","past":{"forms":"prévenait [pray-vuh-NEH] / a prévenu [ah pray-vuh-NEW]","example":"Elle nous a prévenus de son retard. (She informed us of her lateness.)"},"present":{"forms":"prévient [pray-VYAHN] / prévenons [pray-vuh-NOHN]","example":"Il prévient toujours ses collègues en cas d'urgence. (He always informs his colleagues in case of emergency.)"},"future":{"forms":"préviendra [pray-vyahn-DRAH] / préviendrons [pray-vyahn-DROHN]","example":"Je te préviendrai dès que j'ai des nouvelles. (I will let you know as soon as I have news.)"}},{"verb":"habiter","pronunciation":"ah-bee-TAY","translation":"to live in","past":{"forms":"habitait [ah-bee-TEH] / a habité [ah ah-bee-TAY]","example":"Elle a habité à Marseille pendant cinq ans. (She lived in Marseille for five years.)"},"present":{"forms":"habite [ah-BEET] / habitons [ah-bee-TOHN]","example":"Il habite dans un appartement au centre-ville. (He lives in a flat in the city centre.)"},"future":{"forms":"habitera [ah-beet-RAH] / habiterons [ah-beet-ROHN]","example":"Nous habiterons dans une maison avec jardin. (We will live in a house with a garden.)"}},{"verb":"déranger","pronunciation":"day-rahn-ZHAY","translation":"to disturb, upset","past":{"forms":"dérangeait [day-rahn-ZHEH] / a dérangé [ah day-rahn-ZHAY]","example":"Le bruit de la fête l'a dérangé toute la nuit. (The noise from the party disturbed him all night.)"},"present":{"forms":"dérange [day-RAHNZH] / dérangeons [day-rahn-ZHOHN]","example":"Elle ne veut pas déranger ses collègues pendant la réunion. (She does not want to disturb her colleagues during the meeting.)"},"future":{"forms":"dérangera [day-rahnzh-RAH] / dérangerons [day-rahnzh-ROHN]","example":"Ce changement de programme ne me dérangera pas. (This change of programme will not disturb me.)"}},{"verb":"reprendre","pronunciation":"ruh-PRAHN-druh","translation":"to resume, take back","past":{"forms":"reprenait [ruh-pruh-NEH] / a repris [ah ruh-PREE]","example":"Elle a repris son travail après sa maladie. (She took up her work again after her illness.)"},"present":{"forms":"reprend [ruh-PRAHN] / reprenons [ruh-pruh-NOHN]","example":"Il reprend ses études à distance. (He is resuming his studies remotely.)"},"future":{"forms":"reprendra [ruh-prahn-DRAH] / reprendrons [ruh-prahn-DROHN]","example":"Nous reprendrons les négociations en septembre. (We will resume negotiations in September.)"}},{"verb":"détruire","pronunciation":"day-TRWEER","translation":"to destroy, ruin","past":{"forms":"détruisait [day-trwee-ZEH] / a détruit [ah day-TRWEE]","example":"L'incendie a détruit plusieurs immeubles du quartier. (The fire destroyed several buildings in the neighbourhood.)"},"present":{"forms":"détruit [day-TRWEE] / détruisons [day-trwee-ZOHN]","example":"La pollution détruit lentement notre planète. (Pollution is slowly destroying our planet.)"},"future":{"forms":"détruira [day-trwee-RAH] / détruirons [day-trwee-ROHN]","example":"Ce projet ne détruira pas les emplois existants. (This project will not destroy existing jobs.)"}},{"verb":"pousser","pronunciation":"poo-SAY","translation":"to push, press","past":{"forms":"poussait [poo-SEH] / a poussé [ah poo-SAY]","example":"Il a poussé la porte pour entrer dans la salle. (He pushed the door to enter the room.)"},"present":{"forms":"pousse [poos] / poussons [poo-SOHN]","example":"Elle pousse sa fille à travailler plus dur. (She pushes her daughter to work harder.)"},"future":{"forms":"poussera [poos-RAH] / pousserons [poos-ROHN]","example":"Les plantes pousseront vite avec un peu d'eau. (The plants will grow quickly with a little water.)"}},{"verb":"découvrir","pronunciation":"day-koo-VREER","translation":"to discover, find","past":{"forms":"découvrait [day-koo-VREH] / a découvert [ah day-koo-VAIR]","example":"Les scientifiques ont découvert un nouveau remède. (Scientists discovered a new remedy.)"},"present":{"forms":"découvre [day-koov-ruh] / découvrons [day-koo-VROHN]","example":"Elle découvre une nouvelle passion pour la photographie. (She is discovering a new passion for photography.)"},"future":{"forms":"découvrira [day-koo-vree-RAH] / découvrirons [day-koo-vree-ROHN]","example":"Tu découvriras des endroits magnifiques pendant ton voyage. (You will discover magnificent places during your trip.)"}},{"verb":"sauter","pronunciation":"soh-TAY","translation":"to jump","past":{"forms":"sautait [soh-TEH] / a sauté [ah soh-TAY]","example":"L'enfant a sauté dans les flaques d'eau. (The child jumped in the puddles.)"},"present":{"forms":"saute [soht] / sautons [soh-TOHN]","example":"Elle saute à la corde chaque récréation. (She skips rope every break time.)"},"future":{"forms":"sautera [soht-RAH] / sauterons [soht-ROHN]","example":"Le chat sautera sur le canapé dès que tu auras le dos tourné. (The cat will jump on the sofa as soon as your back is turned.)"}},{"verb":"rêver","pronunciation":"reh-VAY","translation":"to dream","past":{"forms":"rêvait [reh-VEH] / a rêvé [ah reh-VAY]","example":"Elle rêvait de voyager autour du monde. (She used to dream of travelling around the world.)"},"present":{"forms":"rêve [rev] / rêvons [reh-VOHN]","example":"Il rêve de devenir architecte. (He is dreaming of becoming an architect.)"},"future":{"forms":"rêvera [rev-RAH] / rêverons [rev-ROHN]","example":"Tu rêveras peut-être différemment après cette expérience. (You will perhaps dream differently after this experience.)"}},{"verb":"détester","pronunciation":"day-tes-TAY","translation":"to hate, detest","past":{"forms":"détestait [day-tes-TEH] / a détesté [ah day-tes-TAY]","example":"Il a détesté ce film dès les premières minutes. (He hated this film from the very first minutes.)"},"present":{"forms":"déteste [day-TEST] / détestons [day-tes-TOHN]","example":"Elle déteste le bruit et préfère le calme. (She hates noise and prefers peace and quiet.)"},"future":{"forms":"détestera [day-test-RAH] / détesterons [day-test-ROHN]","example":"Tu détesteras attendre si tu arrives en retard. (You will hate waiting if you arrive late.)"}},{"verb":"empêcher","pronunciation":"ahm-peh-SHAY","translation":"to prevent","past":{"forms":"empêchait [ahm-peh-SHEH] / a empêché [ah ahm-peh-SHAY]","example":"La pluie a empêché la tenue du match. (The rain prevented the match from being held.)"},"present":{"forms":"empêche [ahm-PESH] / empêchons [ahm-peh-SHOHN]","example":"Rien ne l'empêche de partir quand il veut. (Nothing prevents him from leaving when he wants.)"},"future":{"forms":"empêchera [ahm-pesh-RAH] / empêcherons [ahm-pesh-ROHN]","example":"Ce mur empêchera l'entrée des intrus. (This wall will prevent intruders from entering.)"}},{"verb":"maintenir","pronunciation":"mahn-tuh-NEER","translation":"to keep, maintain","past":{"forms":"maintenait [mahn-tuh-NEH] / a maintenu [ah mahn-tuh-NEW]","example":"Elle a maintenu sa position malgré les critiques. (She maintained her position despite the criticism.)"},"present":{"forms":"maintient [mahn-TYAHN] / maintenons [mahn-tuh-NOHN]","example":"Il maintient le contact avec ses anciens collègues. (He maintains contact with his former colleagues.)"},"future":{"forms":"maintiendra [mahn-tyahn-DRAH] / maintiendrons [mahn-tyahn-DROHN]","example":"Nous maintiendrons ce rythme de travail. (We will maintain this work pace.)"}},{"verb":"supposer","pronunciation":"sew-poh-ZAY","translation":"to suppose, assume","past":{"forms":"supposait [sew-poh-ZEH] / a supposé [ah sew-poh-ZAY]","example":"Elle supposait que tout allait bien. (She assumed that everything was going well.)"},"present":{"forms":"suppose [sew-POHZ] / supposons [sew-poh-ZOHN]","example":"Il suppose que la réunion sera courte. (He supposes that the meeting will be short.)"},"future":{"forms":"supposera [sew-pohz-RAH] / supposerons [sew-pohz-ROHN]","example":"Je supposerai que tu es d'accord si tu ne réponds pas. (I will assume you agree if you do not reply.)"}},{"verb":"épouser","pronunciation":"ay-poo-ZAY","translation":"to marry","past":{"forms":"épousait [ay-poo-ZEH] / a épousé [ah ay-poo-ZAY]","example":"Il a épousé sa partenaire de longue date l'été dernier. (He married his long-time partner last summer.)"},"present":{"forms":"épouse [ay-POOZ] / épousons [ay-poo-ZOHN]","example":"Elle épouse ses convictions personnelles dans son travail. (She embraces her personal convictions in her work.)"},"future":{"forms":"épousera [ay-pooz-RAH] / épouserons [ay-pooz-ROHN]","example":"Il épousera la femme qu'il aime l'année prochaine. (He will marry the woman he loves next year.)"}},{"verb":"approcher","pronunciation":"ah-proh-SHAY","translation":"to approach","past":{"forms":"approchait [ah-proh-SHEH] / a approché [ah ah-proh-SHAY]","example":"Elle s'est approchée doucement du chat craintif. (She approached the fearful cat gently.)"},"present":{"forms":"approche [ah-PROSH] / approchons [ah-proh-SHOHN]","example":"La date limite approche très rapidement. (The deadline is approaching very quickly.)"},"future":{"forms":"approchera [ah-prosh-RAH] / approcherons [ah-prosh-ROHN]","example":"Nous approcherons la question avec prudence. (We will approach the matter with caution.)"}},{"verb":"craindre","pronunciation":"krahn-druh","translation":"to fear, be afraid of","past":{"forms":"craignait [kreh-NYEH] / a craint [ah krahn]","example":"Elle craignait le résultat de l'examen depuis des semaines. (She feared the result of the exam for weeks.)"},"present":{"forms":"craint [krahn] / craignons [kreh-NYOHN]","example":"Il craint les changements brusques. (He fears sudden changes.)"},"future":{"forms":"craindra [krahn-DRAH] / craindrons [krahn-DROHN]","example":"Tu craindras moins les challenges avec l'expérience. (You will fear challenges less with experience.)"}},{"verb":"crier","pronunciation":"kree-AY","translation":"to shout","past":{"forms":"criait [kree-EH] / a crié [ah kree-AY]","example":"Elle a crié de joie en apprenant la nouvelle. (She shouted with joy when she heard the news.)"},"present":{"forms":"crie [kree] / crions [kree-OHN]","example":"Il crie toujours pour attirer l'attention. (He always shouts to attract attention.)"},"future":{"forms":"criera [kree-RAH] / crierons [kree-ROHN]","example":"La foule criera quand l'équipe marquera le but. (The crowd will shout when the team scores the goal.)"}},{"verb":"inviter","pronunciation":"ahn-vee-TAY","translation":"to invite","past":{"forms":"invitait [ahn-vee-TEH] / a invité [ah ahn-vee-TAY]","example":"Elle a invité tous ses amis à sa fête d'anniversaire. (She invited all her friends to her birthday party.)"},"present":{"forms":"invite [ahn-VEET] / invitons [ahn-vee-TOHN]","example":"Il invite souvent ses collègues à déjeuner. (He often invites his colleagues to lunch.)"},"future":{"forms":"invitera [ahn-veet-RAH] / inviterons [ahn-veet-ROHN]","example":"Nous vous inviterons à la prochaine cérémonie. (We will invite you to the next ceremony.)"}},{"verb":"réfléchir","pronunciation":"ray-flay-SHEER","translation":"to reflect, think","past":{"forms":"réfléchissait [ray-flay-shee-SEH] / a réfléchi [ah ray-flay-SHEE]","example":"Il a réfléchi longuement avant de prendre sa décision. (He thought for a long time before making his decision.)"},"present":{"forms":"réfléchit [ray-flay-SHEE] / réfléchissons [ray-flay-shee-SOHN]","example":"Elle réfléchit toujours avant de parler. (She always thinks before speaking.)"},"future":{"forms":"réfléchira [ray-flay-shee-RAH] / réfléchirons [ray-flay-shee-ROHN]","example":"Nous réfléchirons à cette proposition en équipe. (We will think about this proposal as a team.)"}},{"verb":"arranger","pronunciation":"ah-rahn-ZHAY","translation":"to arrange, organize","past":{"forms":"arrangeait [ah-rahn-ZHEH] / a arrangé [ah ah-rahn-ZHAY]","example":"Elle a arrangé les fleurs dans un joli vase. (She arranged the flowers in a pretty vase.)"},"present":{"forms":"arrange [ah-RAHNZH] / arrangeons [ah-rahn-ZHOHN]","example":"Il arrange toujours les conflits dans l'équipe. (He always sorts out conflicts within the team.)"},"future":{"forms":"arrangera [ah-rahnzh-RAH] / arrangerons [ah-rahnzh-ROHN]","example":"Nous arrangerons les détails lors de notre prochain appel. (We will sort out the details at our next call.)"}},{"verb":"naître","pronunciation":"neh-truh","translation":"to be born","past":{"forms":"naissait [neh-SEH] / est né [eh nay]","example":"Elle est née à Lyon le cinq mars. (She was born in Lyon on the fifth of March.)"},"present":{"forms":"naît [neh] / naissons [neh-SOHN]","example":"De nouvelles idées naissent chaque jour. (New ideas are born every day.)"},"future":{"forms":"naîtra [neh-TRAH] / naîtrons [neh-TROHN]","example":"Le bébé naîtra en mai selon le médecin. (The baby will be born in May according to the doctor.)"}},{"verb":"souffrir","pronunciation":"soo-FREER","translation":"to suffer, be in pain","past":{"forms":"souffrait [soo-FREH] / a souffert [ah soo-FAIR]","example":"Il a souffert beaucoup après son accident. (He suffered a lot after his accident.)"},"present":{"forms":"souffre [soofr] / souffrons [soo-FROHN]","example":"Elle souffre d'une allergie au pollen chaque printemps. (She suffers from a pollen allergy every spring.)"},"future":{"forms":"souffrira [soo-free-RAH] / souffrirons [soo-free-ROHN]","example":"Tu ne souffriras plus quand le médicament fera effet. (You will no longer suffer once the medicine takes effect.)"}},{"verb":"remercier","pronunciation":"ruh-mair-SYAY","translation":"to thank","past":{"forms":"remerciait [ruh-mair-SYEH] / a remercié [ah ruh-mair-SYAY]","example":"Il l'a remercié chaleureusement pour son aide. (He warmly thanked her for her help.)"},"present":{"forms":"remercie [ruh-mair-SEE] / remercions [ruh-mair-SYOHN]","example":"Elle remercie toujours ses collègues après une réunion productive. (She always thanks her colleagues after a productive meeting.)"},"future":{"forms":"remerciera [ruh-mair-see-RAH] / remercierons [ruh-mair-see-ROHN]","example":"Vous remercierez votre équipe lors de la cérémonie. (You will thank your team at the ceremony.)"}},{"verb":"abandonner","pronunciation":"ah-bahn-doh-NAY","translation":"to abandon, desert","past":{"forms":"abandonnait [ah-bahn-doh-NEH] / a abandonné [ah ah-bahn-doh-NAY]","example":"Il n'a jamais abandonné ses études malgré les difficultés. (He never abandoned his studies despite the difficulties.)"},"present":{"forms":"abandonne [ah-bahn-DOHN] / abandonnons [ah-bahn-doh-NOHN]","example":"Elle n'abandonne jamais quand les choses deviennent difficiles. (She never gives up when things become difficult.)"},"future":{"forms":"abandonnera [ah-bahn-dohn-RAH] / abandonnerons [ah-bahn-dohn-ROHN]","example":"Nous n'abandonnerons pas ce projet sans avoir tout essayé. (We will not abandon this project without having tried everything.)"}},{"verb":"vérifier","pronunciation":"vay-ree-FYAY","translation":"to check, verify","past":{"forms":"vérifiait [vay-ree-FYEH] / a vérifié [ah vay-ree-FYAY]","example":"Elle a vérifié toutes les informations avant de publier l'article. (She verified all the information before publishing the article.)"},"present":{"forms":"vérifie [vay-ree-FEE] / vérifions [vay-ree-FYOHN]","example":"Il vérifie ses emails plusieurs fois par jour. (He checks his emails several times a day.)"},"future":{"forms":"vérifiera [vay-ree-fee-RAH] / vérifierons [vay-ree-fee-ROHN]","example":"Nous vérifierons les chiffres avant la présentation. (We will check the figures before the presentation.)"}},{"verb":"brûler","pronunciation":"brew-LAY","translation":"to burn","past":{"forms":"brûlait [brew-LEH] / a brûlé [ah brew-LAY]","example":"La bougie a brûlé toute la nuit. (The candle burned all night.)"},"present":{"forms":"brûle [brewl] / brûlons [brew-LOHN]","example":"Le soleil brûle intensément en été. (The sun burns intensely in summer.)"},"future":{"forms":"brûlera [brewl-RAH] / brûlerons [brewl-ROHN]","example":"Ce discours brûlera dans les mémoires pour toujours. (This speech will burn in memories forever.)"}},{"verb":"traiter","pronunciation":"treh-TAY","translation":"to treat, deal","past":{"forms":"traitait [treh-TEH] / a traité [ah treh-TAY]","example":"Le médecin a traité la blessure rapidement. (The doctor treated the wound quickly.)"},"present":{"forms":"traite [treht] / traitons [treh-TOHN]","example":"Elle traite tous ses employés avec respect. (She treats all her employees with respect.)"},"future":{"forms":"traitera [treht-RAH] / traiterons [treht-ROHN]","example":"Nous traiterons ce problème en priorité. (We will deal with this problem as a priority.)"}},{"verb":"blesser","pronunciation":"bleh-SAY","translation":"to injure, wound, hurt","past":{"forms":"blessait [bleh-SEH] / a blessé [ah bleh-SAY]","example":"Il s'est blessé au genou en tombant de vélo. (He injured his knee by falling off his bicycle.)"},"present":{"forms":"blesse [bless] / blessons [bleh-SOHN]","example":"Ses mots blessent profondément les personnes autour de lui. (His words deeply hurt the people around him.)"},"future":{"forms":"blessera [bless-RAH] / blesserons [bless-ROHN]","example":"Fais attention, tu te blesseras si tu n'écoutes pas. (Be careful, you will hurt yourself if you don't listen.)"}},{"verb":"risquer","pronunciation":"rees-KAY","translation":"to risk","past":{"forms":"risquait [rees-KEH] / a risqué [ah rees-KAY]","example":"Il a risqué sa carrière pour défendre ses idées. (He risked his career to defend his ideas.)"},"present":{"forms":"risque [reesk] / risquons [rees-KOHN]","example":"Elle risque tout pour réussir son projet. (She risks everything to make her project succeed.)"},"future":{"forms":"risquera [reesk-RAH] / risquerons [reesk-ROHN]","example":"Nous ne risquerons pas la sécurité de l'équipe. (We will not risk the safety of the team.)"}},{"verb":"attaquer","pronunciation":"ah-tah-KAY","translation":"to attack","past":{"forms":"attaquait [ah-tah-KEH] / a attaqué [ah ah-tah-KAY]","example":"Le chien a attaqué l'intrus dans le jardin. (The dog attacked the intruder in the garden.)"},"present":{"forms":"attaque [ah-TAK] / attaquons [ah-tah-KOHN]","example":"Elle attaque le problème de front. (She attacks the problem head-on.)"},"future":{"forms":"attaquera [ah-tak-RAH] / attaquerons [ah-tak-ROHN]","example":"L'équipe attaquera la deuxième mi-temps avec plus d'énergie. (The team will attack the second half with more energy.)"}},{"verb":"fumer","pronunciation":"few-MAY","translation":"to smoke","past":{"forms":"fumait [few-MEH] / a fumé [ah few-MAY]","example":"Il fumait un paquet par jour avant d'arrêter. (He used to smoke a packet a day before stopping.)"},"present":{"forms":"fume [fewm] / fumons [few-MOHN]","example":"Elle ne fume plus depuis deux ans. (She no longer smokes since two years ago.)"},"future":{"forms":"fumera [fewm-RAH] / fumerons [fewm-ROHN]","example":"Cette cheminée fumera encore pendant des heures. (This chimney will smoke for several more hours.)"}},{"verb":"répéter","pronunciation":"ray-pay-TAY","translation":"to repeat, rehearse","past":{"forms":"répétait [ray-pay-TEH] / a répété [ah ray-pay-TAY]","example":"Le professeur a répété l'explication trois fois. (The teacher repeated the explanation three times.)"},"present":{"forms":"répète [ray-PET] / répétons [ray-pay-TOHN]","example":"Elle répète sa pièce de théâtre chaque soir. (She rehearses her play every evening.)"},"future":{"forms":"répétera [ray-pet-RAH] / répéterons [ray-pet-ROHN]","example":"Je te répéterai les instructions si nécessaire. (I will repeat the instructions to you if necessary.)"}},{"verb":"signer","pronunciation":"see-NYAY","translation":"to sign","past":{"forms":"signait [see-NYEH] / a signé [ah see-NYAY]","example":"Elle a signé le contrat avant la réunion. (She signed the contract before the meeting.)"},"present":{"forms":"signe [see-nyuh] / signons [see-NYOHN]","example":"Il signe chaque document avec soin. (He signs each document with care.)"},"future":{"forms":"signera [see-nyuh-RAH] / signerons [see-nyuh-ROHN]","example":"Nous signerons l'accord officiel vendredi prochain. (We will sign the official agreement next Friday.)"}},{"verb":"mériter","pronunciation":"may-ree-TAY","translation":"to deserve, be worth","past":{"forms":"méritait [may-ree-TEH] / a mérité [ah may-ree-TAY]","example":"Elle a mérité chaque compliment qu'elle a reçu. (She deserved every compliment she received.)"},"present":{"forms":"mérite [may-REET] / méritons [may-ree-TOHN]","example":"Ce travail mérite d'être reconnu à sa juste valeur. (This work deserves to be recognised at its true value.)"},"future":{"forms":"méritera [may-reet-RAH] / mériterons [may-reet-ROHN]","example":"Tu mériterai une bonne pause après tout ce travail. (You will deserve a good break after all this work.)"}},{"verb":"rejoindre","pronunciation":"ruh-zhwahn-druh","translation":"to meet up, join","past":{"forms":"rejoignait [ruh-zhwah-NYEH] / a rejoint [ah ruh-ZHWAHN]","example":"Elle a rejoint ses amis au café après le travail. (She joined her friends at the café after work.)"},"present":{"forms":"rejoint [ruh-ZHWAHN] / rejoignons [ruh-zhwah-NYOHN]","example":"Il rejoint l'équipe en tant que nouveau responsable. (He is joining the team as the new manager.)"},"future":{"forms":"rejoindra [ruh-zhwahn-DRAH] / rejoindrons [ruh-zhwahn-DROHN]","example":"Nous vous rejoindrons à la gare à midi. (We will join you at the station at noon.)"}},{"verb":"discuter","pronunciation":"dees-kew-TAY","translation":"to discuss, question","past":{"forms":"discutait [dees-kew-TEH] / a discuté [ah dees-kew-TAY]","example":"Ils ont discuté du projet pendant deux heures. (They discussed the project for two hours.)"},"present":{"forms":"discute [dees-KEWT] / discutons [dees-kew-TOHN]","example":"Elle discute toujours avant de prendre une décision. (She always discusses before making a decision.)"},"future":{"forms":"discutera [dees-kewt-RAH] / discuterons [dees-kewt-ROHN]","example":"Nous discuterons des détails lors de notre prochaine rencontre. (We will discuss the details at our next meeting.)"}},{"verb":"avancer","pronunciation":"ah-vahn-SAY","translation":"to move forward, advance","past":{"forms":"avançait [ah-vahn-SEH] / a avancé [ah ah-vahn-SAY]","example":"L'armée a avancé rapidement vers la frontière. (The army advanced quickly towards the border.)"},"present":{"forms":"avance [ah-VAHNS] / avançons [ah-vahn-SOHN]","example":"Le projet avance bien grâce à l'équipe. (The project is advancing well thanks to the team.)"},"future":{"forms":"avancera [ah-vahns-RAH] / avancerons [ah-vahns-ROHN]","example":"Nous avancerons la date de la réunion si tout va bien. (We will move the meeting date forward if all goes well.)"}},{"verb":"reposer","pronunciation":"ruh-poh-ZAY","translation":"to rest","past":{"forms":"reposait [ruh-poh-ZEH] / a reposé [ah ruh-poh-ZAY]","example":"Elle s'est reposée tout le week-end après une semaine difficile. (She rested all weekend after a difficult week.)"},"present":{"forms":"repose [ruh-POHZ] / reposons [ruh-poh-ZOHN]","example":"Il repose sa tête sur l'oreiller. (He rests his head on the pillow.)"},"future":{"forms":"reposera [ruh-pohz-RAH] / reposerons [ruh-pohz-ROHN]","example":"Je me reposerai après avoir terminé ce travail. (I will rest after finishing this work.)"}},{"verb":"échapper","pronunciation":"ay-shah-PAY","translation":"to escape, get away","past":{"forms":"échappait [ay-shah-PEH] / a échappé [ah ay-shah-PAY]","example":"Le prisonnier a échappé à la surveillance des gardes. (The prisoner escaped the guards' surveillance.)"},"present":{"forms":"échappe [ay-SHAHP] / échappons [ay-shah-POHN]","example":"Rien ne lui échappe, il est très attentif. (Nothing escapes him, he is very attentive.)"},"future":{"forms":"échappera [ay-shahp-RAH] / échapperons [ay-shahp-ROHN]","example":"Ce détail n'échappera pas à un expert. (This detail will not escape an expert.)"}},{"verb":"charger","pronunciation":"shar-ZHAY","translation":"to charge, load","past":{"forms":"chargeait [shar-ZHEH] / a chargé [ah shar-ZHAY]","example":"Il a chargé les bagages dans le coffre de la voiture. (He loaded the luggage into the boot of the car.)"},"present":{"forms":"charge [sharzh] / chargeons [shar-ZHOHN]","example":"Elle charge son téléphone chaque nuit. (She charges her phone every night.)"},"future":{"forms":"chargera [sharzh-RAH] / chargerons [sharzh-ROHN]","example":"Nous te chargerons de cette mission importante. (We will entrust you with this important mission.)"}},{"verb":"obliger","pronunciation":"oh-blee-ZHAY","translation":"to oblige","past":{"forms":"obligeait [oh-blee-ZHEH] / a obligé [ah oh-blee-ZHAY]","example":"La loi l'a obligé à rembourser la dette. (The law obliged him to repay the debt.)"},"present":{"forms":"oblige [oh-BLEEZH] / obligeons [oh-blee-ZHOHN]","example":"Son poste l'oblige à voyager souvent. (His position obliges him to travel often.)"},"future":{"forms":"obligera [oh-bleezh-RAH] / obligerons [oh-bleezh-ROHN]","example":"Cette situation nous obligera à revoir nos plans. (This situation will oblige us to revise our plans.)"}},{"verb":"accompagner","pronunciation":"ah-kohm-pah-NYAY","translation":"to go with, accompany","past":{"forms":"accompagnait [ah-kohm-pah-NYEH] / a accompagné [ah ah-kohm-pah-NYAY]","example":"Elle a accompagné son fils à son premier jour d'école. (She accompanied her son on his first day at school.)"},"present":{"forms":"accompagne [ah-kohm-PAH-nyuh] / accompagnons [ah-kohm-pah-NYOHN]","example":"Il accompagne toujours sa mère aux rendez-vous médicaux. (He always accompanies his mother to medical appointments.)"},"future":{"forms":"accompagnera [ah-kohm-pah-nyuh-RAH] / accompagnerons [ah-kohm-pah-nyuh-ROHN]","example":"Je vous accompagnerai jusqu'à l'aéroport. (I will accompany you to the airport.)"}},{"verb":"oser","pronunciation":"oh-ZAY","translation":"to dare","past":{"forms":"osait [oh-ZEH] / a osé [ah oh-ZAY]","example":"Elle a osé dire la vérité devant tout le monde. (She dared to tell the truth in front of everyone.)"},"present":{"forms":"ose [ohz] / osons [oh-ZOHN]","example":"Il n'ose pas demander une augmentation. (He does not dare to ask for a pay rise.)"},"future":{"forms":"osera [ohz-RAH] / oserons [ohz-ROHN]","example":"Tu oseras parler en public après t'être entraîné. (You will dare to speak in public after having practised.)"}},{"verb":"tromper","pronunciation":"trohm-PAY","translation":"to deceive, make a mistake","past":{"forms":"trompait [trohm-PEH] / a trompé [ah trohm-PAY]","example":"Elle l'a trompé pendant plusieurs années. (She deceived him for several years.)"},"present":{"forms":"trompe [trohmp] / trompons [trohm-POHN]","example":"Il se trompe souvent de bus. (He often gets the wrong bus.)"},"future":{"forms":"trompera [trohmp-RAH] / tromperons [trohmp-ROHN]","example":"Tu te tromperas si tu ne fais pas attention aux détails. (You will make a mistake if you don't pay attention to the details.)"}},{"verb":"ressembler","pronunciation":"ruh-sahm-BLAY","translation":"to look like, resemble","past":{"forms":"ressemblait [ruh-sahm-BLEH] / a ressemblé [ah ruh-sahm-BLAY]","example":"Elle ressemblait beaucoup à sa mère dans sa jeunesse. (She looked a lot like her mother in her youth.)"},"present":{"forms":"ressemble [ruh-SAHM-bluh] / ressemblons [ruh-sahm-BLOHN]","example":"Il ressemble énormément à son père. (He resembles his father enormously.)"},"future":{"forms":"ressemblera [ruh-sahm-bluh-RAH] / ressemblerons [ruh-sahm-bluh-ROHN]","example":"Cette ville ressemblera à New York dans dix ans. (This city will resemble New York in ten years.)"}},{"verb":"jurer","pronunciation":"zhew-RAY","translation":"to swear","past":{"forms":"jurait [zhew-REH] / a juré [ah zhew-RAY]","example":"Il a juré de ne jamais trahir ses amis. (He swore never to betray his friends.)"},"present":{"forms":"jure [zhewr] / jurons [zhew-ROHN]","example":"Elle jure toujours de dire la vérité. (She always swears to tell the truth.)"},"future":{"forms":"jurera [zhewr-RAH] / jurerons [zhewr-ROHN]","example":"Je te jurerai sur ma vie que c'est vrai. (I will swear to you on my life that it is true.)"}},{"verb":"assurer","pronunciation":"ah-sew-RAY","translation":"to assure, insure","past":{"forms":"assurait [ah-sew-REH] / a assuré [ah ah-sew-RAY]","example":"Elle a assuré à ses clients une livraison rapide. (She assured her clients of quick delivery.)"},"present":{"forms":"assure [ah-SEWR] / assurons [ah-sew-ROHN]","example":"Il assure la direction de l'entreprise depuis dix ans. (He has been managing the company for ten years.)"},"future":{"forms":"assurera [ah-sewr-RAH] / assurerons [ah-sewr-ROHN]","example":"Nous vous assurerons un service de qualité. (We will assure you of a quality service.)"}},{"verb":"gagner","pronunciation":"gah-NYAY","translation":"to win, earn","past":{"forms":"gagnait [gah-NYEH] / a gagné [ah gah-NYAY]","example":"Notre équipe a gagné le championnat national. (Our team won the national championship.)"},"present":{"forms":"gagne [gah-nyuh] / gagnons [gah-NYOHN]","example":"Il gagne bien sa vie comme ingénieur. (He earns a good living as an engineer.)"},"future":{"forms":"gagnera [gah-nyuh-RAH] / gagnerons [gah-nyuh-ROHN]","example":"Elle gagnera plus d'expérience avec le temps. (She will gain more experience with time.)"}},{"verb":"acheter","pronunciation":"ash-TAY","translation":"to buy","past":{"forms":"achetait [ash-TEH] / a acheté [ah ash-TAY]","example":"Il a acheté une nouvelle voiture électrique. (He bought a new electric car.)"},"present":{"forms":"achète [ah-SHET] / achetons [ash-TOHN]","example":"Elle achète ses légumes au marché local. (She buys her vegetables at the local market.)"},"future":{"forms":"achètera [ah-shet-RAH] / achèterons [ah-shet-ROHN]","example":"Nous achèterons un appartement dans deux ans. (We will buy a flat in two years.)"}},{"verb":"descendre","pronunciation":"day-SAHN-druh","translation":"to go down, come down","past":{"forms":"descendait [day-sahn-DEH] / est descendu [eh day-sahn-DEW]","example":"Elle est descendue chercher son courrier. (She went down to collect her mail.)"},"present":{"forms":"descend [day-SAHN] / descendons [day-sahn-DOHN]","example":"Il descend l'escalier avec précaution. (He goes down the stairs with care.)"},"future":{"forms":"descendra [day-sahn-DRAH] / descendrons [day-sahn-DROHN]","example":"Les prix des billets d'avion descendront en janvier. (Plane ticket prices will come down in January.)"}},{"verb":"valoir","pronunciation":"vah-LWAHR","translation":"to be worth","past":{"forms":"valait [vah-LEH] / a valu [ah vah-LEW]","example":"Ce tableau valait une fortune à l'époque. (This painting was worth a fortune at the time.)"},"present":{"forms":"vaut [voh] / valons [vah-LOHN]","example":"Cette expérience vaut bien plus que tout diplôme. (This experience is worth far more than any degree.)"},"future":{"forms":"vaudra [voh-DRAH] / vaudrons [voh-DROHN]","example":"Cet investissement vaudra la peine dans dix ans. (This investment will be worth it in ten years.)"}},{"verb":"suffire","pronunciation":"sew-FEER","translation":"to be enough, suffice","past":{"forms":"suffisait [sew-fee-ZEH] / a suffi [ah sew-FEE]","example":"Une seule explication a suffi pour qu'il comprenne. (A single explanation was enough for him to understand.)"},"present":{"forms":"suffit [sew-FEE] / suffisons [sew-fee-ZOHN]","example":"Cela ne suffit pas pour réussir l'examen. (That is not enough to pass the exam.)"},"future":{"forms":"suffira [sew-fee-RAH] / suffirons [sew-fee-ROHN]","example":"Une semaine suffira pour terminer ce travail. (One week will suffice to finish this work.)"}},{"verb":"sembler","pronunciation":"sahm-BLAY","translation":"to seem, appear","past":{"forms":"semblait [sahm-BLEH] / a semblé [ah sahm-BLAY]","example":"Elle semblait fatiguée après la longue réunion. (She seemed tired after the long meeting.)"},"present":{"forms":"semble [sahm-bluh] / semblons [sahm-BLOHN]","example":"Il semble très heureux dans son nouveau poste. (He seems very happy in his new position.)"},"future":{"forms":"semblera [sahm-bluh-RAH] / semblerons [sahm-bluh-ROHN]","example":"Cela vous semblera plus simple après pratique. (This will seem simpler to you after practice.)"}},{"verb":"compter","pronunciation":"kohn-TAY","translation":"to count","past":{"forms":"comptait [kohn-TEH] / a compté [ah kohn-TAY]","example":"Elle a compté tous les participants à la réunion. (She counted all the participants at the meeting.)"},"present":{"forms":"compte [kohnt] / comptons [kohn-TOHN]","example":"Il compte sur ses amis dans les moments difficiles. (He counts on his friends in difficult times.)"},"future":{"forms":"comptera [kohnt-RAH] / compterons [kohnt-ROHN]","example":"Chaque vote comptera pour décider du résultat. (Every vote will count in deciding the result.)"}},{"verb":"marier","pronunciation":"mah-ryAY","translation":"to marry","past":{"forms":"mariait [mah-ryEH] / a marié [ah mah-ryAY]","example":"Le prêtre a marié les deux jeunes gens à l'église. (The priest married the two young people in the church.)"},"present":{"forms":"marie [mah-REE] / marions [mah-ryOHN]","example":"Elle marie sa fille en juin prochain. (She is marrying off her daughter next June.)"},"future":{"forms":"mariera [mah-ree-RAH] / marierons [mah-ree-ROHN]","example":"Ils se marieront dans une belle cérémonie en Provence. (They will get married in a beautiful ceremony in Provence.)"}},{"verb":"poser","pronunciation":"poh-ZAY","translation":"to put down, pose","past":{"forms":"posait [poh-ZEH] / a posé [ah poh-ZAY]","example":"Il a posé sa valise dans l'entrée de l'hôtel. (He put down his suitcase in the hotel entrance.)"},"present":{"forms":"pose [pohz] / posons [poh-ZOHN]","example":"Elle pose toujours des questions pertinentes. (She always asks relevant questions.)"},"future":{"forms":"posera [pohz-RAH] / poserons [pohz-ROHN]","example":"Nous poserons les fondations de la maison la semaine prochaine. (We will lay the foundations of the house next week.)"}},{"verb":"retourner","pronunciation":"ruh-toor-NAY","translation":"to turn, return","past":{"forms":"retournait [ruh-toor-NEH] / est retourné [eh ruh-toor-NAY]","example":"Elle est retournée dans son pays natal après dix ans. (She returned to her home country after ten years.)"},"present":{"forms":"retourne [ruh-TOORN] / retournons [ruh-toor-NOHN]","example":"Il retourne au bureau après son déjeuner. (He goes back to the office after his lunch.)"},"future":{"forms":"retournera [ruh-toorn-RAH] / retournerons [ruh-toorn-ROHN]","example":"Nous retournerons à Paris l'été prochain. (We will return to Paris next summer.)"}},{"verb":"rencontrer","pronunciation":"rahn-kohn-TRAY","translation":"to meet, encounter","past":{"forms":"rencontrait [rahn-kohn-TREH] / a rencontré [ah rahn-kohn-TRAY]","example":"Elle a rencontré son mari lors d'un voyage au Japon. (She met her husband on a trip to Japan.)"},"present":{"forms":"rencontre [rahn-KOHN-truh] / rencontrons [rahn-kohn-TROHN]","example":"Il rencontre souvent des difficultés dans son travail. (He often encounters difficulties in his work.)"},"future":{"forms":"rencontrera [rahn-kohn-truh-RAH] / rencontrerons [rahn-kohn-truh-ROHN]","example":"Nous rencontrerons nos partenaires lors de la conférence. (We will meet our partners at the conference.)"}},{"verb":"voler","pronunciation":"voh-LAY","translation":"to fly, steal","past":{"forms":"volait [voh-LEH] / a volé [ah voh-LAY]","example":"Le pickpocket a volé son portefeuille dans la foule. (The pickpocket stole his wallet in the crowd.)"},"present":{"forms":"vole [vohl] / volons [voh-LOHN]","example":"L'oiseau vole librement dans le ciel bleu. (The bird flies freely in the blue sky.)"},"future":{"forms":"volera [vohl-RAH] / volerons [vohl-ROHN]","example":"Les drones voleront les livraisons dans les villes du futur. (Drones will fly deliveries in the cities of the future.)"}},{"verb":"fermer","pronunciation":"fair-MAY","translation":"to close, shut","past":{"forms":"fermait [fair-MEH] / a fermé [ah fair-MAY]","example":"Il a fermé la fenêtre à cause du bruit. (He closed the window because of the noise.)"},"present":{"forms":"ferme [fairm] / fermons [fair-MOHN]","example":"La boutique ferme à dix-neuf heures. (The shop closes at seven o'clock.)"},"future":{"forms":"fermera [fairm-RAH] / fermerons [fairm-ROHN]","example":"Nous fermerons le bureau pendant les fêtes. (We will close the office during the holidays.)"}},{"verb":"sauver","pronunciation":"soh-VAY","translation":"to save","past":{"forms":"sauvait [soh-VEH] / a sauvé [ah soh-VAY]","example":"Le médecin a sauvé la vie du patient. (The doctor saved the patient's life.)"},"present":{"forms":"sauve [sohv] / sauvons [soh-VOHN]","example":"Elle sauve des données importantes sur son ordinateur. (She saves important data on her computer.)"},"future":{"forms":"sauvera [sohv-RAH] / sauverons [sohv-ROHN]","example":"Ces mesures sauveront des milliers de vies chaque année. (These measures will save thousands of lives every year.)"}},{"verb":"envoyer","pronunciation":"ahn-vwah-YAY","translation":"to send, dispatch","past":{"forms":"envoyait [ahn-vwah-YEH] / a envoyé [ah ahn-vwah-YAY]","example":"Elle a envoyé une carte postale de Rome. (She sent a postcard from Rome.)"},"present":{"forms":"envoie [ahn-VWAH] / envoyons [ahn-vwah-YOHN]","example":"Il envoie un email à son équipe chaque matin. (He sends an email to his team every morning.)"},"future":{"forms":"enverra [ahn-veh-RAH] / enverrons [ahn-veh-ROHN]","example":"Je vous enverrai le rapport dès qu'il sera prêt. (I will send you the report as soon as it is ready.)"}},{"verb":"apprendre","pronunciation":"ah-PRAHN-druh","translation":"to learn, hear about","past":{"forms":"apprenait [ah-pruh-NEH] / a appris [ah ah-PREE]","example":"Il a appris à conduire à l'âge de dix-huit ans. (He learned to drive at the age of eighteen.)"},"present":{"forms":"apprend [ah-PRAHN] / apprenons [ah-pruh-NOHN]","example":"Elle apprend le mandarin depuis six mois. (She has been learning Mandarin for six months.)"},"future":{"forms":"apprendra [ah-prahn-DRAH] / apprendrons [ah-prahn-DROHN]","example":"Nous apprendrons de nouvelles technologies dans ce cours. (We will learn new technologies in this course.)"}},{"verb":"boire","pronunciation":"bwahr","translation":"to drink","past":{"forms":"buvait [bew-VEH] / a bu [ah bew]","example":"Elle a bu un verre de vin rouge au dîner. (She drank a glass of red wine at dinner.)"},"present":{"forms":"boit [bwah] / buvons [bew-VOHN]","example":"Il boit deux litres d'eau par jour. (He drinks two litres of water a day.)"},"future":{"forms":"boira [bwah-RAH] / boirons [bwah-ROHN]","example":"Nous boirons à votre santé lors de la fête. (We will drink to your health at the party.)"}},{"verb":"garder","pronunciation":"gar-DAY","translation":"to keep, look after","past":{"forms":"gardait [gar-DEH] / a gardé [ah gar-DAY]","example":"Elle a gardé ce secret pendant des années. (She kept this secret for years.)"},"present":{"forms":"garde [gard] / gardons [gar-DOHN]","example":"Il garde ses enfants quand sa femme travaille. (He looks after the children when his wife is at work.)"},"future":{"forms":"gardera [gard-RAH] / garderons [gard-ROHN]","example":"Nous garderons ce souvenir pour toujours. (We will keep this memory forever.)"}},{"verb":"montrer","pronunciation":"mohn-TRAY","translation":"to show, point out","past":{"forms":"montrait [mohn-TREH] / a montré [ah mohn-TRAY]","example":"Il lui a montré comment utiliser le logiciel. (He showed her how to use the software.)"},"present":{"forms":"montre [mohn-truh] / montrons [mohn-TROHN]","example":"Elle montre une grande passion pour son métier. (She shows great passion for her work.)"},"future":{"forms":"montrera [mohn-truh-RAH] / montrerons [mohn-truh-ROHN]","example":"Je vous montrerai les résultats lors de la prochaine réunion. (I will show you the results at the next meeting.)"}},{"verb":"s'asseoir","pronunciation":"ah-SWAHR","translation":"to sit down","past":{"forms":"s'asseyait [sah-say-EH] / s'est assis [seh ah-SEE]","example":"Elle s'est assise près de la fenêtre pour lire. (She sat down near the window to read.)"},"present":{"forms":"s'assoit [sah-SWAH] / nous asseyons [noo-zah-say-OHN]","example":"Il s'assoit toujours à la même place en classe. (He always sits in the same seat in class.)"},"future":{"forms":"s'assoira [sah-swah-RAH] / nous assoirons [noo-zah-swah-ROHN]","example":"Nous nous assoirons ensemble autour de la table. (We will sit together around the table.)"}},{"verb":"porter","pronunciation":"por-TAY","translation":"to carry, wear","past":{"forms":"portait [por-TEH] / a porté [ah por-TAY]","example":"Elle portait une robe rouge à la soirée. (She was wearing a red dress at the party.)"},"present":{"forms":"porte [port] / portons [por-TOHN]","example":"Il porte toujours une cravate au bureau. (He always wears a tie at the office.)"},"future":{"forms":"portera [port-RAH] / porterons [port-ROHN]","example":"Nous porterons les colis jusqu'à l'entrée. (We will carry the parcels to the entrance.)"}},{"verb":"prier","pronunciation":"pree-AY","translation":"to pray","past":{"forms":"priait [pree-EH] / a prié [ah pree-AY]","example":"Elle priait chaque soir avant de dormir. (She used to pray every evening before sleeping.)"},"present":{"forms":"prie [pree] / prions [pree-OHN]","example":"Il prie pour la santé de sa famille. (He prays for the health of his family.)"},"future":{"forms":"priera [pree-RAH] / prierons [pree-ROHN]","example":"Je vous prie d'accepter mes excuses. (I beg you to accept my apologies.)"}},{"verb":"servir","pronunciation":"sair-VEER","translation":"to serve","past":{"forms":"servait [sair-VEH] / a servi [ah sair-VEE]","example":"Le serveur nous a servi rapidement ce soir. (The waiter served us quickly this evening.)"},"present":{"forms":"sert [sair] / servons [sair-VOHN]","example":"Elle sert le dîner à dix-neuf heures trente. (She serves dinner at seven thirty.)"},"future":{"forms":"servira [sair-vee-RAH] / servirons [sair-vee-ROHN]","example":"Ce nouvel outil vous servira au quotidien. (This new tool will serve you on a daily basis.)"}},{"verb":"espérer","pronunciation":"es-pay-RAY","translation":"to hope for","past":{"forms":"espérait [es-pay-REH] / a espéré [ah es-pay-RAY]","example":"Elle espérait recevoir de bonnes nouvelles. (She hoped to receive good news.)"},"present":{"forms":"espère [es-PAIR] / espérons [es-pay-ROHN]","example":"Il espère trouver un emploi avant la fin du mois. (He hopes to find a job before the end of the month.)"},"future":{"forms":"espérera [es-pair-RAH] / espèrerons [es-pair-ROHN]","example":"Nous espérerons toujours le meilleur pour vous. (We will always hope for the best for you.)"}},{"verb":"retrouver","pronunciation":"ruh-troo-VAY","translation":"to find, meet","past":{"forms":"retrouvait [ruh-troo-VEH] / a retrouvé [ah ruh-troo-VAY]","example":"Il a retrouvé ses clés dans la poche de son manteau. (He found his keys in the pocket of his coat.)"},"present":{"forms":"retrouve [ruh-TROOV] / retrouvons [ruh-troo-VOHN]","example":"Elle retrouve ses amis tous les vendredis soir. (She meets her friends every Friday evening.)"},"future":{"forms":"retrouvera [ruh-troov-RAH] / retrouverons [ruh-troov-ROHN]","example":"Nous retrouverons notre rythme de travail après les vacances. (We will find our work rhythm again after the holidays.)"}},{"verb":"bouger","pronunciation":"boo-ZHAY","translation":"to move","past":{"forms":"bougeait [boo-ZHEH] / a bougé [ah boo-ZHAY]","example":"Elle a bougé les meubles pour refaire la décoration. (She moved the furniture to redo the decoration.)"},"present":{"forms":"bouge [boozh] / bougeons [boo-ZHOHN]","example":"Il ne bouge pas de chez lui quand il pleut. (He doesn't go out when it rains.)"},"future":{"forms":"bougera [boozh-RAH] / bougerons [boozh-ROHN]","example":"La situation bougera bientôt dans la bonne direction. (The situation will soon move in the right direction.)"}},{"verb":"apporter","pronunciation":"ah-por-TAY","translation":"to bring, supply","past":{"forms":"apportait [ah-por-TEH] / a apporté [ah ah-por-TAY]","example":"Il a apporté des fleurs à son hôtesse. (He brought flowers to his hostess.)"},"present":{"forms":"apporte [ah-PORT] / apportons [ah-por-TOHN]","example":"Elle apporte toujours des idées nouvelles aux réunions. (She always brings new ideas to meetings.)"},"future":{"forms":"apportera [ah-port-RAH] / apporterons [ah-port-ROHN]","example":"Ce partenariat nous apportera de nombreux avantages. (This partnership will bring us many advantages.)"}},{"verb":"marcher","pronunciation":"mar-SHAY","translation":"to walk, march","past":{"forms":"marchait [mar-SHEH] / a marché [ah mar-SHAY]","example":"Nous avons marché cinq kilomètres dans la forêt. (We walked five kilometres in the forest.)"},"present":{"forms":"marche [marsh] / marchons [mar-SHOHN]","example":"Elle marche chaque matin pour rester en bonne santé. (She walks every morning to stay in good health.)"},"future":{"forms":"marchera [marsh-RAH] / marcherons [marsh-ROHN]","example":"Tu marcheras plus facilement avec de bonnes chaussures. (You will walk more easily with good shoes.)"}}];
+
+// ——————————————————————————————
+// TIPS per verb (contextual usage tips)
+// ——————————————————————————————
+const TIPS = {
+  "être": "Used as an auxiliary verb with many verbs of motion and reflexive verbs. \"C'est\" (it is) vs \"Il est\" (he is) — use \"c'est\" before nouns/adjectives with no article.",
+  "avoir": "Main auxiliary for most French verbs in compound tenses. Also in many idioms: avoir faim (to be hungry), avoir peur (to be scared), avoir raison (to be right).",
+  "aller": "Used to form near future: \"Je vais manger\" (I'm going to eat). Also used in greetings: \"Ça va?\" (How are you?).",
+  "faire": "Extremely versatile — faire du sport (to do sport), faire la cuisine (to cook), faire beau (nice weather). Used in causative constructions: faire faire (to have something done).",
+  "dire": "Distinguished from 'parler': dire = what you say, parler = the act of speaking. Note: 'vous dites' is irregular (not 'vous disez').",
+  "pouvoir": "Expresses ability or permission. In conditional: 'pourrait' = could. Often paired with infinitive: je peux venir (I can come).",
+  "vouloir": "Use conditional 'voudrais' for polite requests: 'Je voudrais un café' (I would like a coffee) — much more polite than 'je veux'.",
+  "savoir": "Contrasted with 'connaître': savoir = knowing a fact/how to do something; connaître = knowing a person/place/thing.",
+  "voir": "Common in expressions: on verra (we'll see), voir venir (wait and see). Also used figuratively: je vois ce que tu veux dire (I see what you mean).",
+  "venir": "Forms recent past with 'de': 'Je viens de manger' (I just ate). 'Venir' is used for where you come from; 'aller' for where you're going.",
+  "parler": "Use 'parler de' (to talk about) and 'parler à' (to talk to). 'Parler' vs 'dire': parler is the general act, dire focuses on the content.",
+  "prendre": "Has many meanings: take a train, take a shower (prendre une douche), take a decision. Also used for eating/drinking: prendre un café.",
+  "aimer": "Followed by infinitive for activities: 'J'aime nager'. Followed by noun with article: 'J'aime le chocolat'. 'Aimer' is stronger (love) than 'aimer bien' (like).",
+  "passer": "Very versatile: passer un examen (take an exam), passer du temps (spend time), ça se passe (it happens). Also used as an auxiliary with être for 'to pass by'.",
+  "penser": "Use 'penser à' (to think about/of someone) vs 'penser de' (to think of = have an opinion). 'Je pense que' introduces an opinion.",
+  "attendre": "No preposition needed: 'J'attends le bus' (I'm waiting for the bus). Compare with English 'wait for'.",
+  "trouver": "Can mean both 'to find' and 'to think/consider': 'Je trouve ça intéressant' (I find that interesting). Very common in everyday speech.",
+  "donner": "Key phrase: 'donner envie' (to make you want to). Also: 'se donner' (to devote oneself). 'Donner sur' means to overlook/face.",
+  "laisser": "Distinguish from 'partir' and 'quitter': laisser = leave something/someone behind. Also used causatively: laisser faire (let it happen).",
+  "demander": "Use 'demander à quelqu'un de faire' (ask someone to do). 'Se demander' = to wonder. Different from 'poser une question' (to ask a question formally).",
+  "travailler": "Used for all types of work. 'Travailler sur' (to work on), 'travailler pour' (to work for). Compare: 'le travail' (work/job), 'un travail' (a job).",
+  "manger": "Note the spelling change: nous mangeons (not mangons) to preserve the soft 'g' sound. Common in: manger sur le pouce (eat on the go).",
+  "partir": "Vs 'quitter': partir is intransitive (I leave), quitter takes a direct object (I leave Paris / I leave her). Also: à partir de (starting from).",
+  "mettre": "Hugely versatile: mettre du temps (to take time), mettre en place (to set up), se mettre à (to start doing). Also used for wearing clothes.",
+  "sauter": "Literal and figurative: sauter une étape (skip a step), sauter de joie (jump for joy), sauter aux yeux (be obvious).",
+  "rêver": "Used with 'de' for dreaming of something: 'Je rêve de voyager'. Also: 'rêver éveillé' (daydream). 'Tu rêves!' means 'You wish!' or 'No way!'",
+  "finir": "Regular -ir verb (model). 'Finir par' + infinitive means 'to end up doing': Il finit par accepter (He ends up accepting).",
+  "perdre": "Common expressions: perdre la tête (lose one's mind), perdre du temps (waste time), perdre de vue (lose sight of). Also 'se perdre' = to get lost.",
+  "choisir": "Regular -ir verb. 'Choisir entre' (choose between), 'choisir de' + infinitive (choose to do something). Very common in daily decisions.",
+  "comprendre": "Distinguished from 'savoir': comprendre is about understanding/grasping, savoir is about factual knowledge. 'Je ne comprends pas' is essential in French!",
+  "apprendre": "'Apprendre à' + infinitive = to learn to do: 'J'apprends à cuisiner'. Also means 'to teach' with indirect object: Il m'apprend le français.",
+  "boire": "Irregular verb. Common: boire un coup (have a drink), boire à la santé de (drink to). 'Je boirais bien...' is a polite way to say you'd like a drink.",
+  "voir": "Common: voir venir (wait and see), loin de voir (far from seeing). 'Voyons!' is an interjection meaning 'Come on!' or 'Let me think...'",
+  "vivre": "Vs 'habiter': vivre is broader (to live/be alive), habiter is specifically where you reside. 'Vivre de' = to live on/off something.",
+  "venir": "'D'où viens-tu?' (Where are you from?) is very common. 'En venir à' = to get around to. 'Ça vient!' = It's coming! (be patient).",
+};
+
+// State
+let currentIndex = 0;
+let bookmarks = JSON.parse(localStorage.getItem('frBookmarks') || '[]');
+let showBookmarksOnly = false;
+let displayList = [...VERBS.keys()].map((i, _) => i);
+let autoInterval = null;
+let autoRunning = false;
+let quizScore = { correct: 0, total: 0 };
+let quizAnswer = '';
+
+function getDisplayList() {
+  if (showBookmarksOnly) {
+    return VERBS.map((v, i) => i).filter(i => bookmarks.includes(VERBS[i].verb));
+  }
+  return VERBS.map((_, i) => i);
+}
+
+function currentVerb() {
+  const list = getDisplayList();
+  return VERBS[list[currentIndex]] || VERBS[0];
+}
+
+function speakText(text, lang = 'fr-FR') {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(text);
+  utt.lang = lang;
+  utt.rate = 0.85;
+  utt.pitch = 1;
+  window.speechSynthesis.speak(utt);
+}
+
+function speakCurrent() {
+  const v = currentVerb();
+  speakText(v.verb);
+  document.querySelectorAll('.speak-btn').forEach(b => b.classList.add('speaking'));
+  setTimeout(() => document.querySelectorAll('.speak-btn').forEach(b => b.classList.remove('speaking')), 1200);
+}
+
+function speakTense(tense) {
+  const v = currentVerb();
+  const forms = v[tense].forms.replace(/\[.*?\]/g, '').replace(/\//g, ',');
+  speakText(forms);
+}
+
+function speakExample(tense) {
+  const v = currentVerb();
+  const ex = v[tense].example;
+  const frPart = ex.split('(')[0].trim();
+  speakText(frPart);
+}
+
+function renderTenseForms(forms) {
+  const parts = forms.split('/').map(s => s.trim());
+  return parts.map(part => {
+    const match = part.match(/^([^\[]+)(\[.*?\])?(.*)$/);
+    if (match) {
+      const word = match[1].trim();
+      const pron = match[2] ? match[2] : '';
+      return `<div class="form-entry"><span class="form-word">${word}</span>${pron ? `<span class="form-pron">${pron}</span>` : ''}</div>`;
+    }
+    return `<div class="form-entry"><span class="form-word">${part}</span></div>`;
+  }).join('');
+}
+
+function renderExample(example) {
+  const match = example.match(/^(.*?)\((.*?)\)$/);
+  if (match) {
+    return `<div class="fr">${match[1].trim()}</div><div class="en">(${match[2].trim()})</div>`;
+  }
+  return `<div class="fr">${example}</div>`;
+}
+
+function render() {
+  const list = getDisplayList();
+  if (list.length === 0) {
+    document.getElementById('cardArea').innerHTML = `<div style="text-align:center;color:var(--muted);padding:60px">No saved verbs yet. Star some verbs to see them here!</div>`;
+    return;
+  }
+  if (currentIndex >= list.length) currentIndex = 0;
+
+  const idx = list[currentIndex];
+  const v = VERBS[idx];
+  const tip = TIPS[v.verb] || `Use "${v.verb}" naturally in everyday conversation to master it. Pay attention to how native speakers use it in context.`;
+  const isBm = bookmarks.includes(v.verb);
+
+  const html = `
+    <div class="word-card card-enter">
+      <div class="word-card-header">
+        <div class="verb-number">Verbe ${idx + 1} sur ${VERBS.length} &nbsp;·&nbsp; ${currentIndex + 1} / ${list.length} affiché</div>
+        <div class="card-actions">
+          <button class="bm-btn ${isBm ? 'saved' : ''}" onclick="toggleBookmark()">
+            ${isBm ? '⭐ Sauvegardé' : '☆ Sauvegarder'}
+          </button>
+        </div>
+        <div class="verb-main-row">
+          <div class="verb-word" onclick="speakCurrent()">
+            ${v.verb}
+            <button class="speak-btn" onclick="speakCurrent(); event.stopPropagation();">🔊</button>
+          </div>
+          <div class="verb-translation">${v.translation}</div>
+        </div>
+        <div class="verb-pron">[ ${v.pronunciation} ]</div>
+      </div>
+      <div class="word-card-body">
+        <div class="tips-row">
+          <div class="tips-icon">💡</div>
+          <div class="tips-content">
+            <div class="tips-label">Conseil d'utilisation</div>
+            <div class="tips-text">${tip}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tense-grid">
+      <div class="tense-card past">
+        <div class="tense-header">
+          <div class="tense-label-group">
+            <div class="tense-dot"></div>
+            <span class="tense-label">Passé</span>
+            <span class="tense-french">Past</span>
+          </div>
+          <button class="tense-speak" onclick="speakTense('past')">🔊 Écouter</button>
+        </div>
+        <div class="tense-body">
+          <div class="tense-forms">${renderTenseForms(v.past.forms)}</div>
+          <div class="tense-example">
+            ${renderExample(v.past.example)}
+            <button class="ex-speak-btn" onclick="speakExample('past')">🔊 Entendre l'exemple</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tense-card present">
+        <div class="tense-header">
+          <div class="tense-label-group">
+            <div class="tense-dot"></div>
+            <span class="tense-label">Présent</span>
+            <span class="tense-french">Present</span>
+          </div>
+          <button class="tense-speak" onclick="speakTense('present')">🔊 Écouter</button>
+        </div>
+        <div class="tense-body">
+          <div class="tense-forms">${renderTenseForms(v.present.forms)}</div>
+          <div class="tense-example">
+            ${renderExample(v.present.example)}
+            <button class="ex-speak-btn" onclick="speakExample('present')">🔊 Entendre l'exemple</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tense-card future">
+        <div class="tense-header">
+          <div class="tense-label-group">
+            <div class="tense-dot"></div>
+            <span class="tense-label">Futur</span>
+            <span class="tense-french">Future</span>
+          </div>
+          <button class="tense-speak" onclick="speakTense('future')">🔊 Écouter</button>
+        </div>
+        <div class="tense-body">
+          <div class="tense-forms">${renderTenseForms(v.future.forms)}</div>
+          <div class="tense-example">
+            ${renderExample(v.future.example)}
+            <button class="ex-speak-btn" onclick="speakExample('future')">🔊 Entendre l'exemple</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('cardArea').innerHTML = html;
+  updateProgress(list);
+  document.getElementById('prevBtn').disabled = currentIndex === 0;
+  document.getElementById('nextBtn').disabled = currentIndex === list.length - 1;
+}
+
+function updateProgress(list) {
+  const pct = ((currentIndex + 1) / list.length) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = `${currentIndex + 1} / ${list.length}`;
+}
+
+function navigate(dir) {
+  const list = getDisplayList();
+  const newIdx = currentIndex + dir;
+  if (newIdx < 0 || newIdx >= list.length) return;
+  currentIndex = newIdx;
+  render();
+}
+
+function toggleBookmark() {
+  const v = currentVerb();
+  if (bookmarks.includes(v.verb)) {
+    bookmarks = bookmarks.filter(b => b !== v.verb);
+    showToast('Removed from saved');
+  } else {
+    bookmarks.push(v.verb);
+    showToast('Saved! ⭐');
+  }
+  localStorage.setItem('frBookmarks', JSON.stringify(bookmarks));
+  render();
+}
+
+function toggleBookmarkFilter() {
+  showBookmarksOnly = !showBookmarksOnly;
+  currentIndex = 0;
+  document.getElementById('bookmarkFilterBtn').classList.toggle('active', showBookmarksOnly);
+  render();
+}
+
+// SEARCH
+function toggleSearch() {
+  const overlay = document.getElementById('searchOverlay');
+  overlay.classList.toggle('open');
+  if (overlay.classList.contains('open')) {
+    document.getElementById('searchInput').value = '';
+    filterSearch();
+    setTimeout(() => document.getElementById('searchInput').focus(), 100);
+  }
+}
+
+function filterSearch() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const results = document.getElementById('searchResults');
+  const filtered = VERBS.filter(v =>
+    v.verb.toLowerCase().includes(q) ||
+    v.translation.toLowerCase().includes(q)
+  ).slice(0, 30);
+
+  results.innerHTML = filtered.map((v, i) => {
+    const globalIdx = VERBS.indexOf(v);
+    return `<div class="search-result" onclick="goToVerb(${globalIdx})">
+      <span class="sr-num">${globalIdx + 1}</span>
+      <div>
+        <div class="sr-verb">${v.verb}</div>
+        <div class="sr-trans">${v.translation}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function goToVerb(globalIdx) {
+  showBookmarksOnly = false;
+  document.getElementById('bookmarkFilterBtn').classList.remove('active');
+  const list = getDisplayList();
+  currentIndex = list.indexOf(globalIdx);
+  if (currentIndex < 0) currentIndex = 0;
+  toggleSearch();
+  render();
+}
+
+// AUTOPLAY
+function toggleAuto() {
+  autoRunning = !autoRunning;
+  const btn = document.getElementById('autoBtn');
+  const bar = document.getElementById('autoBar');
+
+  if (autoRunning) {
+    btn.textContent = '⏸ Auto';
+    btn.classList.add('active');
+    bar.classList.add('active');
+    runAutoStep();
+  } else {
+    btn.textContent = '▶ Auto';
+    btn.classList.remove('active');
+    bar.classList.remove('active');
+    if (autoInterval) clearTimeout(autoInterval);
+  }
+}
+
+function runAutoStep() {
+  if (!autoRunning) return;
+  const v = currentVerb();
+  speakText(v.verb);
+
+  const fill = document.getElementById('autoFill');
+  fill.style.transition = 'none';
+  fill.style.width = '0%';
+  setTimeout(() => {
+    fill.style.transition = 'width 4s linear';
+    fill.style.width = '100%';
+  }, 50);
+
+  autoInterval = setTimeout(() => {
+    const list = getDisplayList();
+    if (currentIndex < list.length - 1) {
+      currentIndex++;
+      render();
+      runAutoStep();
+    } else {
+      toggleAuto();
+    }
+  }, 4000);
+}
+
+// QUIZ
+let quizVerbIdx = -1;
+
+function openQuiz() {
+  document.getElementById('quizOverlay').classList.add('open');
+  quizScore = { correct: 0, total: 0 };
+  updateQuizScore();
+  nextQuiz();
+}
+
+function closeQuiz() {
+  document.getElementById('quizOverlay').classList.remove('open');
+}
+
+function updateQuizScore() {
+  document.getElementById('quizScore').textContent = `Score: ${quizScore.correct} / ${quizScore.total}`;
+}
+
+function nextQuiz() {
+  document.getElementById('quizNextBtn').style.display = 'none';
+  // Pick random verb
+  quizVerbIdx = Math.floor(Math.random() * VERBS.length);
+  const v = VERBS[quizVerbIdx];
+  quizAnswer = v.translation;
+
+  document.getElementById('quizQ').textContent = v.verb;
+  document.getElementById('quizHint').textContent = 'What does this verb mean in English?';
+
+  // Wrong answers
+  const allTranslations = VERBS.map(vb => vb.translation).filter(t => t !== v.translation);
+  const shuffled = allTranslations.sort(() => Math.random() - 0.5).slice(0, 3);
+  const options = [...shuffled, v.translation].sort(() => Math.random() - 0.5);
+
+  document.getElementById('quizOpts').innerHTML = options.map(opt => `
+    <button class="quiz-opt" onclick="checkQuiz(this, '${opt.replace(/'/g, "\\'")}')">
+      ${opt}
+    </button>
+  `).join('');
+}
+
+function checkQuiz(btn, answer) {
+  const isCorrect = answer === quizAnswer;
+  quizScore.total++;
+  if (isCorrect) {
+    quizScore.correct++;
+    btn.classList.add('correct');
+    speakText(VERBS[quizVerbIdx].verb);
+  } else {
+    btn.classList.add('wrong');
+    // Show correct
+    document.querySelectorAll('.quiz-opt').forEach(b => {
+      if (b.textContent.trim() === quizAnswer) b.classList.add('correct');
+    });
+  }
+  document.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
+  updateQuizScore();
+  document.getElementById('quizNextBtn').style.display = 'flex';
+}
+
+// TOAST
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// KEYBOARD
+document.addEventListener('keydown', e => {
+  if (document.getElementById('searchOverlay').classList.contains('open')) return;
+  if (document.getElementById('quizOverlay').classList.contains('open')) return;
+  if (e.key === 'ArrowRight') navigate(1);
+  if (e.key === 'ArrowLeft') navigate(-1);
+  if (e.key === ' ') { e.preventDefault(); speakCurrent(); }
+  if (e.key === 'f' || e.key === 'F') toggleSearch();
+  if (e.key === 'b' || e.key === 'B') toggleBookmark();
+});
+
+// Close search on escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.getElementById('searchOverlay').classList.remove('open');
+    document.getElementById('quizOverlay').classList.remove('open');
+  }
+});
+
+// Init
+render();
+</script>
+</body>
+</html>
