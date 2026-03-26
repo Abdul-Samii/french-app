@@ -3,821 +3,292 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Parlez-Vous — French Verb Mastery</title>
+<title>Parlez-Vous — French A2→B1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #f7f3ed;
-    --page: #ede8e0;
-    --card: #faf8f4;
-    --card2: #f2ede4;
-    --border: #d4c9b8;
-    --border2: #c4b8a4;
-    --navy: #1a2d4a;
-    --navy2: #243d62;
-    --blue: #2e5496;
-    --blue2: #3a6ab8;
-    --terra: #c05e3a;
-    --terra2: #d97050;
-    --teal: #2a6b5a;
-    --teal2: #348a72;
-    --amber: #b07b20;
-    --amber2: #d09830;
-    --ink: #1a1816;
-    --ink2: #3a3630;
-    --muted: #7a7060;
-    --muted2: #9a9080;
-    --past-bg: #e8f2ee;
-    --past-border: #2a6b5a;
-    --past-text: #1a4035;
-    --present-bg: #fff8e8;
-    --present-border: #b07b20;
-    --present-text: #5a3c08;
-    --future-bg: #e8eef8;
-    --future-border: #2e5496;
-    --future-text: #12274a;
-    --radius: 14px;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Inter', system-ui, sans-serif;
-    background: var(--bg);
-    color: var(--ink);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
-  }
-
-  /* subtle dot pattern on body */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: radial-gradient(circle, #b8a88820 1px, transparent 1px);
-    background-size: 24px 24px;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* TOP BAR */
-  .topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 28px;
-    border-bottom: 2px solid var(--border);
-    position: sticky;
-    top: 0;
-    background: rgba(247,243,237,0.97);
-    backdrop-filter: blur(8px);
-    z-index: 100;
-  }
-
-  .logo {
-    font-family: 'Libre Baskerville', serif;
-    font-style: italic;
-    font-size: 1.45rem;
-    color: var(--navy);
-    letter-spacing: -0.01em;
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-  }
-
-  .logo-flag {
-    font-style: normal;
-    font-size: 1.2rem;
-  }
-
-  .logo-sub {
-    font-family: 'Inter', sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 0.7rem;
-    color: var(--muted);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border: 1px solid var(--border2);
-    border-radius: 4px;
-    background: var(--card2);
-  }
-
-  .progress-wrap {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex: 1;
-    max-width: 320px;
-    margin: 0 24px;
-  }
-
-  .progress-track {
-    flex: 1;
-    height: 6px;
-    background: var(--card2);
-    border-radius: 3px;
-    border: 1px solid var(--border);
-    overflow: hidden;
-  }
-
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--navy), var(--blue2));
-    border-radius: 3px;
-    transition: width 0.5s cubic-bezier(.4,0,.2,1);
-  }
-
-  .progress-label {
-    font-size: 0.75rem;
-    color: var(--muted);
-    white-space: nowrap;
-    font-weight: 500;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .top-actions {
-    display: flex;
-    gap: 8px;
-  }
-
-  .btn-icon {
-    background: var(--card);
-    border: 1.5px solid var(--border);
-    color: var(--ink2);
-    border-radius: 8px;
-    padding: 7px 13px;
-    font-size: 0.78rem;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    transition: all 0.15s;
-    letter-spacing: 0.01em;
-  }
-
-  .btn-icon:hover {
-    background: var(--card2);
-    border-color: var(--border2);
-  }
-
-  .btn-icon.active {
-    background: var(--navy);
-    border-color: var(--navy);
-    color: #fff;
-  }
-
-  /* MAIN LAYOUT */
-  .main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 28px 20px 48px;
-    gap: 18px;
-    max-width: 860px;
-    width: 100%;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* MAIN WORD CARD */
-  .word-card {
-    width: 100%;
-    background: var(--card);
-    border: 2px solid var(--border);
-    border-radius: 20px;
-    padding: 0;
-    overflow: hidden;
-    box-shadow: 0 2px 12px rgba(26,24,22,0.07), 0 1px 3px rgba(26,24,22,0.05);
-  }
-
-  .word-card-header {
-    background: var(--navy);
-    padding: 28px 36px 24px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .word-card-header::after {
-    content: '';
-    position: absolute;
-    top: -30px;
-    right: -30px;
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    border: 40px solid rgba(255,255,255,0.04);
-    pointer-events: none;
-  }
-
-  .verb-number {
-    font-size: 0.68rem;
-    color: rgba(255,255,255,0.45);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    font-weight: 500;
-    margin-bottom: 12px;
-  }
-
-  .verb-main-row {
-    display: flex;
-    align-items: flex-end;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-bottom: 10px;
-  }
-
-  .verb-word {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 3.8rem;
-    font-weight: 700;
-    color: #fff;
-    line-height: 1;
-    cursor: pointer;
-    transition: opacity 0.15s;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-
-  .verb-word:hover { opacity: 0.85; }
-
-  .speak-btn {
-    background: rgba(255,255,255,0.12);
-    border: 1.5px solid rgba(255,255,255,0.25);
-    border-radius: 50%;
-    width: 38px;
-    height: 38px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: #fff;
-    font-size: 0.95rem;
-    transition: all 0.15s;
-    flex-shrink: 0;
-  }
-
-  .speak-btn:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.5); }
-  .speak-btn.speaking { background: rgba(255,255,255,0.28); animation: pulse 0.6s infinite; }
-
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.12); }
-  }
-
-  .verb-translation {
-    font-size: 1.1rem;
-    color: rgba(255,255,255,0.6);
-    font-weight: 300;
-    font-style: italic;
-    font-family: 'Libre Baskerville', serif;
-    padding-bottom: 3px;
-  }
-
-  .verb-pron {
-    display: inline-block;
-    font-size: 0.82rem;
-    color: var(--navy);
-    background: #e8f0fa;
-    border: 1px solid #c0d0e8;
-    border-radius: 6px;
-    padding: 4px 11px;
-    letter-spacing: 0.05em;
-    font-weight: 500;
-    margin-top: 2px;
-  }
-
-  .word-card-body {
-    padding: 22px 36px 26px;
-  }
-
-  .tips-row {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-  }
-
-  .tips-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    background: #fff8e8;
-    border: 1.5px solid #e8d090;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.95rem;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-
-  .tips-content {}
-  .tips-label {
-    font-size: 0.68rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--amber);
-    font-weight: 600;
-    margin-bottom: 5px;
-  }
-
-  .tips-text {
-    font-size: 0.88rem;
-    color: var(--ink2);
-    line-height: 1.65;
-  }
-
-  .card-actions {
-    position: absolute;
-    top: 22px;
-    right: 26px;
-    display: flex;
-    gap: 8px;
-  }
-
-  .bm-btn {
-    background: rgba(255,255,255,0.1);
-    border: 1.5px solid rgba(255,255,255,0.2);
-    color: rgba(255,255,255,0.7);
-    border-radius: 8px;
-    padding: 6px 12px;
-    font-size: 0.75rem;
-    font-family: 'Inter', sans-serif;
-    cursor: pointer;
-    transition: all 0.15s;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-weight: 500;
-  }
-
-  .bm-btn:hover { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.4); color: #fff; }
-  .bm-btn.saved { background: #e8b830; border-color: #e8b830; color: var(--navy); }
-
-  /* TENSE GRID */
-  .tense-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-    width: 100%;
-  }
-
-  @media(max-width: 640px) {
-    .tense-grid { grid-template-columns: 1fr; }
-    .verb-word { font-size: 2.6rem; }
-    .word-card-header { padding: 22px 20px 20px; }
-    .word-card-body { padding: 18px 20px 20px; }
-  }
-
-  .tense-card {
-    background: var(--card);
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: 0 1px 4px rgba(26,24,22,0.04);
-  }
-
-  .tense-header {
-    padding: 14px 18px 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .past   .tense-header { background: var(--past-bg); border-bottom-color: rgba(42,107,90,0.2); }
-  .present .tense-header { background: var(--present-bg); border-bottom-color: rgba(176,123,32,0.2); }
-  .future  .tense-header { background: var(--future-bg); border-bottom-color: rgba(46,84,150,0.2); }
-
-  .tense-label-group { display: flex; align-items: center; gap: 8px; }
-
-  .tense-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .past .tense-dot   { background: var(--past-border); }
-  .present .tense-dot { background: var(--amber); }
-  .future .tense-dot  { background: var(--blue); }
-
-  .tense-label {
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .past .tense-label   { color: var(--past-text); }
-  .present .tense-label { color: var(--present-text); }
-  .future .tense-label  { color: var(--future-text); }
-
-  .tense-french {
-    font-size: 0.65rem;
-    font-family: 'Libre Baskerville', serif;
-    font-style: italic;
-  }
-
-  .past .tense-french   { color: var(--teal2); }
-  .present .tense-french { color: var(--amber); }
-  .future .tense-french  { color: var(--blue2); }
-
-  .tense-speak {
-    background: none;
-    border: 1px solid;
-    border-radius: 6px;
-    padding: 4px 9px;
-    font-size: 0.7rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    transition: all 0.15s;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-  }
-
-  .past .tense-speak   { border-color: var(--past-border); color: var(--teal); }
-  .present .tense-speak { border-color: var(--amber); color: var(--amber); }
-  .future .tense-speak  { border-color: var(--blue); color: var(--blue); }
-
-  .past .tense-speak:hover   { background: var(--past-border); color: #fff; }
-  .present .tense-speak:hover { background: var(--amber); color: #fff; }
-  .future .tense-speak:hover  { background: var(--blue); color: #fff; }
-
-  .tense-body { padding: 16px 18px 14px; }
-
-  .tense-forms {
-    font-size: 1.02rem;
-    color: var(--ink);
-    font-weight: 500;
-    line-height: 1.8;
-    margin-bottom: 12px;
-  }
-
-  .form-entry { display: flex; align-items: baseline; gap: 7px; flex-wrap: wrap; }
-  .form-word { font-weight: 600; color: var(--ink); }
-  .form-pron {
-    font-size: 0.72rem;
-    color: var(--muted2);
-    background: var(--card2);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 1px 5px;
-    font-family: 'Libre Baskerville', serif;
-    font-style: italic;
-  }
-
-  .tense-example {
-    font-size: 0.82rem;
-    line-height: 1.6;
-    padding-top: 10px;
-    border-top: 1px dashed var(--border);
-  }
-
-  .tense-example .fr {
-    color: var(--ink2);
-    font-weight: 500;
-    font-family: 'Libre Baskerville', serif;
-    font-style: italic;
-    margin-bottom: 3px;
-  }
-
-  .tense-example .en {
-    color: var(--muted);
-    font-size: 0.78rem;
-    margin-bottom: 8px;
-  }
-
-  .ex-speak-btn {
-    background: none;
-    border: none;
-    font-size: 0.72rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 0;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    transition: opacity 0.15s;
-  }
-
-  .past .ex-speak-btn   { color: var(--teal); }
-  .present .ex-speak-btn { color: var(--amber); }
-  .future .ex-speak-btn  { color: var(--blue); }
-  .ex-speak-btn:hover { opacity: 0.7; }
-
-  /* NAV */
-  .nav-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    width: 100%;
-  }
-
-  .btn-nav {
-    background: var(--card);
-    border: 1.5px solid var(--border);
-    color: var(--ink2);
-    border-radius: 12px;
-    padding: 12px 28px;
-    font-size: 0.88rem;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.15s;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    box-shadow: 0 1px 3px rgba(26,24,22,0.06);
-  }
-
-  .btn-nav:hover { background: var(--card2); border-color: var(--border2); }
-
-  .btn-nav.primary {
-    background: var(--navy);
-    border-color: var(--navy);
-    color: #fff;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-  }
-
-  .btn-nav.primary:hover { background: var(--navy2); }
-  .btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
-
-  /* SEARCH PANEL */
-  .search-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(26,45,74,0.55);
-    z-index: 200;
-    display: none;
-    align-items: flex-start;
-    justify-content: center;
-    padding-top: 80px;
-  }
-
-  .search-overlay.open { display: flex; }
-
-  .search-box {
-    background: var(--card);
-    border: 2px solid var(--border);
-    border-radius: 18px;
-    width: 100%;
-    max-width: 540px;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(26,24,22,0.18);
-  }
-
-  .search-input-row {
-    display: flex;
-    align-items: center;
-    padding: 14px 18px;
-    gap: 10px;
-    border-bottom: 1.5px solid var(--border);
-    background: var(--card2);
-  }
-
-  .search-icon { color: var(--muted); font-size: 0.95rem; }
-
-  .search-input {
-    flex: 1;
-    background: none;
-    border: none;
-    color: var(--ink);
-    font-size: 1rem;
-    font-family: 'Inter', sans-serif;
-    outline: none;
-  }
-
-  .search-input::placeholder { color: var(--muted2); }
-
-  .search-close {
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    border-radius: 6px;
-    width: 28px;
-    height: 28px;
-    font-size: 0.85rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.15s;
-  }
-
-  .search-close:hover { background: var(--card); color: var(--ink); }
-
-  .search-results { max-height: 400px; overflow-y: auto; }
-
-  .search-result {
-    padding: 12px 18px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    cursor: pointer;
-    transition: background 0.12s;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .search-result:hover { background: var(--card2); }
-  .search-result:last-child { border-bottom: none; }
-
-  .sr-num {
-    font-size: 0.68rem;
-    color: var(--muted2);
-    width: 28px;
-    font-variant-numeric: tabular-nums;
-    font-weight: 500;
-  }
-
-  .sr-verb {
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--navy);
-    font-family: 'Libre Baskerville', serif;
-  }
-
-  .sr-trans { font-size: 0.8rem; color: var(--muted); font-style: italic; }
-
-  /* Card animation */
-  .card-enter {
-    animation: cardIn 0.32s cubic-bezier(0.34,1.4,0.64,1);
-  }
-
-  @keyframes cardIn {
-    from { opacity: 0; transform: translateY(10px) scale(0.99); }
-    to   { opacity: 1; transform: translateY(0) scale(1); }
-  }
-
-  .loading {
-    text-align: center;
-    padding: 80px;
-    color: var(--muted);
-    font-size: 1.1rem;
-    font-style: italic;
-    font-family: 'Libre Baskerville', serif;
-  }
-
-  /* Toast */
-  .toast {
-    position: fixed;
-    bottom: 28px;
-    left: 50%;
-    transform: translateX(-50%) translateY(80px);
-    background: var(--navy);
-    color: #fff;
-    padding: 10px 22px;
-    border-radius: 50px;
-    font-size: 0.82rem;
-    font-weight: 500;
-    z-index: 300;
-    transition: transform 0.28s cubic-bezier(.34,1.4,.64,1);
-    pointer-events: none;
-    letter-spacing: 0.01em;
-  }
-
-  .toast.show { transform: translateX(-50%) translateY(0); }
-
-  /* Autoplay bar */
-  .autoplay-bar {
-    width: 100%;
-    height: 3px;
-    background: var(--card2);
-    border-radius: 2px;
-    overflow: hidden;
-    display: none;
-    border: 1px solid var(--border);
-  }
-
-  .autoplay-bar.active { display: block; }
-
-  .autoplay-fill {
-    height: 100%;
-    background: var(--navy);
-    border-radius: 2px;
-    width: 0%;
-    transition: width linear;
-  }
-
-  /* Quiz */
-  .quiz-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(26,45,74,0.65);
-    z-index: 150;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-    padding: 24px;
-  }
-
-  .quiz-overlay.open { display: flex; }
-
-  .quiz-card {
-    background: var(--card);
-    border: 2px solid var(--border);
-    border-radius: 20px;
-    padding: 36px 40px;
-    max-width: 480px;
-    width: 100%;
-    text-align: center;
-    box-shadow: 0 20px 60px rgba(26,24,22,0.14);
-  }
-
-  .quiz-question {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 3rem;
-    color: var(--navy);
-    margin-bottom: 8px;
-    font-weight: 700;
-  }
-
-  .quiz-hint { font-size: 0.85rem; color: var(--muted); margin-bottom: 24px; }
-
-  .quiz-options {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 18px;
-  }
-
-  .quiz-opt {
-    background: var(--card2);
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    padding: 13px 10px;
-    color: var(--ink);
-    cursor: pointer;
-    font-size: 0.88rem;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    transition: all 0.15s;
-    text-align: center;
-    line-height: 1.3;
-  }
-
-  .quiz-opt:hover { border-color: var(--navy); color: var(--navy); background: var(--future-bg); }
-  .quiz-opt.correct { border-color: var(--teal); background: var(--past-bg); color: var(--teal); }
-  .quiz-opt.wrong { border-color: var(--terra); background: #faeee8; color: var(--terra); }
-  .quiz-opt:disabled { cursor: not-allowed; }
-
-  .quiz-score { font-size: 0.88rem; color: rgba(255,255,255,0.8); font-weight: 500; }
-
-  .quiz-title {
-    font-family: 'Libre Baskerville', serif;
-    font-style: italic;
-    font-size: 1.4rem;
-    color: #fff;
-    margin-bottom: 3px;
-  }
-
-  .quiz-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-  }
+:root {
+  --bg: #f7f3ed;
+  --card: #faf8f4;
+  --card2: #f0ebe0;
+  --border: #d4c9b8;
+  --border2: #c0b4a0;
+  --navy: #1a2d4a;
+  --navy2: #243d62;
+  --blue: #2e5496;
+  --blue2: #3a6ab8;
+  --terra: #b85030;
+  --terra2: #d06848;
+  --teal: #2a6b5a;
+  --teal2: #348a72;
+  --amber: #a06818;
+  --amber2: #c08828;
+  --plum: #6b3a6b;
+  --plum2: #8a4e8a;
+  --green: #3a6828;
+  --green2: #4e8838;
+  --ink: #1a1816;
+  --ink2: #3a3630;
+  --muted: #706858;
+  --muted2: #9a9080;
+  --past-bg: #e8f2ee; --past-border: #2a6b5a; --past-text: #1a4035;
+  --pres-bg: #fff8e8; --pres-border: #a06818; --pres-text: #5a3c08;
+  --fut-bg: #e8eef8; --fut-border: #2e5496; --fut-text: #12274a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle,#b8a88818 1px,transparent 1px);background-size:24px 24px;pointer-events:none;z-index:0}
+
+/* ── TOPBAR ── */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-bottom:2px solid var(--border);position:sticky;top:0;background:rgba(247,243,237,0.97);backdrop-filter:blur(8px);z-index:100;gap:16px}
+.logo{font-family:'Libre Baskerville',serif;font-style:italic;font-size:1.35rem;color:var(--navy);white-space:nowrap;display:flex;align-items:baseline;gap:8px}
+.logo-badge{font-style:normal;font-family:'Inter',sans-serif;font-weight:600;font-size:0.62rem;color:var(--terra);background:#faeee8;border:1px solid #e8c0b0;border-radius:4px;padding:2px 7px;letter-spacing:0.08em;text-transform:uppercase}
+.progress-wrap{display:flex;align-items:center;gap:8px;flex:1;max-width:280px}
+.progress-track{flex:1;height:5px;background:var(--card2);border-radius:3px;border:1px solid var(--border);overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--navy),var(--blue2));border-radius:3px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.progress-label{font-size:0.72rem;color:var(--muted);white-space:nowrap;font-weight:500;font-variant-numeric:tabular-nums}
+.top-actions{display:flex;gap:6px;flex-shrink:0}
+.btn-icon{background:var(--card);border:1.5px solid var(--border);color:var(--ink2);border-radius:8px;padding:6px 11px;font-size:0.76rem;font-family:'Inter',sans-serif;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:4px;transition:all .15s;white-space:nowrap}
+.btn-icon:hover{background:var(--card2);border-color:var(--border2)}
+.btn-icon.active{background:var(--navy);border-color:var(--navy);color:#fff}
+
+/* ── NAV TABS ── */
+.nav-tabs{display:flex;overflow-x:auto;border-bottom:2px solid var(--border);background:var(--card);position:sticky;top:57px;z-index:90;scrollbar-width:none}
+.nav-tabs::-webkit-scrollbar{display:none}
+.nav-tab{display:flex;align-items:center;gap:7px;padding:13px 20px;font-size:0.8rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;white-space:nowrap;border:none;background:none;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;letter-spacing:0.01em}
+.nav-tab:hover{color:var(--ink);background:var(--bg)}
+.nav-tab.active{color:var(--navy);border-bottom-color:var(--navy)}
+.nav-tab .tab-icon{font-size:1rem;line-height:1}
+.nav-tab .tab-count{font-size:0.65rem;background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;font-weight:500;color:var(--muted2)}
+.nav-tab.active .tab-count{background:var(--navy);border-color:var(--navy);color:#fff}
+
+/* ── SECTIONS ── */
+.section{display:none;flex-direction:column;align-items:center;padding:24px 20px 48px;gap:16px;max-width:900px;width:100%;margin:0 auto;position:relative;z-index:1}
+.section.active{display:flex}
+
+/* ── SHARED CARD ── */
+.word-card{width:100%;background:var(--card);border:2px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 2px 12px rgba(26,24,22,.07)}
+.word-card-header{padding:26px 32px 22px;position:relative;overflow:hidden}
+.word-card-header::after{content:'';position:absolute;top:-30px;right:-30px;width:160px;height:160px;border-radius:50%;border:36px solid rgba(255,255,255,.04);pointer-events:none}
+.wch-navy{background:var(--navy)}
+.wch-terra{background:var(--terra)}
+.wch-teal{background:var(--teal)}
+.wch-plum{background:var(--plum)}
+.wch-amber{background:#6b4a10}
+.wch-green{background:var(--green)}
+.word-card-body{padding:20px 32px 24px}
+.card-num{font-size:0.66rem;color:rgba(255,255,255,.42);letter-spacing:.14em;text-transform:uppercase;font-weight:500;margin-bottom:10px}
+.card-main-row{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:8px}
+.card-word{font-family:'Libre Baskerville',serif;font-size:3.2rem;font-weight:700;color:#fff;line-height:1;cursor:pointer;transition:opacity .15s;display:flex;align-items:center;gap:12px}
+.card-word:hover{opacity:.85}
+.speak-btn{background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;font-size:.9rem;transition:all .15s;flex-shrink:0}
+.speak-btn:hover{background:rgba(255,255,255,.22)}
+.speak-btn.speaking{background:rgba(255,255,255,.28);animation:pulse .6s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.card-sub{font-size:1rem;color:rgba(255,255,255,.58);font-weight:300;font-style:italic;font-family:'Libre Baskerville',serif;padding-bottom:2px}
+.card-pron{display:inline-block;font-size:0.8rem;color:var(--navy);background:#e8f0fa;border:1px solid #c0d0e8;border-radius:6px;padding:3px 10px;letter-spacing:.05em;font-weight:500;margin-top:2px}
+.card-pron.terra{color:var(--terra);background:#faeee8;border-color:#e8c0b0}
+.card-pron.teal{color:var(--teal);background:#e8f2ee;border-color:#b0d8cc}
+.card-pron.plum{color:var(--plum);background:#f0e8f0;border-color:#d0b0d0}
+.card-pron.amber{color:#7a5010;background:#fff4d8;border-color:#e0c070}
+.card-pron.green{color:var(--green);background:#eaf4e0;border-color:#b0d890}
+.card-actions{position:absolute;top:18px;right:22px;display:flex;gap:6px}
+.bm-btn{background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);border-radius:8px;padding:5px 11px;font-size:.73rem;font-family:'Inter',sans-serif;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:4px;font-weight:500}
+.bm-btn:hover{background:rgba(255,255,255,.18);color:#fff}
+.bm-btn.saved{background:#e8b830;border-color:#e8b830;color:var(--navy)}
+
+/* ── TIP ROW ── */
+.tips-row{display:flex;gap:10px;align-items:flex-start}
+.tips-icon{width:30px;height:30px;border-radius:8px;background:#fff8e8;border:1.5px solid #e8d090;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;margin-top:1px}
+.tips-label{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--amber2);font-weight:600;margin-bottom:4px}
+.tips-text{font-size:.86rem;color:var(--ink2);line-height:1.65}
+
+/* ── TENSE GRID (verbs) ── */
+.tense-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:100%}
+@media(max-width:640px){.tense-grid{grid-template-columns:1fr}.card-word{font-size:2.4rem}.word-card-header{padding:20px 18px 18px}.word-card-body{padding:16px 18px 20px}.topbar{padding:10px 14px}.nav-tab{padding:11px 14px;font-size:.74rem}}
+.tense-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 1px 4px rgba(26,24,22,.04)}
+.tense-header{padding:12px 16px 10px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.past .tense-header{background:var(--past-bg);border-bottom-color:rgba(42,107,90,.18)}
+.present .tense-header{background:var(--pres-bg);border-bottom-color:rgba(160,104,24,.18)}
+.future .tense-header{background:var(--fut-bg);border-bottom-color:rgba(46,84,150,.18)}
+.tense-label-group{display:flex;align-items:center;gap:7px}
+.tense-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.past .tense-dot{background:var(--past-border)} .present .tense-dot{background:var(--amber)} .future .tense-dot{background:var(--blue)}
+.tense-label{font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+.past .tense-label{color:var(--past-text)} .present .tense-label{color:var(--pres-text)} .future .tense-label{color:var(--fut-text)}
+.tense-french{font-size:.64rem;font-family:'Libre Baskerville',serif;font-style:italic}
+.past .tense-french{color:var(--teal2)} .present .tense-french{color:var(--amber)} .future .tense-french{color:var(--blue2)}
+.tense-speak{background:none;border:1px solid;border-radius:6px;padding:3px 8px;font-size:.68rem;cursor:pointer;display:flex;align-items:center;gap:3px;transition:all .15s;font-family:'Inter',sans-serif;font-weight:500}
+.past .tense-speak{border-color:var(--past-border);color:var(--teal)} .present .tense-speak{border-color:var(--amber);color:var(--amber)} .future .tense-speak{border-color:var(--blue);color:var(--blue)}
+.past .tense-speak:hover{background:var(--past-border);color:#fff} .present .tense-speak:hover{background:var(--amber);color:#fff} .future .tense-speak:hover{background:var(--blue);color:#fff}
+.tense-body{padding:14px 16px 12px}
+.tense-forms{font-size:1rem;color:var(--ink);font-weight:500;line-height:1.8;margin-bottom:10px}
+.form-entry{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.form-word{font-weight:600;color:var(--ink)}
+.form-pron{font-size:.7rem;color:var(--muted2);background:var(--card2);border:1px solid var(--border);border-radius:4px;padding:1px 4px;font-family:'Libre Baskerville',serif;font-style:italic}
+.tense-example{font-size:.8rem;line-height:1.6;padding-top:9px;border-top:1px dashed var(--border)}
+.tense-example .fr{color:var(--ink2);font-weight:500;font-family:'Libre Baskerville',serif;font-style:italic;margin-bottom:2px}
+.tense-example .en{color:var(--muted);font-size:.76rem;margin-bottom:7px}
+.ex-speak-btn{background:none;border:none;font-size:.7rem;cursor:pointer;display:flex;align-items:center;gap:3px;padding:0;font-family:'Inter',sans-serif;font-weight:500;transition:opacity .15s}
+.past .ex-speak-btn{color:var(--teal)} .present .ex-speak-btn{color:var(--amber)} .future .ex-speak-btn{color:var(--blue)}
+.ex-speak-btn:hover{opacity:.7}
+
+/* ── INFO ROWS ── */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
+@media(max-width:540px){.info-grid{grid-template-columns:1fr}}
+.info-box{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px}
+.info-box-label{font-size:.65rem;letter-spacing:.11em;text-transform:uppercase;font-weight:600;margin-bottom:6px}
+.info-box-text{font-size:.88rem;line-height:1.6;color:var(--ink2)}
+.info-box-text .hi{font-weight:700;font-family:'Libre Baskerville',serif}
+.info-box-text .em{font-style:italic;color:var(--muted)}
+
+/* coloured info-box variants */
+.ib-red .info-box-label{color:#a02020} .ib-red{border-color:#e8c0c0;background:#fdf4f4}
+.ib-green .info-box-label{color:var(--teal)} .ib-green{border-color:#b0d8cc;background:#f0f8f4}
+.ib-amber .info-box-label{color:var(--amber)} .ib-amber{border-color:#e0c070;background:#fffaee}
+.ib-blue .info-box-label{color:var(--blue)} .ib-blue{border-color:#b8d0f0;background:#f0f4fc}
+.ib-plum .info-box-label{color:var(--plum)} .ib-plum{border-color:#d0b0d0;background:#f8f0f8}
+
+/* ── GRAMMAR SPECIAL ── */
+.grammar-card{width:100%;background:var(--card);border:2px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 2px 12px rgba(26,24,22,.07)}
+.grammar-header{background:var(--green);padding:22px 30px 20px;position:relative;overflow:hidden}
+.grammar-header::after{content:'';position:absolute;top:-30px;right:-30px;width:160px;height:160px;border-radius:50%;border:36px solid rgba(255,255,255,.04);pointer-events:none}
+.grammar-body{padding:20px 30px 24px;display:flex;flex-direction:column;gap:14px}
+.example-row{background:var(--card2);border:1.5px solid var(--border);border-radius:10px;padding:12px 16px}
+.example-row-label{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;margin-bottom:5px}
+.example-row-label.past{color:var(--past-border)} .example-row-label.present{color:var(--amber)} .example-row-label.future{color:var(--blue)} .example-row-label.rule{color:var(--green)} .example-row-label.wrong{color:var(--terra)} .example-row-label.correct{color:var(--teal)}
+.example-fr{font-family:'Libre Baskerville',serif;font-style:italic;font-size:.92rem;font-weight:700;color:var(--ink);margin-bottom:3px;display:flex;align-items:center;gap:8px}
+.example-en{font-size:.8rem;color:var(--muted);margin-bottom:6px}
+
+/* ── WRONG/RIGHT TAGS ── */
+.tag-wrong{display:inline-block;background:#faeee8;border:1px solid #e8c0b0;color:var(--terra);border-radius:5px;font-size:.68rem;font-weight:600;padding:2px 7px;letter-spacing:.05em;font-style:normal}
+.tag-right{display:inline-block;background:var(--past-bg);border:1px solid #b0d8cc;color:var(--teal);border-radius:5px;font-size:.68rem;font-weight:600;padding:2px 7px;letter-spacing:.05em;font-style:normal}
+
+/* ── SPEAK EXAMPLE BTN ── */
+.speak-example-btn{background:none;border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:.7rem;font-family:'Inter',sans-serif;font-weight:500;cursor:pointer;padding:3px 8px;display:inline-flex;align-items:center;gap:3px;transition:all .15s;margin-top:4px}
+.speak-example-btn:hover{border-color:var(--navy);color:var(--navy)}
+
+/* ── NAV ROW ── */
+.nav-row{display:flex;align-items:center;justify-content:center;gap:10px;width:100%}
+.btn-nav{background:var(--card);border:1.5px solid var(--border);color:var(--ink2);border-radius:12px;padding:11px 24px;font-size:.86rem;font-family:'Inter',sans-serif;font-weight:500;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px;box-shadow:0 1px 3px rgba(26,24,22,.06)}
+.btn-nav:hover{background:var(--card2);border-color:var(--border2)}
+.btn-nav.primary{background:var(--navy);border-color:var(--navy);color:#fff;font-weight:600}
+.btn-nav.primary:hover{background:var(--navy2)}
+.btn-nav:disabled{opacity:.3;cursor:not-allowed}
+
+/* ── CARD ANIMATION ── */
+.card-enter{animation:cardIn .32s cubic-bezier(.34,1.4,.64,1)}
+@keyframes cardIn{from{opacity:0;transform:translateY(10px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
+.loading{text-align:center;padding:80px;color:var(--muted);font-size:1.1rem;font-style:italic;font-family:'Libre Baskerville',serif}
+
+/* ── AUTOPLAY BAR ── */
+.autoplay-bar{width:100%;height:3px;background:var(--card2);border-radius:2px;overflow:hidden;display:none;border:1px solid var(--border)}
+.autoplay-bar.active{display:block}
+.autoplay-fill{height:100%;background:var(--navy);border-radius:2px;width:0%;transition:width linear}
+
+/* ── SEARCH ── */
+.search-overlay{position:fixed;inset:0;background:rgba(26,45,74,.55);z-index:200;display:none;align-items:flex-start;justify-content:center;padding-top:90px}
+.search-overlay.open{display:flex}
+.search-box{background:var(--card);border:2px solid var(--border);border-radius:18px;width:100%;max-width:520px;overflow:hidden;box-shadow:0 20px 60px rgba(26,24,22,.18)}
+.search-input-row{display:flex;align-items:center;padding:13px 16px;gap:9px;border-bottom:1.5px solid var(--border);background:var(--card2)}
+.search-input{flex:1;background:none;border:none;color:var(--ink);font-size:.97rem;font-family:'Inter',sans-serif;outline:none}
+.search-input::placeholder{color:var(--muted2)}
+.search-close{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;width:26px;height:26px;font-size:.82rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.search-close:hover{background:var(--card);color:var(--ink)}
+.search-results{max-height:400px;overflow-y:auto}
+.search-result{padding:11px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:background .12s;border-bottom:1px solid var(--border)}
+.search-result:hover{background:var(--card2)}
+.search-result:last-child{border-bottom:none}
+.sr-num{font-size:.67rem;color:var(--muted2);width:26px;font-variant-numeric:tabular-nums;font-weight:500}
+.sr-verb{font-weight:700;font-size:.97rem;color:var(--navy);font-family:'Libre Baskerville',serif}
+.sr-trans{font-size:.78rem;color:var(--muted);font-style:italic}
+.sr-section{font-size:.63rem;background:var(--card2);border:1px solid var(--border);border-radius:4px;padding:1px 5px;color:var(--muted);font-weight:500;letter-spacing:.04em}
+
+/* ── QUIZ ── */
+.quiz-overlay{position:fixed;inset:0;background:rgba(26,45,74,.65);z-index:150;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px}
+.quiz-overlay.open{display:flex}
+.quiz-card{background:var(--card);border:2px solid var(--border);border-radius:20px;padding:32px 36px;max-width:460px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(26,24,22,.14)}
+.quiz-question{font-family:'Libre Baskerville',serif;font-size:2.6rem;color:var(--navy);margin-bottom:7px;font-weight:700;line-height:1.15}
+.quiz-hint{font-size:.83rem;color:var(--muted);margin-bottom:20px}
+.quiz-options{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:16px}
+.quiz-opt{background:var(--card2);border:1.5px solid var(--border);border-radius:10px;padding:12px 10px;color:var(--ink);cursor:pointer;font-size:.85rem;font-family:'Inter',sans-serif;font-weight:500;transition:all .15s;text-align:center;line-height:1.3}
+.quiz-opt:hover{border-color:var(--navy);color:var(--navy);background:var(--fut-bg)}
+.quiz-opt.correct{border-color:var(--teal);background:var(--past-bg);color:var(--teal)}
+.quiz-opt.wrong{border-color:var(--terra);background:#faeee8;color:var(--terra)}
+.quiz-opt:disabled{cursor:not-allowed}
+.quiz-score{font-size:.86rem;color:rgba(255,255,255,.8);font-weight:500}
+.quiz-title{font-family:'Libre Baskerville',serif;font-style:italic;font-size:1.3rem;color:#fff;margin-bottom:2px}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--navy);color:#fff;padding:9px 20px;border-radius:50px;font-size:.8rem;font-weight:500;z-index:300;transition:transform .28s cubic-bezier(.34,1.4,.64,1);pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ── CATEGORY PILL ── */
+.category-pill{display:inline-block;font-size:.65rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-radius:5px;padding:2px 8px;margin-right:4px}
+.pill-contrast{background:#e8eef8;color:var(--blue);border:1px solid #c0d0f0}
+.pill-concession{background:#f0e8f0;color:var(--plum);border:1px solid #d0b0d0}
+.pill-addition{background:var(--past-bg);color:var(--teal);border:1px solid #b0d8cc}
+.pill-consequence{background:#fff4d8;color:#7a5010;border:1px solid #e0c070}
+.pill-clarification{background:#faeee8;color:var(--terra);border:1px solid #e8c0b0}
+.pill-topic{background:#f4f4e8;color:#605820;border:1px solid #d8d090}
+.pill-gradation{background:#f8f0f8;color:var(--plum);border:1px solid #d0b0d0}
+.pill-condition{background:#f0f8f4;color:var(--teal);border:1px solid #b0d8cc}
+.pill-progression{background:#fff8e8;color:var(--amber);border:1px solid #e8d090}
+.pill-reference{background:var(--fut-bg);color:var(--blue);border:1px solid #b8d0f0}
+.pill-logical{background:#f4f0fc;color:#5040a0;border:1px solid #c8c0e8}
+.pill-time{background:#e8f8f8;color:#205858;border:1px solid #a0d0d0}
+.pill-cause{background:#fff4e8;color:#804020;border:1px solid #d8b080}
+
+/* ── COMPARE ROW ── */
+.compare-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.compare-item{font-size:.76rem;background:var(--card2);border:1px solid var(--border);border-radius:6px;padding:3px 9px;color:var(--ink2);font-family:'Libre Baskerville',serif;font-style:italic;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:4px}
+.compare-item:hover{border-color:var(--navy);color:var(--navy)}
+.compare-label{font-size:.66rem;color:var(--muted);font-style:normal;font-family:'Inter',sans-serif}
 </style>
 </head>
 <body>
 
+<!-- TOP BAR -->
 <div class="topbar">
-  <div class="logo">
-    <span class="logo-flag">🇫🇷</span>
-    Parlez-Vous
-    <span class="logo-sub">194 Verbs</span>
-  </div>
+  <div class="logo">🇫🇷 Parlez-Vous <span class="logo-badge">A2→B1</span></div>
   <div class="progress-wrap">
-    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-    <span class="progress-label" id="progressLabel">1 / 194</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:1%"></div></div>
+    <span class="progress-label" id="progressLabel">1 / ?</span>
   </div>
   <div class="top-actions">
-    <button class="btn-icon" onclick="toggleSearch()" title="Search verbs">🔍 Search</button>
+    <button class="btn-icon" onclick="toggleSearch()">🔍 Search</button>
     <button class="btn-icon" id="autoBtn" onclick="toggleAuto()">▶ Auto</button>
     <button class="btn-icon" onclick="openQuiz()">🎯 Quiz</button>
-    <button class="btn-icon" id="bookmarkFilterBtn" onclick="toggleBookmarkFilter()">⭐ Saved</button>
+    <button class="btn-icon" id="bmFilterBtn" onclick="toggleBookmarkFilter()">⭐ Saved</button>
   </div>
 </div>
 
-<div class="main">
-  <div class="autoplay-bar" id="autoBar"><div class="autoplay-fill" id="autoFill"></div></div>
-  <div id="cardArea" class="loading">Chargement des verbes…</div>
+<!-- NAV TABS -->
+<div class="nav-tabs" id="navTabs">
+  <button class="nav-tab active" data-section="verbes" onclick="switchSection('verbes',this)">
+    <span class="tab-icon">🔤</span> Verbes <span class="tab-count">194</span>
+  </button>
+  <button class="nav-tab" data-section="expressions" onclick="switchSection('expressions',this)">
+    <span class="tab-icon">💬</span> Expressions <span class="tab-count">20</span>
+  </button>
+  <button class="nav-tab" data-section="faux-amis" onclick="switchSection('faux-amis',this)">
+    <span class="tab-icon">⚠️</span> Faux Amis <span class="tab-count">20</span>
+  </button>
+  <button class="nav-tab" data-section="collocations" onclick="switchSection('collocations',this)">
+    <span class="tab-icon">🔗</span> Collocations <span class="tab-count">20</span>
+  </button>
+  <button class="nav-tab" data-section="connecteurs" onclick="switchSection('connecteurs',this)">
+    <span class="tab-icon">🧵</span> Connecteurs <span class="tab-count">19</span>
+  </button>
+  <button class="nav-tab" data-section="grammaire" onclick="switchSection('grammaire',this)">
+    <span class="tab-icon">📐</span> Grammaire <span class="tab-count">12</span>
+  </button>
+</div>
 
+<!-- ══════════ SECTION: VERBES ══════════ -->
+<div class="section active" id="section-verbes">
+  <div class="autoplay-bar" id="autoBar"><div class="autoplay-fill" id="autoFill"></div></div>
+  <div id="cardArea" class="loading" style="width:100%">Chargement des verbes…</div>
   <div class="nav-row">
     <button class="btn-nav" id="prevBtn" onclick="navigate(-1)">← Précédent</button>
     <button class="btn-nav primary" onclick="speakCurrent()">🔊 Prononcer</button>
@@ -825,26 +296,76 @@
   </div>
 </div>
 
-<!-- Search -->
+<!-- ══════════ SECTION: EXPRESSIONS ══════════ -->
+<div class="section" id="section-expressions">
+  <div id="exprArea" class="loading" style="width:100%">…</div>
+  <div class="nav-row">
+    <button class="btn-nav" id="exprPrev" onclick="navigateSection('expr',-1)">← Précédent</button>
+    <button class="btn-nav primary" onclick="speakSectionCurrent('expr')">🔊 Écouter</button>
+    <button class="btn-nav" id="exprNext" onclick="navigateSection('expr',1)">Suivant →</button>
+  </div>
+</div>
+
+<!-- ══════════ SECTION: FAUX AMIS ══════════ -->
+<div class="section" id="section-faux-amis">
+  <div id="fauxArea" class="loading" style="width:100%">…</div>
+  <div class="nav-row">
+    <button class="btn-nav" id="fauxPrev" onclick="navigateSection('faux',-1)">← Précédent</button>
+    <button class="btn-nav primary" onclick="speakSectionCurrent('faux')">🔊 Écouter</button>
+    <button class="btn-nav" id="fauxNext" onclick="navigateSection('faux',1)">Suivant →</button>
+  </div>
+</div>
+
+<!-- ══════════ SECTION: COLLOCATIONS ══════════ -->
+<div class="section" id="section-collocations">
+  <div id="collArea" class="loading" style="width:100%">…</div>
+  <div class="nav-row">
+    <button class="btn-nav" id="collPrev" onclick="navigateSection('coll',-1)">← Précédent</button>
+    <button class="btn-nav primary" onclick="speakSectionCurrent('coll')">🔊 Écouter</button>
+    <button class="btn-nav" id="collNext" onclick="navigateSection('coll',1)">Suivant →</button>
+  </div>
+</div>
+
+<!-- ══════════ SECTION: CONNECTEURS ══════════ -->
+<div class="section" id="section-connecteurs">
+  <div id="connArea" class="loading" style="width:100%">…</div>
+  <div class="nav-row">
+    <button class="btn-nav" id="connPrev" onclick="navigateSection('conn',-1)">← Précédent</button>
+    <button class="btn-nav primary" onclick="speakSectionCurrent('conn')">🔊 Écouter</button>
+    <button class="btn-nav" id="connNext" onclick="navigateSection('conn',1)">Suivant →</button>
+  </div>
+</div>
+
+<!-- ══════════ SECTION: GRAMMAIRE ══════════ -->
+<div class="section" id="section-grammaire">
+  <div id="gramArea" class="loading" style="width:100%">…</div>
+  <div class="nav-row">
+    <button class="btn-nav" id="gramPrev" onclick="navigateSection('gram',-1)">← Précédent</button>
+    <button class="btn-nav primary" onclick="speakSectionCurrent('gram')">🔊 Écouter</button>
+    <button class="btn-nav" id="gramNext" onclick="navigateSection('gram',1)">Suivant →</button>
+  </div>
+</div>
+
+<!-- SEARCH OVERLAY -->
 <div class="search-overlay" id="searchOverlay">
   <div class="search-box">
     <div class="search-input-row">
-      <span class="search-icon">🔍</span>
-      <input class="search-input" id="searchInput" placeholder="Rechercher un verbe en français ou en anglais…" oninput="filterSearch()">
+      <span style="color:var(--muted)">🔍</span>
+      <input class="search-input" id="searchInput" placeholder="Rechercher dans toutes les sections…" oninput="filterSearch()">
       <button class="search-close" onclick="toggleSearch()">✕</button>
     </div>
     <div class="search-results" id="searchResults"></div>
   </div>
 </div>
 
-<!-- Quiz -->
-<div class="quiz-overlay" id="quizOverlay" style="position:fixed;">
-  <div class="quiz-title">Quiz de conjugaison</div>
+<!-- QUIZ OVERLAY -->
+<div class="quiz-overlay" id="quizOverlay">
+  <div class="quiz-title">🎯 Quiz A2→B1</div>
   <div class="quiz-score" id="quizScore">Score: 0 / 0</div>
-  <div class="quiz-card" style="position:relative;">
-    <button class="btn-nav quiz-close" onclick="closeQuiz()" style="position:absolute;top:14px;right:14px;padding:6px 12px;font-size:0.78rem;">✕ Fermer</button>
+  <div class="quiz-card" style="position:relative">
+    <button class="btn-nav" onclick="closeQuiz()" style="position:absolute;top:12px;right:12px;padding:5px 11px;font-size:.74rem">✕ Fermer</button>
     <div class="quiz-question" id="quizQ">—</div>
-    <div class="quiz-hint" id="quizHint">Que signifie ce verbe ?</div>
+    <div class="quiz-hint" id="quizHint">Que signifie cette expression ?</div>
     <div class="quiz-options" id="quizOpts"></div>
   </div>
   <button class="btn-nav primary" onclick="nextQuiz()" style="display:none" id="quizNextBtn">Question suivante →</button>
@@ -853,6 +374,530 @@
 <div class="toast" id="toast"></div>
 
 <script>
+// ══════════════════════════════════════════
+// SECTION DATA
+// ══════════════════════════════════════════
+const EXPRESSIONS = [{"fr":"avoir le cafard","pronunciation":"ah-VWAHR luh kah-FAR","literal":"to have the cockroach","meaning":"to feel down, blue, depressed","register":"informal","example_fr":"Je ne sais pas pourquoi, mais j'ai vraiment le cafard ce soir.","example_en":"I don't know why, but I'm really feeling down tonight.","tip":"Very common in everyday speech. Not to be confused with actual cockroaches — 'cafard' here is purely emotional."},{"fr":"poser un lapin","pronunciation":"poh-ZAY uhn lah-PAN","literal":"to put a rabbit","meaning":"to stand someone up (not show up for a date/meeting)","register":"informal","example_fr":"Il m'a posé un lapin devant le cinéma — j'ai attendu une heure!","example_en":"He stood me up outside the cinema — I waited an hour!","tip":"Always used with an indirect object: poser un lapin À quelqu'un. Very commonly used for romantic and social contexts."},{"fr":"tomber dans les pommes","pronunciation":"tohm-BAY dahn lay POHM","literal":"to fall in the apples","meaning":"to faint, pass out","register":"informal","example_fr":"Il faisait tellement chaud qu'elle est tombée dans les pommes.","example_en":"It was so hot that she fainted.","tip":"A very French expression with disputed origins. Use 's'évanouir' in formal/medical contexts instead."},{"fr":"avoir du pain sur la planche","pronunciation":"ah-VWAHR dew pan sewr lah PLAHNSH","literal":"to have bread on the board","meaning":"to have a lot of work ahead, a full plate","register":"neutral","example_fr":"On a du pain sur la planche avant la présentation de lundi.","example_en":"We have a lot on our plate before Monday's presentation.","tip":"Use this when referring to future work, not past. 'J'avais du pain sur la planche' also works in past tense."},{"fr":"casser les pieds","pronunciation":"kah-SAY lay PYAY","literal":"to break the feet","meaning":"to annoy, to be a pain","register":"informal","example_fr":"Tu me casses les pieds avec tes questions!","example_en":"You're getting on my nerves with your questions!","tip":"A polite alternative to stronger expressions. Equivalent to 'tu m'énerves' but more colourful. Can be used with all persons."},{"fr":"mettre son grain de sel","pronunciation":"meh-TRUH sohn gran duh SEL","literal":"to put one's grain of salt","meaning":"to put one's two cents in, to interfere uninvited","register":"informal","example_fr":"Elle met toujours son grain de sel dans les conversations des autres.","example_en":"She always puts her two cents into other people's conversations.","tip":"Usually negative connotation — implies the person is meddling where they're not needed."},{"fr":"avoir la tête dans les nuages","pronunciation":"ah-VWAHR lah TET dahn lay new-AZH","literal":"to have one's head in the clouds","meaning":"to be a daydreamer, absent-minded","register":"neutral","example_fr":"Tu as encore la tête dans les nuages — tu n'as rien entendu!","example_en":"You've got your head in the clouds again — you didn't hear anything!","tip":"Similar to English 'head in the clouds'. Can be said affectionately or critically depending on context."},{"fr":"ça ne casse pas trois pattes à un canard","pronunciation":"sah nuh KAHS pah twah PAT ah uhn kah-NAR","literal":"it doesn't break three legs off a duck","meaning":"it's nothing special, not impressive","register":"informal","example_fr":"Son nouveau film? Ça ne casse pas trois pattes à un canard.","example_en":"His new film? It's nothing to write home about.","tip":"Used to express mild disappointment. Always negative — never say this about something you liked!"},{"fr":"avoir le beurre et l'argent du beurre","pronunciation":"ah-VWAHR luh BUHR ay lar-ZHAHN dew BUHR","literal":"to have the butter and the money for the butter","meaning":"to want to have it both ways, to have your cake and eat it","register":"neutral","example_fr":"Il veut être libre mais aussi de la sécurité — il veut le beurre et l'argent du beurre.","example_en":"He wants freedom but also security — he wants to have his cake and eat it too.","tip":"Often used critically. The full version sometimes includes '...et le sourire de la crémière' (and the smile of the dairy girl)."},{"fr":"prendre ses jambes à son cou","pronunciation":"PRAHN-druh say ZHAMB ah sohn KOO","literal":"to take one's legs to one's neck","meaning":"to run away fast, to take to one's heels","register":"neutral","example_fr":"Quand il a vu l'orage arriver, il a pris ses jambes à son cou.","example_en":"When he saw the storm coming, he took to his heels.","tip":"Implies running away from danger or out of fear. Not used for casual running or exercise."},{"fr":"il ne faut pas vendre la peau de l'ours avant de l'avoir tué","pronunciation":"eel nuh foh pah vahn-DRUH lah POH duh LOOR ah-VAHN duh lah-VWAHR tew-AY","literal":"don't sell the bear's skin before killing it","meaning":"don't count your chickens before they hatch","register":"neutral","example_fr":"Tu parles déjà de fêter ta promotion? Il ne faut pas vendre la peau de l'ours!","example_en":"You're already talking about celebrating your promotion? Don't count your chickens!","tip":"Often shortened to 'ne vendons pas la peau de l'ours'. A very classic French proverb."},{"fr":"avoir d'autres chats à fouetter","pronunciation":"ah-VWAHR DOH-truh SHA ah fweh-TAY","literal":"to have other cats to whip","meaning":"to have more important things to do, bigger fish to fry","register":"neutral","example_fr":"Je ne peux pas m'occuper de ça maintenant, j'ai d'autres chats à fouetter.","example_en":"I can't deal with that now, I have bigger fish to fry.","tip":"Used to deflect or dismiss a request politely. Similar in tone to the English expression."},{"fr":"revenons à nos moutons","pronunciation":"ruh-vuh-NOHN ah noh moo-TOHN","literal":"let's return to our sheep","meaning":"let's get back to the subject, back to the point","register":"neutral/slightly formal","example_fr":"C'est intéressant mais revenons à nos moutons — où en étions-nous?","example_en":"That's interesting but let's get back to the point — where were we?","tip":"One of the oldest French expressions, from a medieval play. Widely recognized and used in professional settings too."},{"fr":"ne pas avoir la langue dans sa poche","pronunciation":"nuh pah ah-VWAHR lah LAHNG dahn sah POHSH","literal":"to not have one's tongue in one's pocket","meaning":"to be outspoken, never at a loss for words","register":"neutral","example_fr":"Elle n'a pas la langue dans sa poche — elle dit toujours ce qu'elle pense.","example_en":"She's never at a loss for words — she always says what she thinks.","tip":"Can be used positively (eloquent) or negatively (too blunt) depending on context."},{"fr":"faire la grasse matinée","pronunciation":"FAIR lah gras mah-tee-NAY","literal":"to do the fat morning","meaning":"to sleep in, have a lie-in","register":"neutral","example_fr":"Le week-end, j'adore faire la grasse matinée jusqu'à midi.","example_en":"On weekends, I love sleeping in until noon.","tip":"Positive connotation — a guilty pleasure. 'Grasse' here means 'rich/indulgent', not fat in a physical sense."},{"fr":"noyer le poisson","pronunciation":"nwah-YAY luh pwah-SOHN","literal":"to drown the fish","meaning":"to dodge the question, confuse the issue deliberately","register":"informal","example_fr":"Le ministre a noyé le poisson pendant toute l'interview.","example_en":"The minister dodged every question throughout the interview.","tip":"Slightly negative — implies deliberate evasion or obfuscation. Common in political commentary."},{"fr":"avoir le coup de foudre","pronunciation":"ah-VWAHR luh KOO duh FOO-druh","literal":"to have the lightning bolt","meaning":"love at first sight","register":"neutral/romantic","example_fr":"Quand il l'a vue, ce fut le coup de foudre immédiat.","example_en":"When he saw her, it was love at first sight.","tip":"'Foudre' means lightning/thunderbolt. Also used figuratively for sudden passion about anything — a city, a job, a book."},{"fr":"casser du sucre sur le dos de quelqu'un","pronunciation":"kah-SAY dew sew-KRUH sewr luh DOH duh kel-KUN","literal":"to break sugar on someone's back","meaning":"to talk behind someone's back, badmouth someone","register":"informal","example_fr":"Arrête de casser du sucre sur son dos — dis-lui en face!","example_en":"Stop talking behind his back — say it to his face!","tip":"Implies malicious gossip. Always negative. Often used as a criticism of the person gossiping."},{"fr":"les carottes sont cuites","pronunciation":"lay kah-ROHT sohn KWEET","literal":"the carrots are cooked","meaning":"it's all over, there's no way out now, the game is up","register":"informal","example_fr":"Avec ce témoignage, les carottes sont cuites pour lui.","example_en":"With that testimony, the game is up for him.","tip":"Implies a point of no return. The situation is definitive and can't be changed. Often used with resignation."},{"fr":"avoir le vent en poupe","pronunciation":"ah-VWAHR luh VAHN ahn POOP","literal":"to have the wind in the stern","meaning":"to have the wind in your sails, to be on a winning streak","register":"neutral/slightly formal","example_fr":"Depuis sa promotion, elle a vraiment le vent en poupe.","example_en":"Since her promotion, she's really on a roll.","tip":"A nautical expression. Positive connotation — implies momentum and success. Common in journalism and business contexts."}];
+const FAUX_AMIS = [{"french":"sensible","pronunciation":"sahn-SEE-bluh","looks_like":"sensible","actual_meaning":"sensitive, emotional, perceptible","false_meaning":"sensible (reasonable)","example_fr":"Elle est très sensible — la moindre critique la blesse.","example_en":"She is very sensitive — the slightest criticism hurts her.","correct_french":"For 'sensible' (reasonable), use: raisonnable, sensé","tip":"One of the most common mistakes English speakers make. A 'personne sensible' cries at films, not someone who makes good decisions."},{"french":"actuellement","pronunciation":"ak-tew-el-MAHN","looks_like":"actually","actual_meaning":"currently, at present, right now","false_meaning":"actually (in fact)","example_fr":"Actuellement, je travaille sur un nouveau projet.","example_en":"Currently, I'm working on a new project.","correct_french":"For 'actually' (in fact), use: en fait, en réalité, à vrai dire","tip":"'Actuellement' is about time (now), not emphasis. 'En fait je préfère le thé' = Actually I prefer tea."},{"french":"rester","pronunciation":"res-TAY","looks_like":"to rest","actual_meaning":"to stay, to remain","false_meaning":"to rest (relax)","example_fr":"Je vais rester à Paris encore une semaine.","example_en":"I'm going to stay in Paris for another week.","correct_french":"For 'to rest', use: se reposer","tip":"Very easy mistake — 'je veux rester' means I want to STAY, not I want to REST. 'Je veux me reposer' = I want to rest."},{"french":"attendre","pronunciation":"ah-TAHN-druh","looks_like":"to attend","actual_meaning":"to wait (for)","false_meaning":"to attend (an event)","example_fr":"J'attends le bus depuis vingt minutes.","example_en":"I've been waiting for the bus for twenty minutes.","correct_french":"For 'to attend', use: assister à, participer à","tip":"'J'attends la réunion' means I'm waiting FOR the meeting. 'J'assiste à la réunion' = I'm attending the meeting."},{"french":"librairie","pronunciation":"lee-brah-REE","looks_like":"library","actual_meaning":"bookshop, bookstore","false_meaning":"library (free lending)","example_fr":"J'ai acheté ce roman dans une librairie près de chez moi.","example_en":"I bought this novel at a bookshop near my home.","correct_french":"For 'library', use: bibliothèque","tip":"Classic beginner trap. 'La librairie' sells books (you pay). 'La bibliothèque' lends books (free). Very different places!"},{"french":"journée","pronunciation":"zhoor-NAY","looks_like":"journey","actual_meaning":"day (duration), daytime","false_meaning":"journey, trip","example_fr":"J'ai passé toute la journée à lire.","example_en":"I spent the whole day reading.","correct_french":"For 'journey', use: trajet, voyage","tip":"'Journée' emphasises the full duration of a day. Compare 'jour' (calendar day) vs 'journée' (the felt experience of the day)."},{"french":"collège","pronunciation":"koh-LEZH","looks_like":"college","actual_meaning":"middle school (ages 11–15)","false_meaning":"college (higher education)","example_fr":"Mon fils entre au collège cette année — il a douze ans.","example_en":"My son is starting middle school this year — he's twelve.","correct_french":"For 'college/university', use: université, grande école, fac (informal)","tip":"French education system: collège (11–15) → lycée (15–18) → université. 'Il va à l'université' = He goes to university."},{"french":"sympathique","pronunciation":"sam-pah-TEEK","looks_like":"sympathetic","actual_meaning":"nice, pleasant, friendly","false_meaning":"sympathetic (feeling compassion)","example_fr":"Ton nouveau collègue est vraiment sympathique.","example_en":"Your new colleague is really nice/pleasant.","correct_french":"For 'sympathetic' (compassionate), use: compatissant, compréhensif","tip":"'Il est très sympathique' = He's very nice. NOT he feels your pain. Shortened to 'sympa' in everyday speech."},{"french":"occasion","pronunciation":"oh-kah-ZYOHN","looks_like":"occasion","actual_meaning":"opportunity, chance; also second-hand item","false_meaning":"occasion (only a special event)","example_fr":"C'est une occasion en or — ne la rate pas!","example_en":"It's a golden opportunity — don't miss it!","correct_french":"Same word works for both, but 'd'occasion' means second-hand: 'une voiture d'occasion' (a used car)","tip":"'Saisir l'occasion' = seize the opportunity. 'À l'occasion' = when the chance arises. Much broader than just a special event."},{"french":"large","pronunciation":"LARZH","looks_like":"large","actual_meaning":"wide, broad","false_meaning":"large (big in size)","example_fr":"Cette avenue est très large — on peut y marcher à six de front.","example_en":"This avenue is very wide — six people can walk abreast.","correct_french":"For 'large' (big), use: grand, gros, important","tip":"'Large' in French is about width, not general size. 'Un grand lit' = a large bed. 'Un lit large' = a wide bed."},{"french":"assister","pronunciation":"ah-sees-TAY","looks_like":"to assist","actual_meaning":"to attend, to witness, to be present at","false_meaning":"to assist, to help","example_fr":"J'ai assisté à une conférence très intéressante hier.","example_en":"I attended a very interesting conference yesterday.","correct_french":"For 'to assist/help', use: aider, assister quelqu'un (assist someone directly)","tip":"'Assister à' = to attend. 'Assister quelqu'un' = to assist someone. The preposition changes the meaning entirely."},{"french":"passer un examen","pronunciation":"pah-SAY uhn eg-zah-MAN","looks_like":"to pass an exam","actual_meaning":"to sit/take an exam","false_meaning":"to pass an exam (succeed)","example_fr":"J'ai passé l'examen hier — maintenant j'attends les résultats.","example_en":"I sat the exam yesterday — now I'm waiting for the results.","correct_french":"For 'to pass an exam', use: réussir un examen, être reçu à un examen","tip":"Critical distinction. 'J'ai passé l'examen' ≠ I passed. It means I took it. To say you passed: 'J'ai réussi l'examen'."},{"french":"car","pronunciation":"KAR","looks_like":"car","actual_meaning":"because, for (conjunction)","false_meaning":"car (vehicle)","example_fr":"Je reste à la maison car il pleut.","example_en":"I'm staying home because it's raining.","correct_french":"For 'car' (vehicle), use: voiture","tip":"'Car' in French is a formal conjunction meaning 'because/for'. The vehicle is always 'voiture'. 'Je prends ma voiture' = I'm taking my car."},{"french":"entrée","pronunciation":"ahn-TRAY","looks_like":"entrée","actual_meaning":"starter/appetiser (first course); entrance","false_meaning":"main course (in American English usage)","example_fr":"Pour l'entrée, j'ai pris une soupe à l'oignon.","example_en":"For the starter, I had French onion soup.","correct_french":"For 'main course', use: plat principal","tip":"In French dining: entrée → plat principal → dessert. The 'entrée' literally enters the meal — it's the first course, not the main."},{"french":"rude","pronunciation":"REWD","looks_like":"rude","actual_meaning":"rough, harsh, tough, severe","false_meaning":"rude (impolite)","example_fr":"L'hiver a été particulièrement rude cette année.","example_en":"Winter was particularly harsh this year.","correct_french":"For 'rude' (impolite), use: impoli, grossier, malappris","tip":"'Rude' in French describes harshness or severity — weather, conditions, tasks. Never rudeness of manner. 'Il est impoli' = He is rude."},{"french":"formidable","pronunciation":"for-mee-DAH-bluh","looks_like":"formidable","actual_meaning":"wonderful, fantastic, great","false_meaning":"formidable (intimidating)","example_fr":"C'est une formidable opportunité — tu dois la saisir!","example_en":"It's a wonderful opportunity — you must seize it!","correct_french":"For 'formidable' (intimidating), use: redoutable, impressionnant","tip":"In French, 'formidable' is almost always positive. In English it implies something overwhelming. 'C'est formidable!' = That's fantastic!"},{"french":"location","pronunciation":"loh-kah-SYOHN","looks_like":"location","actual_meaning":"rental, hire (of something)","false_meaning":"location (place)","example_fr":"La location d'un appartement à Paris coûte très cher.","example_en":"Renting a flat in Paris is very expensive.","correct_french":"For 'location' (place), use: endroit, lieu, emplacement","tip":"'Location de voitures' = car rental. 'Agence de location' = rental agency. Nothing to do with where something is situated."},{"french":"résumer","pronunciation":"ray-zew-MAY","looks_like":"to resume","actual_meaning":"to summarise, to sum up","false_meaning":"to resume (continue after pause)","example_fr":"Pouvez-vous résumer les points principaux?","example_en":"Can you summarise the main points?","correct_french":"For 'to resume', use: reprendre, continuer","tip":"'Résumé' in French is a summary. In English it became a CV/work history. 'Reprendre le travail' = resume work."},{"french":"phrase","pronunciation":"FRAZ","looks_like":"phrase","actual_meaning":"sentence (grammatical)","false_meaning":"phrase (short expression)","example_fr":"Écrivez une phrase complète avec ce mot.","example_en":"Write a complete sentence with this word.","correct_french":"For 'phrase' (group of words), use: expression, locution","tip":"In French, 'une phrase' always means a full grammatical sentence. 'Une expression' is a phrase. Linguists distinguish rigorously."},{"french":"décevoir","pronunciation":"day-suh-VWAHR","looks_like":"to deceive","actual_meaning":"to disappoint","false_meaning":"to deceive, to trick","example_fr":"Ce film m'a beaucoup déçu — j'attendais mieux.","example_en":"This film really disappointed me — I expected better.","correct_french":"For 'to deceive', use: tromper, duper, induire en erreur","tip":"'Je suis déçu(e)' = I am disappointed. VERY common expression. 'Il m'a trompé' = He deceived me. Very different emotional registers."}];
+const COLLOCATIONS = [{"verb":"prendre","noun":"une décision","pronunciation":"PRAHN-druh ewn day-see-ZYOHN","wrong_verb":"faire","meaning":"to make a decision","example_fr":"Il a pris une décision difficile après de longues réflexions.","example_en":"He made a difficult decision after much deliberation.","tip":"In French, decisions are 'taken' not 'made'. Never 'faire une décision'."},{"verb":"rendre","noun":"service","pronunciation":"RAHN-druh sair-VEES","wrong_verb":"donner / faire","meaning":"to do someone a favour","example_fr":"Tu peux me rendre un petit service?","example_en":"Can you do me a small favour?","tip":"Services are 'rendered', not given or done. 'Me rendre service' = do me a favour."},{"verb":"passer","noun":"un examen","pronunciation":"pah-SAY uhn eg-zah-MAN","wrong_verb":"prendre / faire","meaning":"to take/sit an exam","example_fr":"Elle passe son bac en juin prochain.","example_en":"She is sitting her baccalaureate next June.","tip":"You 'pass' an exam in French (passer), but this means to SIT it. To succeed: réussir. Don't confuse!"},{"verb":"faire","noun":"une promenade","pronunciation":"FAIR ewn prom-NAHD","wrong_verb":"prendre / aller","meaning":"to go for a walk","example_fr":"On fait une petite promenade après le dîner?","example_en":"Shall we go for a little walk after dinner?","tip":"Walks are 'made' in French. Also: faire un tour (go for a stroll), faire un voyage (take a trip)."},{"verb":"avoir","noun":"lieu","pronunciation":"ah-VWAHR LYUH","wrong_verb":"prendre / se passer","meaning":"to take place, to occur","example_fr":"La conférence aura lieu le 15 mars à Paris.","example_en":"The conference will take place on 15 March in Paris.","tip":"Events 'have place' in French. Very formal/written. In speech: 'ça se passe' or 'ça se déroule'."},{"verb":"poser","noun":"une question","pronunciation":"poh-ZAY ewn kes-TYOHN","wrong_verb":"faire / demander","meaning":"to ask a question","example_fr":"Est-ce que je peux vous poser une question?","example_en":"May I ask you a question?","tip":"Questions are 'posed/placed' in French. 'Demander' works too but 'poser une question' sounds more natural."},{"verb":"tenir","noun":"compte de","pronunciation":"tuh-NEER KOHNT duh","wrong_verb":"prendre / considérer","meaning":"to take into account, to bear in mind","example_fr":"Il faut tenir compte des contraintes budgétaires.","example_en":"We need to take the budget constraints into account.","tip":"A crucial B1 expression. 'Sans tenir compte de' = without considering. Very common in professional and academic French."},{"verb":"mettre","noun":"en place","pronunciation":"MEH-truh ahn PLAHS","wrong_verb":"installer / créer","meaning":"to set up, to put in place, to implement","example_fr":"Nous allons mettre en place une nouvelle procédure.","example_en":"We are going to implement a new procedure.","tip":"Essential in professional contexts. 'La mise en place' (noun form) = the setup/implementation."},{"verb":"jouer","noun":"un rôle","pronunciation":"zhoo-AY uhn ROHL","wrong_verb":"avoir / faire","meaning":"to play a role, to have an impact","example_fr":"L'éducation joue un rôle essentiel dans le développement.","example_en":"Education plays an essential role in development.","tip":"Both literal (theatre) and figurative. 'Jouer un rôle important' = to play an important role."},{"verb":"faire","noun":"confiance","pronunciation":"FAIR kon-FYAHNS","wrong_verb":"avoir / donner","meaning":"to trust someone","example_fr":"Je lui fais entièrement confiance pour ce projet.","example_en":"I trust him completely on this project.","tip":"Trust is 'made' in French! Always: faire confiance À quelqu'un. 'Il m'inspire confiance' also works."},{"verb":"prendre","noun":"conscience","pronunciation":"PRAHN-druh kon-SYAHNS","wrong_verb":"avoir / réaliser","meaning":"to become aware of, to realize","example_fr":"Il faut prendre conscience de l'urgence climatique.","example_en":"We need to become aware of the climate emergency.","tip":"More nuanced than 'réaliser'. Implies a gradual awareness process. Common in essays and formal speech."},{"verb":"mener","noun":"une vie","pronunciation":"muh-NAY ewn VEE","wrong_verb":"avoir / faire / vivre","meaning":"to lead a life","example_fr":"Elle mène une vie très active depuis sa retraite.","example_en":"She leads a very active life since her retirement.","tip":"'Mener' is used with 'une vie' (life), 'une carrière' (career), 'une enquête' (investigation). Rich verb worth learning."},{"verb":"porter","noun":"atteinte à","pronunciation":"por-TAY ah-TANT ah","wrong_verb":"toucher / blesser / attaquer","meaning":"to undermine, to infringe on, to damage","example_fr":"Cette décision porte atteinte à la liberté d'expression.","example_en":"This decision undermines freedom of expression.","tip":"A formal expression essential for essays and debates. 'Porter atteinte aux droits' = infringe on rights."},{"verb":"faire","noun":"preuve de","pronunciation":"FAIR PRUHV duh","wrong_verb":"montrer / avoir / démontrer","meaning":"to show, to demonstrate (a quality)","example_fr":"Dans cette situation, il a fait preuve d'un grand courage.","example_en":"In that situation, he showed great courage.","tip":"Always followed by an abstract quality. 'Faire preuve de patience/courage/générosité'. Very elegant B1 expression."},{"verb":"prendre","noun":"en charge","pronunciation":"PRAHN-druh ahn SHARZH","wrong_verb":"s'occuper / gérer","meaning":"to take charge of, to cover, to handle","example_fr":"L'assurance prendra en charge les frais médicaux.","example_en":"The insurance will cover the medical costs.","tip":"Used for medical coverage, responsibilities, and management. 'La prise en charge' = the coverage/handling."},{"verb":"avoir","noun":"recours à","pronunciation":"ah-VWAHR ruh-KOOR ah","wrong_verb":"utiliser / prendre","meaning":"to resort to, to turn to, to use","example_fr":"Nous avons dû avoir recours à un avocat.","example_en":"We had to resort to using a lawyer.","tip":"Often implies necessity or last resort. 'Sans avoir recours à' = without resorting to. Formal register."},{"verb":"exercer","noun":"une influence","pronunciation":"eg-zair-SAY ewn an-flew-AHNS","wrong_verb":"avoir / donner","meaning":"to exert an influence","example_fr":"Les médias exercent une grande influence sur l'opinion publique.","example_en":"The media exerts great influence on public opinion.","tip":"Influence is 'exercised' in French. Also: exercer une pression (exert pressure), exercer un métier (practise a profession)."},{"verb":"tirer","noun":"profit de","pronunciation":"tee-RAY pro-FEE duh","wrong_verb":"bénéficier / profiter seul","meaning":"to take advantage of, to benefit from","example_fr":"Il a su tirer profit de chaque expérience professionnelle.","example_en":"He knew how to benefit from every professional experience.","tip":"More strategic connotation than 'profiter de'. Implies calculated use of an opportunity."},{"verb":"mettre","noun":"fin à","pronunciation":"MEH-truh FAN ah","wrong_verb":"arrêter / finir / terminer","meaning":"to put an end to, to bring to an end","example_fr":"Le gouvernement a décidé de mettre fin à ce programme.","example_en":"The government decided to put an end to this programme.","tip":"More emphatic and final than 'terminer'. Often used for relationships, policies, conflicts. 'Mettre fin à ses jours' = to end one's life (euphemism)."},{"verb":"remettre","noun":"en question","pronunciation":"ruh-MEH-truh ahn kes-TYOHN","wrong_verb":"questionner / douter","meaning":"to call into question, to challenge","example_fr":"Cette découverte remet en question tout ce qu'on croyait savoir.","example_en":"This discovery calls into question everything we thought we knew.","tip":"Essential B1 expression. 'Se remettre en question' = to question oneself, to self-reflect. Very valued concept in French culture."}];
+const CONNECTEURS = [{"word":"pourtant","pronunciation":"poor-TAHN","category":"contrast","meaning":"yet, however, nevertheless","nuance":"expresses surprise at a contradiction — the second fact seems to contradict what was expected","example_fr":"Il a travaillé dur toute l'année. Pourtant, il a échoué à l'examen.","example_en":"He worked hard all year. Yet he failed the exam.","compare_with":"mais (simple opposition), cependant (more formal), néanmoins (despite everything)","tip":"More emphatic than 'mais'. The contrast is unexpected, almost shocking. Place at start of sentence or after subject."},{"word":"néanmoins","pronunciation":"nay-ahn-MWAN","category":"concession","meaning":"nevertheless, nonetheless","nuance":"acknowledges an obstacle or objection but maintains the main argument","example_fr":"La situation est difficile. Néanmoins, nous devons persévérer.","example_en":"The situation is difficult. Nevertheless, we must persevere.","compare_with":"cependant (same register), toutefois (more administrative), quand même (informal)","tip":"Formal register. Common in essays, formal letters, and academic writing. Signals intellectual honesty — you acknowledge the counterpoint."},{"word":"en revanche","pronunciation":"ahn ruh-VAHNSH","category":"contrast","meaning":"on the other hand, however (compensation)","nuance":"introduces a compensation or contrasting positive after a negative (or vice versa)","example_fr":"Le film était trop long. En revanche, les acteurs étaient remarquables.","example_en":"The film was too long. On the other hand, the actors were remarkable.","compare_with":"par contre (same meaning, slightly informal), d'un autre côté (more neutral)","tip":"Often mistranslated as 'in revenge'. Nothing vengeful — it's purely contrastive. More positive compensation than 'mais'."},{"word":"d'ailleurs","pronunciation":"dah-YUHR","category":"addition/support","meaning":"moreover, besides, incidentally, what's more","nuance":"adds a supporting point, often one that reinforces or elaborates naturally","example_fr":"Ce restaurant est excellent. D'ailleurs, c'est le meilleur de la ville.","example_en":"This restaurant is excellent. What's more, it's the best in the city.","compare_with":"de plus (plain addition), en outre (formal addition), du reste (moreover, by the way)","tip":"Also used to introduce a tangential but related point: 'd'ailleurs, j'ai oublié de te dire...' = by the way, I forgot to tell you..."},{"word":"certes","pronunciation":"SAIRT","category":"concession","meaning":"certainly, admittedly, granted","nuance":"grants a point before introducing a counterargument — classic essay move","example_fr":"Certes, la solution n'est pas parfaite, mais c'est un bon début.","example_en":"Admittedly, the solution isn't perfect, but it's a good start.","compare_with":"il est vrai que, bien sûr (less formal concession)","tip":"Almost always followed by 'mais' or 'cependant'. Structure: 'Certes X, mais Y'. A key building block in French argumentation and DELF essays."},{"word":"quant à","pronunciation":"kahn-TAH","category":"topic shift","meaning":"as for, regarding, as to","nuance":"shifts focus to a new subject while maintaining connection to previous idea","example_fr":"Le rapport économique est encourageant. Quant à la situation sociale, elle reste préoccupante.","example_en":"The economic report is encouraging. As for the social situation, it remains worrying.","compare_with":"en ce qui concerne (more formal), pour ce qui est de (same register)","tip":"Always followed by a noun or pronoun + verb. 'Quant à moi' = as for me (gives personal opinion). Very common in French discourse."},{"word":"voire","pronunciation":"VWAHR","category":"gradation","meaning":"or even, indeed, nay","nuance":"escalates to an even more extreme possibility — pushes the argument further than expected","example_fr":"C'est une décision difficile, voire impossible à prendre seul.","example_en":"It's a difficult decision, or even impossible to make alone.","compare_with":"même (even), qui plus est (what is more, even stronger)","tip":"Common mistake: confusing with 'voir' (to see). 'Voire' intensifies — always moves to a stronger, more extreme statement. Elegant B1 word."},{"word":"c'est-à-dire","pronunciation":"set-ah-DEER","category":"clarification","meaning":"that is to say, i.e., meaning","nuance":"introduces a clarification, definition, or reformulation of what was just said","example_fr":"Il faut adopter une approche différente, c'est-à-dire repenser totalement notre stratégie.","example_en":"We need to adopt a different approach, that is to say completely rethink our strategy.","compare_with":"autrement dit (in other words), soit (namely, more formal)","tip":"Often abbreviated to 'c.-à-d.' in writing. Also used colloquially when self-correcting: 'Je voulais dire... c'est-à-dire...'"},{"word":"en outre","pronunciation":"ahn OO-truh","category":"addition","meaning":"furthermore, in addition, moreover","nuance":"adds a further point of equal or greater importance to the argument","example_fr":"Ce projet est rentable. En outre, il créera deux cents emplois.","example_en":"This project is profitable. Furthermore, it will create two hundred jobs.","compare_with":"de plus (same meaning, slightly less formal), par ailleurs (also, in addition)","tip":"Formal register — perfect for essays, reports, presentations. Never start a casual conversation with 'en outre'!"},{"word":"or","pronunciation":"OR","category":"logical link","meaning":"now, but (logical pivot)","nuance":"introduces a premise that leads to a conclusion — a logical 'and yet, consider this'","example_fr":"On dit qu'il est honnête. Or, il a menti à plusieurs reprises.","example_en":"He is said to be honest. Yet he has lied on several occasions.","compare_with":"pourtant (contrastive), mais (simple opposition)","tip":"One of the most misunderstood words for English speakers — 'or' is NOT the English 'or'. It's a logical pivot introducing evidence that complicates the picture."},{"word":"ainsi","pronunciation":"an-SEE","category":"consequence","meaning":"thus, therefore, in this way","nuance":"introduces a logical consequence or sums up how something was done","example_fr":"Il a redoublé d'efforts. Ainsi, il a obtenu les meilleurs résultats.","example_en":"He doubled his efforts. Thus, he achieved the best results.","compare_with":"donc (therefore, more conversational), par conséquent (as a result, formal)","tip":"When placed first: 'Ainsi, ...' introduces a conclusion. When in the middle, it describes manner: 'c'est ainsi que...' = that is how..."},{"word":"par ailleurs","pronunciation":"par ah-YUHR","category":"addition/nuance","meaning":"moreover, in addition, on the other hand","nuance":"adds a distinct point that completes or nuances the picture without contradicting","example_fr":"Ce candidat est compétent. Par ailleurs, il parle trois langues.","example_en":"This candidate is competent. Moreover, he speaks three languages.","compare_with":"d'ailleurs (similar but more conversational), en outre (more formal addition)","tip":"Slightly ambiguous — can add or contrast. Context makes it clear. Very common in professional French writing."},{"word":"à cet égard","pronunciation":"ah set ay-GAR","category":"reference","meaning":"in this regard, in this respect","nuance":"refers back to something just mentioned and draws a specific point about it","example_fr":"La formation est essentielle. À cet égard, nous avons investi massivement.","example_en":"Training is essential. In this regard, we have invested massively.","compare_with":"à ce sujet (on this subject), en la matière (in this area)","tip":"Formal and precise. Very common in reports, official documents, and formal speeches. Elevates your register immediately."},{"word":"bien que","pronunciation":"byan KUH","category":"concession","meaning":"although, even though","nuance":"introduces a concession that doesn't invalidate the main point — requires subjunctive","example_fr":"Bien qu'il soit fatigué, il a continué à travailler.","example_en":"Although he was tired, he continued to work.","compare_with":"quoique (same + subjunctive, slightly more literary), même si (even if, + indicative)","tip":"CRITICAL: 'bien que' MUST be followed by the subjunctive. 'Bien qu'il soit' NOT 'bien qu'il est'. This is a key B1 grammar test point."},{"word":"faute de","pronunciation":"FOHT duh","category":"cause/reason","meaning":"for lack of, due to lack of","nuance":"explains an absence or failure due to insufficient resources, time, or means","example_fr":"Le projet a été abandonné faute de financement.","example_en":"The project was abandoned for lack of funding.","compare_with":"à cause de (because of, negative cause), par manque de (for lack of)","tip":"Always negative connotation — something didn't happen because of a lack. 'Faute de temps' (for lack of time) is very common."},{"word":"tant que","pronunciation":"TAHN KUH","category":"condition/time","meaning":"as long as, so long as","nuance":"links duration — while condition A holds, result B continues","example_fr":"Tant qu'il y aura de la volonté, il y aura des solutions.","example_en":"As long as there is will, there will be solutions.","compare_with":"aussi longtemps que (same meaning, more literal), du moment que (as long as, given that)","tip":"Also used in warnings: 'tant que tu n'auras pas fini...' = until/as long as you haven't finished. Requires future tense in the clause."},{"word":"à moins que","pronunciation":"ah MWAN KUH","category":"condition","meaning":"unless","nuance":"introduces the one exception or condition that would change the outcome","example_fr":"Je viendrai demain, à moins qu'il ne pleuve.","example_en":"I'll come tomorrow, unless it rains.","compare_with":"sauf si (unless, more informal), si ce n'est que (except that)","tip":"Requires subjunctive. The 'ne' that follows is an expletive ne (non-negative) — 'à moins qu'il ne pleuve' doesn't mean 'unless it doesn't rain'."},{"word":"au fur et à mesure","pronunciation":"oh fewr ay ah muh-ZEWR","category":"progression","meaning":"gradually, as, as one goes along, progressively","nuance":"describes something evolving in parallel with something else — simultaneous progression","example_fr":"Au fur et à mesure que tu pratiques, tu progresseras.","example_en":"As you practise, you will gradually improve.","compare_with":"peu à peu (little by little), progressivement (progressively)","tip":"Often followed by 'que' + verb. 'Au fur et à mesure du temps' = as time goes on. A distinctly French expression with no direct English equivalent."},{"word":"quoique","pronunciation":"kwah-KUH","category":"concession","meaning":"although, even though (more literary)","nuance":"slightly more formal/literary than 'bien que', same meaning and grammar","example_fr":"C'est une bonne idée, quoique difficile à mettre en œuvre.","example_en":"It's a good idea, although difficult to implement.","compare_with":"bien que (same + subjunctive), même si (even if)","tip":"Requires subjunctive. More literary than 'bien que'. Also used conversationally at the end: 'c'est difficile, quoique...' meaning 'then again...'"}];
+const GRAMMAIRE = [{"trap":"depuis vs pendant vs il y a","pronunciation":"duh-PWEE / pahn-DAHN / eel ee AH","rule":"depuis = since/for (ongoing action still happening); pendant = for (completed duration); il y a = ago (point in the past)","example_depuis":"J'habite à Paris depuis trois ans. (I have been living in Paris for three years — still living there)","example_pendant":"J'ai habité à Paris pendant trois ans. (I lived in Paris for three years — no longer)","example_il_y_a":"Je suis arrivé à Paris il y a trois ans. (I arrived in Paris three years ago)","tip":"The most tested A2→B1 distinction. 'Depuis' uses present tense for ongoing situations. 'Pendant' uses past tense for completed periods. 'Il y a' is always past tense."},{"trap":"imparfait vs passé composé","pronunciation":"ee-par-FAY / pah-SAY kohm-poh-ZAY","rule":"passé composé = completed action, specific moment, sequence of events; imparfait = background, ongoing state, habits, descriptions in the past","example_pc":"Hier, je suis allé au marché. (Yesterday, I went to the market — completed action)","example_imp":"Quand j'étais enfant, j'allais souvent à la plage. (When I was a child, I used to go to the beach often — habitual)","example_combined":"Il lisait quand le téléphone a sonné. (He was reading when the phone rang — background + interrupting action)","tip":"The classic B1 hurdle. Think of imparfait as the 'stage setting' and passé composé as 'the events that happen on that stage'. They often appear together."},{"trap":"en vs y","pronunciation":"AHN / EE","rule":"en = replaces de + noun (quantities, partitive, places with de); y = replaces à + noun/place","example_en":"Tu veux du café? — Oui, j'en veux. (Do you want coffee? Yes, I want some.)","example_y":"Tu vas à Paris? — Oui, j'y vais. (Are you going to Paris? Yes, I'm going there.)","example_en2":"Il parle de son travail. → Il en parle. (He talks about his work → He talks about it.)","tip":"En and y are placed BEFORE the verb (or auxiliary). With infinitives, they go before the infinitive: 'Je vais y aller' (I'm going to go there). Both replace pronouns — never omit them when the noun has been introduced."},{"trap":"lequel / dont / où (relative pronouns)","pronunciation":"luh-KEL / DOHN / OO","rule":"dont = of which/whose (replaces de + noun); où = where/when (place or time); lequel/laquelle = which (after prepositions other than de)","example_dont":"C'est le livre dont j'ai besoin. (It's the book I need — avoir besoin DE)","example_ou":"C'est la ville où j'ai grandi. (It's the city where I grew up)","example_lequel":"C'est l'outil avec lequel je travaille. (It's the tool with which I work — avec + lequel)","tip":"Rule: if the verb uses 'de', use 'dont'. If it's a place/time, use 'où'. For all other prepositions (avec, sur, pour, etc.) use lequel/laquelle/lesquels/lesquelles."},{"trap":"le subjonctif — when to use it","pronunciation":"luh sew-zhohn-KTEEF","rule":"Subjunctive is required after: vouloir que, falloir que, bien que, à moins que, pour que, avant que, and expressions of emotion/doubt/wish","example_vouloir":"Je veux qu'il vienne. (I want him to come — NOT 'je veux qu'il vient')","example_bien_que":"Bien qu'elle soit fatiguée, elle travaille. (Although she is tired, she works)","example_falloir":"Il faut que tu finisses avant midi. (You must finish before noon)","tip":"The subjunctive mood signals subjectivity. Key triggers: volonté (will), émotion (emotion), doute (doubt), obligation (necessity), conjunction (certain connectors). Learn the triggers, not every individual case."},{"trap":"en train de (present continuous)","pronunciation":"ahn TRAN duh","rule":"French has no '-ing' form. To express an ongoing action right now, use être en train de + infinitive","example_correct":"Je suis en train de manger. (I am eating — right now, at this moment)","example_wrong":"Je mange = I eat / I am eating (both — context-dependent)","example_context":"Ne me dérange pas, je suis en train de travailler! (Don't disturb me, I'm working!)","tip":"Only use 'en train de' when you want to emphasise the action is happening RIGHT NOW and should not be interrupted. Otherwise, simple present is fine."},{"trap":"faire + infinitive (causative)","pronunciation":"FAIR + infinitif","rule":"faire + infinitive = to have/make something done, or to cause someone to do something","example_causative":"Je fais réparer ma voiture. (I'm having my car repaired — by someone else)","example_cause":"Elle fait rire tout le monde. (She makes everyone laugh)","example_indirect":"Il m'a fait attendre une heure. (He made me wait an hour)","tip":"The object follows the infinitive, not 'faire'. 'Je fais laver la voiture' (I have the car washed) — the car is the object of 'laver'. This structure is essential for everyday French."},{"trap":"ne... que (restrictive negation)","pronunciation":"nuh... KUH","rule":"ne... que = only (it is NOT a negation — it restricts). Different from ne... pas (negation)","example_que":"Je n'ai que dix euros. (I only have ten euros — not a negation, I DO have ten euros)","example_pas":"Je n'ai pas dix euros. (I don't have ten euros — true negation)","example_emphasis":"Il ne boit que du thé. (He only drinks tea — restriction, not negation)","tip":"Common confusion: 'ne... que' looks negative but isn't. The 'que' replaces the negative element with 'only'. You can often replace it with 'seulement': 'J'ai seulement dix euros' = same meaning."},{"trap":"si clauses (conditional structures)","pronunciation":"SEE + tense","rule":"si + present → future; si + imparfait → conditionnel; si + plus-que-parfait → conditionnel passé","example_real":"Si tu travailles, tu réussiras. (If you work, you will succeed — real possibility)","example_hypothetical":"Si j'avais plus de temps, je voyagerais. (If I had more time, I would travel — hypothetical)","example_past":"Si tu avais étudié, tu aurais réussi. (If you had studied, you would have succeeded — past regret)","tip":"NEVER use 'si' with conditionnel or futur in the si-clause. The sequence is fixed: si + present/imparfait/plus-que-parfait. The conditionnel only goes in the result clause."},{"trap":"agreement of past participle with avoir","pronunciation":"ah-VWAHR + participe passé","rule":"With avoir, the past participle agrees with a PRECEDING direct object. If the object comes after, no agreement","example_no_agreement":"J'ai mangé une pomme. (No agreement — object after verb)","example_agreement":"La pomme que j'ai mangée était délicieuse. (Agreement — 'que' refers to 'pomme', feminine, precedes)","example_pronoun":"Je les ai vus hier. (Agreement — 'les' is direct object, precedes, masculine plural)","tip":"The most common mistake in written French. Ask: is there a direct object? Does it come BEFORE the verb? If yes, agree. With reflexive verbs (être), agree with the subject — different rule."},{"trap":"en vs dans (time expressions)","pronunciation":"AHN / DAHN","rule":"en = how long something takes; dans = in X time from now (future countdown)","example_en":"Il a appris le français en six mois. (He learned French in six months — duration to complete)","example_dans":"Je partirai dans six mois. (I will leave in six months — six months from now)","example_en2":"En combien de temps tu fais ça? (How long does it take you to do that?)","tip":"Classic confusion. 'En' looks back at duration; 'dans' looks forward to a future point. 'En une heure' = it takes an hour. 'Dans une heure' = one hour from now."},{"trap":"quel que soit / quoi que (concessive subjunctive)","pronunciation":"kel kuh SWAH / kwah KUH","rule":"quel que soit = whatever (adjective agreement); quoi que = whatever (pronoun) — both require subjunctive","example_quel":"Quel que soit le résultat, nous continuerons. (Whatever the result, we will continue)","example_quoi":"Quoi que tu fasses, fais-le bien. (Whatever you do, do it well)","example_qui_que":"Qui que ce soit, je ne veux pas être dérangé. (Whoever it is, I don't want to be disturbed)","tip":"'Quel que' agrees with the noun it refers to: 'quelle que soit la raison' (feminine). These are B1 structures that make your French sound genuinely advanced."}];
+
+// Section state indexes
+const sectionState = { expr:0, faux:0, coll:0, conn:0, gram:0 };
+const sectionData  = { expr:EXPRESSIONS, faux:FAUX_AMIS, coll:COLLOCATIONS, conn:CONNECTEURS, gram:GRAMMAIRE };
+const sectionArea  = { expr:'exprArea', faux:'fauxArea', coll:'collArea', conn:'connArea', gram:'gramArea' };
+const sectionPrev  = { expr:'exprPrev', faux:'fauxPrev', coll:'collPrev', conn:'connPrev', gram:'gramPrev' };
+const sectionNext  = { expr:'exprNext', faux:'fauxNext', coll:'collNext', conn:'connNext', gram:'gramNext' };
+
+let currentSection = 'verbes';
+let bookmarks = JSON.parse(localStorage.getItem('frBookmarks2') || '{}');
+// bookmarks = { verbes: [...verbs], expr:[...], faux:[...], coll:[...], conn:[...], gram:[...] }
+if (!bookmarks.verbes) bookmarks.verbes = [];
+['expr','faux','coll','conn','gram'].forEach(s => { if (!bookmarks[s]) bookmarks[s] = []; });
+let showBookmarksOnly = false;
+
+function saveBookmarks(){ localStorage.setItem('frBookmarks2', JSON.stringify(bookmarks)); }
+
+// ── Section switching ──
+function switchSection(name, tabEl) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('section-' + name).classList.add('active');
+  tabEl.classList.add('active');
+  currentSection = name;
+  showBookmarksOnly = false;
+  document.getElementById('bmFilterBtn').classList.remove('active');
+  if (name !== 'verbes') renderSection(sectionKeyFromName(name));
+  updateProgressForSection(name);
+}
+
+function sectionKeyFromName(name){
+  const map = {'expressions':'expr','faux-amis':'faux','collocations':'coll','connecteurs':'conn','grammaire':'gram'};
+  return map[name] || name;
+}
+
+function updateProgressForSection(name){
+  if(name==='verbes') return; // verbs handles its own progress
+  const key = sectionKeyFromName(name);
+  if(key === name) return;
+  const data = sectionData[key];
+  const idx = sectionState[key];
+  const total = data.length;
+  const pct = ((idx+1)/total)*100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = (idx+1)+' / '+total;
+}
+
+// ── Navigation for non-verb sections ──
+function navigateSection(key, dir){
+  const data = sectionData[key];
+  const newIdx = sectionState[key] + dir;
+  if(newIdx < 0 || newIdx >= data.length) return;
+  sectionState[key] = newIdx;
+  renderSection(key);
+}
+
+function speakSectionCurrent(key){
+  const data = sectionData[key];
+  const item = data[sectionState[key]];
+  let text = item.fr || item.french || item.word || (item.verb + ' ' + item.noun) || item.trap || '';
+  speak(text);
+}
+
+// ── Speak helpers ──
+function speak(text, lang='fr-FR'){
+  if(!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang; u.rate = 0.85; u.pitch = 1;
+  window.speechSynthesis.speak(u);
+}
+
+function speakEl(el){
+  el.classList.add('speaking');
+  setTimeout(()=>el.classList.remove('speaking'),1400);
+}
+
+// ── RENDER: EXPRESSIONS ──
+function renderSection(key){
+  const data = sectionData[key];
+  const idx = sectionState[key];
+  const item = data[idx];
+  const area = document.getElementById(sectionArea[key]);
+  area.className = '';
+
+  const bmKey = key;
+  let mainText = '';
+  let html = '';
+
+  if(key === 'expr'){
+    const isBm = bookmarks.expr.includes(item.fr);
+    html = `<div class="word-card card-enter">
+      <div class="word-card-header wch-terra">
+        <div class="card-num">Expression ${idx+1} / ${data.length}</div>
+        <div class="card-actions">
+          <button class="bm-btn ${isBm?'saved':''}" onclick="toggleBm('expr','${esc(item.fr)}')">${isBm?'⭐ Sauvegardé':'☆ Sauvegarder'}</button>
+        </div>
+        <div class="card-main-row">
+          <div class="card-word" onclick="speak('${esc(item.fr)}');speakEl(this)">
+            ${item.fr}
+            <button class="speak-btn" onclick="speak('${esc(item.fr)}');speakEl(this);event.stopPropagation()">🔊</button>
+          </div>
+        </div>
+        <div class="card-pron terra">[ ${item.pronunciation} ]</div>
+        <div style="margin-top:8px;font-size:.85rem;color:rgba(255,255,255,.55);font-style:italic;font-family:'Libre Baskerville',serif">Lit. "${item.literal}"</div>
+      </div>
+      <div class="word-card-body">
+        <div style="font-size:1.05rem;font-weight:600;color:var(--ink);margin-bottom:6px">→ ${item.meaning}</div>
+        <div style="display:inline-block;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:2px 8px;border-radius:5px;margin-bottom:14px;${item.register==='informal'?'background:#faeee8;border:1px solid #e8c0b0;color:var(--terra)':item.register==='formal'||item.register?.includes('formal')?'background:var(--fut-bg);border:1px solid #b8d0f0;color:var(--blue)':'background:var(--card2);border:1px solid var(--border);color:var(--muted)'}">
+          ${item.register}
+        </div>
+        <div style="background:var(--card2);border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:12px">
+          <div style="font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--terra);margin-bottom:6px">Exemple</div>
+          <div style="font-family:'Libre Baskerville',serif;font-style:italic;font-size:.92rem;color:var(--ink);font-weight:600;margin-bottom:3px">${item.example_fr}</div>
+          <div style="font-size:.8rem;color:var(--muted);margin-bottom:7px">${item.example_en}</div>
+          <button class="speak-example-btn" onclick="speak('${esc(item.example_fr)}')">🔊 Écouter l'exemple</button>
+        </div>
+        <div class="tips-row">
+          <div class="tips-icon">💡</div>
+          <div><div class="tips-label">Conseil</div><div class="tips-text">${item.tip}</div></div>
+        </div>
+      </div>
+    </div>`;
+    document.getElementById('exprPrev').disabled = idx===0;
+    document.getElementById('exprNext').disabled = idx===data.length-1;
+  }
+
+  else if(key === 'faux'){
+    const isBm = bookmarks.faux.includes(item.french);
+    html = `<div class="word-card card-enter">
+      <div class="word-card-header wch-plum">
+        <div class="card-num">Faux Ami ${idx+1} / ${data.length}</div>
+        <div class="card-actions">
+          <button class="bm-btn ${isBm?'saved':''}" onclick="toggleBm('faux','${esc(item.french)}')">${isBm?'⭐ Sauvegardé':'☆ Sauvegarder'}</button>
+        </div>
+        <div class="card-main-row">
+          <div class="card-word" onclick="speak('${esc(item.french)}');speakEl(this)">
+            ${item.french}
+            <button class="speak-btn" onclick="speak('${esc(item.french)}');speakEl(this);event.stopPropagation()">🔊</button>
+          </div>
+        </div>
+        <div class="card-pron plum">[ ${item.pronunciation} ]</div>
+      </div>
+      <div class="word-card-body">
+        <div class="info-grid" style="margin-bottom:12px">
+          <div class="info-box ib-red">
+            <div class="info-box-label">⚠️ Looks like English</div>
+            <div class="info-box-text"><span class="hi">${item.looks_like}</span> <span class="em">(${item.false_meaning})</span></div>
+          </div>
+          <div class="info-box ib-green">
+            <div class="info-box-label">✅ Actually means</div>
+            <div class="info-box-text"><span class="hi">${item.actual_meaning}</span></div>
+          </div>
+        </div>
+        <div style="background:var(--card2);border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:12px">
+          <div style="font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--plum);margin-bottom:6px">Exemple correct</div>
+          <div style="font-family:'Libre Baskerville',serif;font-style:italic;font-size:.92rem;color:var(--ink);font-weight:600;margin-bottom:3px">${item.example_fr}</div>
+          <div style="font-size:.8rem;color:var(--muted);margin-bottom:7px">${item.example_en}</div>
+          <button class="speak-example-btn" onclick="speak('${esc(item.example_fr)}')">🔊 Écouter</button>
+        </div>
+        <div class="info-box ib-amber" style="margin-bottom:12px">
+          <div class="info-box-label">🔄 Comment dire en français</div>
+          <div class="info-box-text">${item.correct_french}</div>
+        </div>
+        <div class="tips-row">
+          <div class="tips-icon">💡</div>
+          <div><div class="tips-label">Conseil</div><div class="tips-text">${item.tip}</div></div>
+        </div>
+      </div>
+    </div>`;
+    document.getElementById('fauxPrev').disabled = idx===0;
+    document.getElementById('fauxNext').disabled = idx===data.length-1;
+  }
+
+  else if(key === 'coll'){
+    const phrase = item.verb + ' ' + item.noun;
+    const isBm = bookmarks.coll.includes(phrase);
+    html = `<div class="word-card card-enter">
+      <div class="word-card-header wch-amber">
+        <div class="card-num">Collocation ${idx+1} / ${data.length}</div>
+        <div class="card-actions">
+          <button class="bm-btn ${isBm?'saved':''}" onclick="toggleBm('coll','${esc(phrase)}')">${isBm?'⭐ Sauvegardé':'☆ Sauvegarder'}</button>
+        </div>
+        <div class="card-main-row">
+          <div class="card-word" onclick="speak('${esc(phrase)}');speakEl(this)" style="flex-wrap:wrap">
+            <span style="color:rgba(255,255,255,.65)">${item.verb}</span>&nbsp;<span>${item.noun}</span>
+            <button class="speak-btn" onclick="speak('${esc(phrase)}');speakEl(this);event.stopPropagation()">🔊</button>
+          </div>
+        </div>
+        <div class="card-pron amber">[ ${item.pronunciation} ]</div>
+        <div style="margin-top:8px;font-size:.85rem;color:rgba(255,255,255,.6)">→ ${item.meaning}</div>
+      </div>
+      <div class="word-card-body">
+        <div class="info-box ib-red" style="margin-bottom:12px">
+          <div class="info-box-label">❌ Ne pas dire</div>
+          <div class="info-box-text"><span class="tag-wrong">✗</span> <span class="hi">${item.wrong_verb} ${item.noun}</span></div>
+        </div>
+        <div style="background:var(--card2);border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:12px">
+          <div style="font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--amber);margin-bottom:6px">Exemple</div>
+          <div style="font-family:'Libre Baskerville',serif;font-style:italic;font-size:.92rem;color:var(--ink);font-weight:600;margin-bottom:3px">${item.example_fr}</div>
+          <div style="font-size:.8rem;color:var(--muted);margin-bottom:7px">${item.example_en}</div>
+          <button class="speak-example-btn" onclick="speak('${esc(item.example_fr)}')">🔊 Écouter</button>
+        </div>
+        <div class="tips-row">
+          <div class="tips-icon">💡</div>
+          <div><div class="tips-label">Conseil</div><div class="tips-text">${item.tip}</div></div>
+        </div>
+      </div>
+    </div>`;
+    document.getElementById('collPrev').disabled = idx===0;
+    document.getElementById('collNext').disabled = idx===data.length-1;
+  }
+
+  else if(key === 'conn'){
+    const isBm = bookmarks.conn.includes(item.word);
+    const pillClass = 'pill-'+(item.category.replace(/[^a-z]/g,'').split('/')[0]) || 'pill-addition';
+    html = `<div class="word-card card-enter">
+      <div class="word-card-header wch-navy">
+        <div class="card-num">Connecteur ${idx+1} / ${data.length}</div>
+        <div class="card-actions">
+          <button class="bm-btn ${isBm?'saved':''}" onclick="toggleBm('conn','${esc(item.word)}')">${isBm?'⭐ Sauvegardé':'☆ Sauvegarder'}</button>
+        </div>
+        <div class="card-main-row">
+          <div class="card-word" onclick="speak('${esc(item.word)}');speakEl(this)">
+            ${item.word}
+            <button class="speak-btn" onclick="speak('${esc(item.word)}');speakEl(this);event.stopPropagation()">🔊</button>
+          </div>
+        </div>
+        <div class="card-pron">[ ${item.pronunciation} ]</div>
+        <div style="margin-top:8px"><span class="category-pill ${pillClass}">${item.category}</span></div>
+      </div>
+      <div class="word-card-body">
+        <div style="font-size:1.05rem;font-weight:600;color:var(--ink);margin-bottom:6px">→ ${item.meaning}</div>
+        <div style="font-size:.86rem;color:var(--ink2);line-height:1.6;margin-bottom:14px;font-style:italic">${item.nuance}</div>
+        <div style="background:var(--card2);border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:12px">
+          <div style="font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--blue);margin-bottom:6px">Exemple</div>
+          <div style="font-family:'Libre Baskerville',serif;font-style:italic;font-size:.92rem;color:var(--ink);font-weight:600;margin-bottom:3px">${item.example_fr}</div>
+          <div style="font-size:.8rem;color:var(--muted);margin-bottom:7px">${item.example_en}</div>
+          <button class="speak-example-btn" onclick="speak('${esc(item.example_fr)}')">🔊 Écouter</button>
+        </div>
+        <div class="info-box ib-blue" style="margin-bottom:12px">
+          <div class="info-box-label">🔄 Comparer avec</div>
+          <div class="info-box-text">${item.compare_with}</div>
+        </div>
+        <div class="tips-row">
+          <div class="tips-icon">💡</div>
+          <div><div class="tips-label">Conseil</div><div class="tips-text">${item.tip}</div></div>
+        </div>
+      </div>
+    </div>`;
+    document.getElementById('connPrev').disabled = idx===0;
+    document.getElementById('connNext').disabled = idx===data.length-1;
+  }
+
+  else if(key === 'gram'){
+    const isBm = bookmarks.gram.includes(item.trap);
+    // Build example rows dynamically
+    let exampleRows = '';
+    const exKeys = Object.keys(item).filter(k => k.startsWith('example_'));
+    exKeys.forEach(k => {
+      const label = k.replace('example_','').replace('_',' ');
+      const colorMap = {pc:'past',imp:'present',depuis:'past',pendant:'present',il:'future',en:'past',y:'present',dans:'future',dont:'past',ou:'present',lequel:'future',vouloir:'past',bien:'present',falloir:'future',real:'past',hypothetical:'present',past:'past',combined:'present',correct:'correct',wrong:'wrong',causative:'past',cause:'present',indirect:'future',que:'past',pas:'present',emphasis:'future',si:'past',no:'present',agreement:'past',pronoun:'present',rule:'rule'};
+      const col = Object.keys(colorMap).find(c => label.startsWith(c)) || 'rule';
+      const labelClass = colorMap[col] || 'rule';
+      const fr_part = item[k].split('(')[0].trim();
+      exampleRows += `<div class="example-row">
+        <div class="example-row-label ${labelClass}">${label.toUpperCase()}</div>
+        <div class="example-fr">${item[k]}
+          <button class="speak-example-btn" onclick="speak('${esc(fr_part)}')" style="margin-left:4px;font-size:.68rem">🔊</button>
+        </div>
+      </div>`;
+    });
+
+    html = `<div class="grammar-card card-enter">
+      <div class="grammar-header">
+        <div class="card-num">Piège grammatical ${idx+1} / ${data.length}</div>
+        <div class="card-actions">
+          <button class="bm-btn ${isBm?'saved':''}" onclick="toggleBm('gram','${esc(item.trap)}')">${isBm?'⭐ Sauvegardé':'☆ Sauvegarder'}</button>
+        </div>
+        <div class="card-main-row">
+          <div class="card-word" onclick="speak('${esc(item.trap.split('(')[0].trim())}');speakEl(this)">
+            ${item.trap}
+            <button class="speak-btn" onclick="speak('${esc(item.trap.split(' ')[0])}');speakEl(this);event.stopPropagation()">🔊</button>
+          </div>
+        </div>
+        <div class="card-pron green">[ ${item.pronunciation} ]</div>
+      </div>
+      <div class="grammar-body">
+        <div class="info-box ib-green">
+          <div class="info-box-label">📏 La règle</div>
+          <div class="info-box-text">${item.rule}</div>
+        </div>
+        ${exampleRows}
+        <div class="tips-row">
+          <div class="tips-icon">💡</div>
+          <div><div class="tips-label">Conseil</div><div class="tips-text">${item.tip}</div></div>
+        </div>
+      </div>
+    </div>`;
+    document.getElementById('gramPrev').disabled = idx===0;
+    document.getElementById('gramNext').disabled = idx===data.length-1;
+  }
+
+  area.innerHTML = html;
+  updateProgressForSection(currentSection);
+}
+
+function esc(s){ return (s||'').replace(/'/g,"\'").replace(/"/g,'&quot;'); }
+
+function toggleBm(key, val){
+  const arr = bookmarks[key];
+  const i = arr.indexOf(val);
+  if(i>=0){ arr.splice(i,1); showToast('Retiré des favoris'); }
+  else { arr.push(val); showToast('Sauvegardé ⭐'); }
+  saveBookmarks();
+  const key2map = {expr:'expressions',faux:'faux-amis',coll:'collocations',conn:'connecteurs',gram:'grammaire'};
+  if(currentSection !== 'verbes') renderSection(key);
+}
+
+// ══════════════════════════════════════════
+// SEARCH — all sections
+// ══════════════════════════════════════════
+function toggleSearch(){
+  const o = document.getElementById('searchOverlay');
+  o.classList.toggle('open');
+  if(o.classList.contains('open')){
+    document.getElementById('searchInput').value='';
+    filterSearch();
+    setTimeout(()=>document.getElementById('searchInput').focus(),100);
+  }
+}
+
+function filterSearch(){
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const res = document.getElementById('searchResults');
+  let results = [];
+
+  // Verbs
+  VERBS.filter(v => v.verb.includes(q)||v.translation.toLowerCase().includes(q)).slice(0,8).forEach((v,_)=>{
+    results.push({section:'Verbes',sectionId:'verbes',key:'verbes',idx:VERBS.indexOf(v),label:v.verb,sub:v.translation});
+  });
+  // Expressions
+  EXPRESSIONS.filter(e=>e.fr.toLowerCase().includes(q)||e.meaning.toLowerCase().includes(q)).slice(0,5).forEach(e=>{
+    results.push({section:'Expressions',sectionId:'expressions',key:'expr',idx:EXPRESSIONS.indexOf(e),label:e.fr,sub:e.meaning});
+  });
+  // Faux amis
+  FAUX_AMIS.filter(e=>e.french.includes(q)||e.actual_meaning.toLowerCase().includes(q)||e.looks_like.toLowerCase().includes(q)).slice(0,5).forEach(e=>{
+    results.push({section:'Faux Amis',sectionId:'faux-amis',key:'faux',idx:FAUX_AMIS.indexOf(e),label:e.french,sub:e.actual_meaning});
+  });
+  // Collocations
+  COLLOCATIONS.filter(e=>(e.verb+' '+e.noun).toLowerCase().includes(q)||e.meaning.toLowerCase().includes(q)).slice(0,5).forEach(e=>{
+    results.push({section:'Collocations',sectionId:'collocations',key:'coll',idx:COLLOCATIONS.indexOf(e),label:e.verb+' '+e.noun,sub:e.meaning});
+  });
+  // Connecteurs
+  CONNECTEURS.filter(e=>e.word.includes(q)||e.meaning.toLowerCase().includes(q)).slice(0,5).forEach(e=>{
+    results.push({section:'Connecteurs',sectionId:'connecteurs',key:'conn',idx:CONNECTEURS.indexOf(e),label:e.word,sub:e.meaning});
+  });
+  // Grammaire
+  GRAMMAIRE.filter(e=>e.trap.toLowerCase().includes(q)).slice(0,4).forEach(e=>{
+    results.push({section:'Grammaire',sectionId:'grammaire',key:'gram',idx:GRAMMAIRE.indexOf(e),label:e.trap,sub:e.rule.slice(0,60)+'…'});
+  });
+
+  res.innerHTML = results.slice(0,20).map(r=>`
+    <div class="search-result" onclick="goToResult('${r.sectionId}','${r.key}',${r.idx})">
+      <span class="sr-num">${r.idx+1}</span>
+      <div style="flex:1">
+        <div class="sr-verb">${r.label}</div>
+        <div class="sr-trans">${r.sub}</div>
+      </div>
+      <span class="sr-section">${r.section}</span>
+    </div>`).join('');
+}
+
+function goToResult(sectionId, key, idx){
+  toggleSearch();
+  const tab = document.querySelector('[data-section="'+sectionId+'"]');
+  if(tab) switchSection(sectionId, tab);
+  if(sectionId==='verbes'){
+    currentIndex = idx;
+    render();
+  } else {
+    sectionState[key] = idx;
+    renderSection(key);
+  }
+}
+
+// ══════════════════════════════════════════
+// QUIZ — pulls from all sections
+// ══════════════════════════════════════════
+let quizPool = [];
+let quizAns = '';
+let quizScore = {correct:0,total:0};
+
+function openQuiz(){
+  document.getElementById('quizOverlay').classList.add('open');
+  quizScore = {correct:0,total:0};
+  updateQuizScore();
+  buildQuizPool();
+  nextQuiz();
+}
+
+function closeQuiz(){ document.getElementById('quizOverlay').classList.remove('open'); }
+function updateQuizScore(){ document.getElementById('quizScore').textContent = 'Score: '+quizScore.correct+' / '+quizScore.total; }
+
+function buildQuizPool(){
+  quizPool = [
+    ...VERBS.slice(0,40).map(v=>({q:v.verb,a:v.translation,type:'verbe'})),
+    ...EXPRESSIONS.map(e=>({q:e.fr,a:e.meaning,type:'expression'})),
+    ...FAUX_AMIS.map(e=>({q:e.french,a:e.actual_meaning,type:'faux ami'})),
+    ...COLLOCATIONS.map(e=>({q:e.verb+' '+e.noun,a:e.meaning,type:'collocation'})),
+    ...CONNECTEURS.map(e=>({q:e.word,a:e.meaning,type:'connecteur'})),
+  ];
+  quizPool = quizPool.sort(()=>Math.random()-.5);
+}
+
+function nextQuiz(){
+  document.getElementById('quizNextBtn').style.display='none';
+  const item = quizPool[Math.floor(Math.random()*quizPool.length)];
+  quizAns = item.a;
+  document.getElementById('quizQ').textContent = item.q;
+  document.getElementById('quizHint').textContent = 'Type: '+item.type+' — Que signifie ceci ?';
+  speak(item.q);
+
+  const allAnswers = quizPool.map(i=>i.a).filter(a=>a!==item.a);
+  const wrong = allAnswers.sort(()=>Math.random()-.5).slice(0,3);
+  const options = [...wrong, item.a].sort(()=>Math.random()-.5);
+
+  document.getElementById('quizOpts').innerHTML = options.map(o=>`
+    <button class="quiz-opt" onclick="checkQuiz(this,'${esc(o)}')">${o}</button>`).join('');
+}
+
+function checkQuiz(btn, ans){
+  const ok = ans === quizAns;
+  quizScore.total++;
+  if(ok){ quizScore.correct++; btn.classList.add('correct'); }
+  else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.quiz-opt').forEach(b=>{ if(b.textContent.trim()===quizAns) b.classList.add('correct'); });
+  }
+  document.querySelectorAll('.quiz-opt').forEach(b=>b.disabled=true);
+  updateQuizScore();
+  document.getElementById('quizNextBtn').style.display='flex';
+}
+
+// ══════════════════════════════════════════
+// AUTOPLAY
+// ══════════════════════════════════════════
+let autoRunning = false, autoInterval = null;
+function toggleAuto(){
+  autoRunning = !autoRunning;
+  const btn = document.getElementById('autoBtn');
+  const bar = document.getElementById('autoBar');
+  if(autoRunning){
+    btn.textContent='⏸ Auto'; btn.classList.add('active');
+    bar.classList.add('active');
+    runAutoStep();
+  } else {
+    btn.textContent='▶ Auto'; btn.classList.remove('active');
+    bar.classList.remove('active');
+    if(autoInterval) clearTimeout(autoInterval);
+  }
+}
+
+function runAutoStep(){
+  if(!autoRunning) return;
+  speakCurrent();
+  const fill = document.getElementById('autoFill');
+  fill.style.transition='none'; fill.style.width='0%';
+  setTimeout(()=>{ fill.style.transition='width 4s linear'; fill.style.width='100%'; },50);
+  autoInterval = setTimeout(()=>{
+    const list = getDisplayList();
+    if(currentIndex < list.length-1){ currentIndex++; render(); runAutoStep(); }
+    else toggleAuto();
+  }, 4000);
+}
+
+// ══════════════════════════════════════════
+// BOOKMARK FILTER
+// ══════════════════════════════════════════
+function toggleBookmarkFilter(){
+  showBookmarksOnly = !showBookmarksOnly;
+  document.getElementById('bmFilterBtn').classList.toggle('active', showBookmarksOnly);
+  currentIndex = 0;
+  render();
+}
+
+// ══════════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════════
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+// ══════════════════════════════════════════
+// KEYBOARD
+// ══════════════════════════════════════════
+document.addEventListener('keydown', e=>{
+  if(document.getElementById('searchOverlay').classList.contains('open')) return;
+  if(document.getElementById('quizOverlay').classList.contains('open')) return;
+  if(e.key==='ArrowRight') {
+    if(currentSection==='verbes') navigate(1);
+    else { const k=sectionKeyFromName(currentSection); if(k!==currentSection) navigateSection(k,1); }
+  }
+  if(e.key==='ArrowLeft'){
+    if(currentSection==='verbes') navigate(-1);
+    else { const k=sectionKeyFromName(currentSection); if(k!==currentSection) navigateSection(k,-1); }
+  }
+  if(e.key===' '){ e.preventDefault(); if(currentSection==='verbes') speakCurrent(); else { const k=sectionKeyFromName(currentSection); if(k!==currentSection) speakSectionCurrent(k); } }
+  if(e.key==='f'||e.key==='F') toggleSearch();
+});
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ document.getElementById('searchOverlay').classList.remove('open'); document.getElementById('quizOverlay').classList.remove('open'); } });
+
+
+
 // ——————————————————————————————
 // VERB DATA (194 verbs from your docx)
 // ——————————————————————————————
@@ -901,17 +946,14 @@ const TIPS = {
 
 // State
 let currentIndex = 0;
-let bookmarks = JSON.parse(localStorage.getItem('frBookmarks') || '[]');
-let showBookmarksOnly = false;
+// bookmarks already declared above as object {verbes:[], expr:[], ...}
 let displayList = [...VERBS.keys()].map((i, _) => i);
-let autoInterval = null;
-let autoRunning = false;
-let quizScore = { correct: 0, total: 0 };
+// autoInterval, autoRunning, quizScore declared in main script above
 let quizAnswer = '';
 
 function getDisplayList() {
   if (showBookmarksOnly) {
-    return VERBS.map((v, i) => i).filter(i => bookmarks.includes(VERBS[i].verb));
+    return VERBS.map((v, i) => i).filter(i => bookmarks.verbes.includes(VERBS[i].verb));
   }
   return VERBS.map((_, i) => i);
 }
@@ -952,6 +994,7 @@ function speakExample(tense) {
 }
 
 function renderTenseForms(forms) {
+  // Parse forms like "était [ay-TEH] / a été [ah ay-TAY]"
   const parts = forms.split('/').map(s => s.trim());
   return parts.map(part => {
     const match = part.match(/^([^\[]+)(\[.*?\])?(.*)$/);
@@ -983,30 +1026,30 @@ function render() {
   const idx = list[currentIndex];
   const v = VERBS[idx];
   const tip = TIPS[v.verb] || `Use "${v.verb}" naturally in everyday conversation to master it. Pay attention to how native speakers use it in context.`;
-  const isBm = bookmarks.includes(v.verb);
+  const isBm = bookmarks.verbes.includes(v.verb);
 
   const html = `
     <div class="word-card card-enter">
-      <div class="word-card-header">
-        <div class="verb-number">Verbe ${idx + 1} sur ${VERBS.length} &nbsp;·&nbsp; ${currentIndex + 1} / ${list.length} affiché</div>
+      <div class="word-card-header wch-navy">
+        <div class="card-num">Verbe ${idx + 1} / ${VERBS.length} &nbsp;·&nbsp; ${currentIndex + 1} / ${list.length}</div>
         <div class="card-actions">
           <button class="bm-btn ${isBm ? 'saved' : ''}" onclick="toggleBookmark()">
             ${isBm ? '⭐ Sauvegardé' : '☆ Sauvegarder'}
           </button>
         </div>
-        <div class="verb-main-row">
-          <div class="verb-word" onclick="speakCurrent()">
+        <div class="card-main-row">
+          <div class="card-word" onclick="speakCurrent()">
             ${v.verb}
             <button class="speak-btn" onclick="speakCurrent(); event.stopPropagation();">🔊</button>
           </div>
-          <div class="verb-translation">${v.translation}</div>
+          <div class="card-sub">${v.translation}</div>
         </div>
-        <div class="verb-pron">[ ${v.pronunciation} ]</div>
+        <div class="card-pron">[ ${v.pronunciation} ]</div>
       </div>
       <div class="word-card-body">
         <div class="tips-row">
           <div class="tips-icon">💡</div>
-          <div class="tips-content">
+          <div>
             <div class="tips-label">Conseil d'utilisation</div>
             <div class="tips-text">${tip}</div>
           </div>
@@ -1069,8 +1112,7 @@ function render() {
         </div>
       </div>
     </div>
-  `;
-
+  `
   document.getElementById('cardArea').innerHTML = html;
   updateProgress(list);
   document.getElementById('prevBtn').disabled = currentIndex === 0;
@@ -1093,54 +1135,20 @@ function navigate(dir) {
 
 function toggleBookmark() {
   const v = currentVerb();
-  if (bookmarks.includes(v.verb)) {
-    bookmarks = bookmarks.filter(b => b !== v.verb);
+  if (bookmarks.verbes.includes(v.verb)) {
+    bookmarks = bookmarks.verbes.filter(b => b !== v.verb);
     showToast('Removed from saved');
   } else {
-    bookmarks.push(v.verb);
+    bookmarks.verbes.push(v.verb);
     showToast('Saved! ⭐');
   }
-  localStorage.setItem('frBookmarks', JSON.stringify(bookmarks));
+  saveBookmarks();
   render();
 }
 
-function toggleBookmarkFilter() {
-  showBookmarksOnly = !showBookmarksOnly;
-  currentIndex = 0;
-  document.getElementById('bookmarkFilterBtn').classList.toggle('active', showBookmarksOnly);
-  render();
-}
 
 // SEARCH
-function toggleSearch() {
-  const overlay = document.getElementById('searchOverlay');
-  overlay.classList.toggle('open');
-  if (overlay.classList.contains('open')) {
-    document.getElementById('searchInput').value = '';
-    filterSearch();
-    setTimeout(() => document.getElementById('searchInput').focus(), 100);
-  }
-}
 
-function filterSearch() {
-  const q = document.getElementById('searchInput').value.toLowerCase();
-  const results = document.getElementById('searchResults');
-  const filtered = VERBS.filter(v =>
-    v.verb.toLowerCase().includes(q) ||
-    v.translation.toLowerCase().includes(q)
-  ).slice(0, 30);
-
-  results.innerHTML = filtered.map((v, i) => {
-    const globalIdx = VERBS.indexOf(v);
-    return `<div class="search-result" onclick="goToVerb(${globalIdx})">
-      <span class="sr-num">${globalIdx + 1}</span>
-      <div>
-        <div class="sr-verb">${v.verb}</div>
-        <div class="sr-trans">${v.translation}</div>
-      </div>
-    </div>`;
-  }).join('');
-}
 
 function goToVerb(globalIdx) {
   showBookmarksOnly = false;
@@ -1153,137 +1161,17 @@ function goToVerb(globalIdx) {
 }
 
 // AUTOPLAY
-function toggleAuto() {
-  autoRunning = !autoRunning;
-  const btn = document.getElementById('autoBtn');
-  const bar = document.getElementById('autoBar');
 
-  if (autoRunning) {
-    btn.textContent = '⏸ Auto';
-    btn.classList.add('active');
-    bar.classList.add('active');
-    runAutoStep();
-  } else {
-    btn.textContent = '▶ Auto';
-    btn.classList.remove('active');
-    bar.classList.remove('active');
-    if (autoInterval) clearTimeout(autoInterval);
-  }
-}
-
-function runAutoStep() {
-  if (!autoRunning) return;
-  const v = currentVerb();
-  speakText(v.verb);
-
-  const fill = document.getElementById('autoFill');
-  fill.style.transition = 'none';
-  fill.style.width = '0%';
-  setTimeout(() => {
-    fill.style.transition = 'width 4s linear';
-    fill.style.width = '100%';
-  }, 50);
-
-  autoInterval = setTimeout(() => {
-    const list = getDisplayList();
-    if (currentIndex < list.length - 1) {
-      currentIndex++;
-      render();
-      runAutoStep();
-    } else {
-      toggleAuto();
-    }
-  }, 4000);
-}
 
 // QUIZ
-let quizVerbIdx = -1;
-
-function openQuiz() {
-  document.getElementById('quizOverlay').classList.add('open');
-  quizScore = { correct: 0, total: 0 };
-  updateQuizScore();
-  nextQuiz();
-}
-
-function closeQuiz() {
-  document.getElementById('quizOverlay').classList.remove('open');
-}
-
-function updateQuizScore() {
-  document.getElementById('quizScore').textContent = `Score: ${quizScore.correct} / ${quizScore.total}`;
-}
-
-function nextQuiz() {
-  document.getElementById('quizNextBtn').style.display = 'none';
-  // Pick random verb
-  quizVerbIdx = Math.floor(Math.random() * VERBS.length);
-  const v = VERBS[quizVerbIdx];
-  quizAnswer = v.translation;
-
-  document.getElementById('quizQ').textContent = v.verb;
-  document.getElementById('quizHint').textContent = 'What does this verb mean in English?';
-
-  // Wrong answers
-  const allTranslations = VERBS.map(vb => vb.translation).filter(t => t !== v.translation);
-  const shuffled = allTranslations.sort(() => Math.random() - 0.5).slice(0, 3);
-  const options = [...shuffled, v.translation].sort(() => Math.random() - 0.5);
-
-  document.getElementById('quizOpts').innerHTML = options.map(opt => `
-    <button class="quiz-opt" onclick="checkQuiz(this, '${opt.replace(/'/g, "\\'")}')">
-      ${opt}
-    </button>
-  `).join('');
-}
-
-function checkQuiz(btn, answer) {
-  const isCorrect = answer === quizAnswer;
-  quizScore.total++;
-  if (isCorrect) {
-    quizScore.correct++;
-    btn.classList.add('correct');
-    speakText(VERBS[quizVerbIdx].verb);
-  } else {
-    btn.classList.add('wrong');
-    // Show correct
-    document.querySelectorAll('.quiz-opt').forEach(b => {
-      if (b.textContent.trim() === quizAnswer) b.classList.add('correct');
-    });
-  }
-  document.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
-  updateQuizScore();
-  document.getElementById('quizNextBtn').style.display = 'flex';
-}
 
 // TOAST
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2200);
-}
 
 // KEYBOARD
-document.addEventListener('keydown', e => {
-  if (document.getElementById('searchOverlay').classList.contains('open')) return;
-  if (document.getElementById('quizOverlay').classList.contains('open')) return;
-  if (e.key === 'ArrowRight') navigate(1);
-  if (e.key === 'ArrowLeft') navigate(-1);
-  if (e.key === ' ') { e.preventDefault(); speakCurrent(); }
-  if (e.key === 'f' || e.key === 'F') toggleSearch();
-  if (e.key === 'b' || e.key === 'B') toggleBookmark();
-});
-
-// Close search on escape
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
-    document.getElementById('searchOverlay').classList.remove('open');
-    document.getElementById('quizOverlay').classList.remove('open');
-  }
-});
 
 // Init
 render();
 </script>
+
 </body>
 </html>
